@@ -1,0 +1,36 @@
+.header {
+  background: #fff;
+  padding: 24px 24px 0;
+}
+
+.ant-tabs-nav-scroll {
+  text-align: center;
+  background: #fff;
+}
+
+.ant-tabs-bar {
+  margin-bottom: 0;
+}
+.tab-content {
+  background: #fff;
+  padding: 2%;
+}
+
+.review-title {
+  color: #7b7be0;
+  font-size: 18px;
+}
+
+.is-locked {
+  color: transparent;
+  cursor: pointer;
+  opacity: .75;
+  outline-style: none;
+  text-shadow: 0 0 5px rgba(0,0,0,.5);
+  zoom: 1;
+}
+
+.review-text {
+  text-align: justify;
+  padding-right: 7%;
+}

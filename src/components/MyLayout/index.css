@@ -1,0 +1,33 @@
+.my-header {
+  position: 'fixed'; 
+  z-index: 1;
+  width: '100%';
+  background: #0f73d0;
+}
+.main {
+  flex-grow: 1;
+  padding: '2%';
+  margin-top: 64; 
+}
+.footer {
+  flex-shrink: 0;
+  background: #0f73d0;
+  color: #fff;
+  text-align: center;
+  padding-top: 4%;
+}
+
+.logo {
+  width: 120px;
+  height: 31px;
+  background: rgba(255,255,255,.2);
+  margin: 16px 24px 16px 0;
+  float: left;
+}
+
+.my-header a {
+  color: #fff;
+}
+.footer a {
+  color: #fff;
+}
