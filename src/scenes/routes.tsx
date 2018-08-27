@@ -21,7 +21,7 @@ const Routes = ({ store }: any) => {
               <Route path='/information/:id' component={Information} />
               <PrivateRoute path='/admin' component={School} store={store} />
               <PrivateRoute path='/profile' component={Profile} store={store}/>
-              <PrivateRoute path='/review' component={Review}  store={store} />
+              <PrivateRoute path='/review/:id?' component={Review}  store={store} />
             </MyLayout>
           </Switch>
         </ScrollToTop>

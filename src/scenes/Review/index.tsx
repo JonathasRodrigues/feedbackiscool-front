@@ -2,7 +2,7 @@ import { Form, Col, Row, Select, Rate, Divider, Radio, Input, Button, InputNumbe
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { list as ListCities } from 'store/City/actions';
-import { list as ListSchool } from 'store/School/actions';
+import { list as ListSchool, findById } from 'store/School/actions';
 import { insert as insertReview } from'store/Review/actions';
 import './index.css';
 import { withRouter } from 'react-router';
@@ -20,10 +20,20 @@ class Home extends Component<any,any> {
   constructor(props: any) {
     super(props);
     this.props.dispatch(ListCities());
+    const { id } = this.props.match.params;
+    if (id) {
+      (async() => {
+        try {
+          await this.props.dispatch(findById(id));
+          await this.props.dispatch(ListSchool(this.props.school.cityId));
+          this.props.form.setFieldsValue({ cityId: this.props.school.cityId, schoolId: id });
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    }
     this.state = {
-      city: null,
-      school: null,
-      student: true
+      student : true
     };
   }
   onSelectedCity = (item: any) => {
@@ -47,7 +57,7 @@ class Home extends Component<any,any> {
             await this.props.dispatch(insertReview(values));
             notification.success({
               message: 'Sucesso',
-              description: 'Obrigado por ajudar com seu review, a comunidade agradece.',
+              description: 'Obrigado por ajudar com sua avaliação.',
             });
             this.props.history.push('/');
           } catch(error) {
@@ -110,7 +120,7 @@ class Home extends Component<any,any> {
             </Form.Item>
           </Col> */}
         </Row>
-        { this.state.city &&
+        { getFieldValue('cityId') &&
           <Row>
             <Col md={24} xs={24} >
               <Form.Item hasFeedback validateStatus={isLoadingSchools ? 'validating': null} colon={false} label={'Selecione a escola que você esta estudando ou estudou'}>
@@ -399,6 +409,7 @@ function mapStateToProps(state: any, ownProps: any) {
     city: state.app.City.selected,
     cities: state.app.City.list.data,
     schools: state.app.School.list.data,
+    school: state.app.School.findById.data,
     isLoadingCities: state.app.City.list.isFetching,
     isLoadingSchools: state.app.School.list.isFetching
   };

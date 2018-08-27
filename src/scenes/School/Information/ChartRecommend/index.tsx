@@ -4,14 +4,7 @@ import { connect } from 'react-redux';
 
 class ChartRecommend extends Component<any, any> {
   render(){
-    const { reviews } = this.props;
-    let yes = reviews ? reviews.filter(( item: any ) =>
-      item.recommend === true
-    ).length : 0;
-    let no = reviews ? reviews.filter(( item: any ) =>
-      item.recommend === false
-    ).length : 0;
-
+    const { recommend, norecommend } = this.props;
     const getOption = () => ({
       title : {
         text: 'Alunos que recomendam a escola',
@@ -28,10 +21,10 @@ class ChartRecommend extends Component<any, any> {
         type: 'pie',
         radius : '55%',
         center: ['50%', '60%'],
-        color: ['#ff0000', '#0f73d0'],
+        color: ['#0f73d0', '#ff0000'],
         data:[
-          {value: yes, name:'Não Recomendam'},
-          {value: no, name:'Recomendam'}
+          {value: recommend ? recommend : 0, name:'Recomendam'},
+          {value: norecommend ? norecommend : 0, name:'Não Recomendam'}
         ],
         itemStyle: {
           emphasis: {

@@ -138,7 +138,7 @@ class Information extends React.Component<IProps, IStates> {
                             </Form.Item>
                           </Col>
                           <Col md={12} xs={24}>
-                            <ChartRecommend />
+                            <ChartRecommend recommend={school && school.recommend} norecommend={school && school.noRecommend} />
                           </Col>
                         </div>
                       }
