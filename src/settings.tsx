@@ -9,3 +9,6 @@ export const SENTRY_KEY = (process.env.REACT_APP_SENTRY_KEY || '').trim();
 export const IS_DEVELOPMENT = ENV === 'development';
 export const SNACKBAR_DEFAULT_TIMEOUT = 5000;
 export const GOOGLE_API_MAPS_KEY = process.env.REACT_APP_GOOGLE_MAPS_KEY;
+export const APP_NAME = 'Feedback is cool';
+export const FB_URL = 'https://fb.me/feedbackiscool';
+export const INST_URL= 'https://instagram.com/feedbackiscool';

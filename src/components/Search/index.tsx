@@ -19,28 +19,38 @@ class Search extends Component<any, any> {
   onSelected = (item: any) => {
     this.setState({ selected : item });
   }
-  onOk = () => {
-    this.props.dispatch(selected(this.state.selected));
-    this.props.dispatch(ListSchool(this.state.selected.id));
+  onOk = (e: any) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        this.props.dispatch(selected(this.state.selected));
+        this.props.dispatch(ListSchool(this.state.selected.id));
+      }
+    });
   }
   render() {
     const filter = (inputValue: any, option: any) => option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1;
     const { cities } = this.props;
+    const { getFieldDecorator } = this.props.form;
     return (
       <div className='search-form'>
-        <Form>
+        <Form onSubmit={this.onOk}>
           <Row>
             <h2> Encontre a melhor escola para seu intercâmbio</h2>
           </Row>
           <Row gutter={16}>
             <Col md={12} xs={24}>
               <Form.Item>
+              {getFieldDecorator('city', {
+                  rules: [{ required: true, message: 'Por favor informe uma cidade' }],
+                })(
                 <AutoComplete size='large'
                   dataSource={(cities && cities.data && cities.data.length > 0) ? cities.data.map((item: any) => item.name) : null}
                   placeholder='Selecione uma cidade'
                   filterOption={filter}
                   onSelect={(item) => this.onSelected(cities.data.filter((it: any) => it.name === item)[0])}
                 />
+                )}
               </Form.Item>
             </Col>
             <Col md={6} xs={24}>
@@ -56,7 +66,7 @@ class Search extends Component<any, any> {
             </Col>
             <Col md={6} xs={24}>
               <Form.Item>
-                <Button onClick={this.onOk} size='large' type='primary' style={{ width: '100%'}} icon='search'>Buscar</Button>
+                <Button size='large' type='primary' style={{ width: '100%'}} icon='search' htmlType='submit'>Buscar</Button>
               </Form.Item>
             </Col>
           </Row>
@@ -71,4 +81,6 @@ function mapStateToProps(state: any, ownProps: any) {
     cities: state.app.City.list
   };
 }
-export default connect(mapStateToProps)(Search);
+const SearchForm = Form.create()(Search);
+
+export default connect(mapStateToProps)(SearchForm);

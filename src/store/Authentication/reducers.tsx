@@ -4,6 +4,9 @@ export enum enAuthenticationActions {
   requestLogin = 'REQUEST_LOGIN',
   receiveLoginSuccess = 'RECEIVE_LOGIN_SUCCESS',
   receiveLoginError = 'RECEIVE_LOGIN_ERROR',
+  requestFacebookLogin = 'REQUEST_FACEBOOK_LOGIN',
+  receiveFacebookLoginSuccess = 'RECEIVE_FACEBOOK_LOGIN_SUCCESS',
+  receiveFacebookLoginError = 'RECEIVE_FACEBOOK_LOGIN_ERROR',
   logout = 'LOGOUT',
   sessionExpired = 'SESSION_EXPIRED',
   requestRegister = 'REQUEST_REGISTER',
@@ -60,6 +63,35 @@ const authentication = (state = initialState, action: any) => {
         ...state,
         isFetching: false,
         isAuthenticated: false
+      };
+    default:
+      return state;
+  }
+};
+
+const loginFacebook = (state = { isFetching: false } , action: any) => {
+  switch (action.type) {
+    case enAuthenticationActions.requestFacebookLogin:
+      return {
+        ...state,
+        isFetching: true,
+        isAuthenticated: false
+      };
+    case enAuthenticationActions.receiveFacebookLoginSuccess:
+        localStorage.setItem('acessToken', action.data.id);
+        localStorage.setItem('id', action.data.userId);
+        return {
+          ...state,
+          isFetching: false,
+          isAuthenticated: true
+        };
+    case enAuthenticationActions.receiveFacebookLoginError:
+
+      return {
+        ...state,
+        isFetching: false,
+        isAuthenticated: false,
+        error: action.error
       };
     default:
       return state;
@@ -148,6 +180,7 @@ const drawer = (state = false, action: any) => {
 
 export const reducer = combineReducers({
   authentication,
+  loginFacebook,
   register,
   recover,
   changePassword,

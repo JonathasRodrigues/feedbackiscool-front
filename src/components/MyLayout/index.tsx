@@ -5,6 +5,7 @@ import MyDrawer from 'components/Drawer';
 import { connect, DispatchProp } from 'react-redux';
 import { drawer, logout } from 'store/Authentication/actions';
 import { Link } from 'react-router-dom';
+import { APP_NAME, FB_URL, INST_URL } from 'settings';
 import './index.css';
 
 interface IProps extends DispatchProp<any> {
@@ -66,8 +67,9 @@ class MyLayout extends React.Component<IProps, IStates> {
         <Footer className='footer'>
           <Row type='flex' justify='start'>
             <Col md={8} xs={24}>
-              <b>LOGO</b><br />
-              <span>NOME DA APP é uma plataforma que ajuda encontrar a escola ideal para você, avaliada por estudantes e ex-estudantes.</span>
+              <b>{APP_NAME}</b>
+              <br />
+              <span>{APP_NAME} é uma plataforma que ajuda encontrar a escola ideal para você, avaliada por estudantes e ex-estudantes.</span>
             </Col>
             <Col md={8} xs={24}>
                 <b>Links</b><br />
@@ -77,15 +79,15 @@ class MyLayout extends React.Component<IProps, IStates> {
             </Col>
             <Col md={8} xs={24}>
               <b>Redes Sociais</b><br />
-              <Icon type='facebook' /><a> Facebook</a><br />
-              <Icon type='instagram' /><a> Instagram</a><br />
-              <Icon type='twitter' /><a> Twitter</a><br />
+              <Icon type='facebook' /><a target='_blank' href={FB_URL}> Facebook</a><br />
+              <Icon type='instagram' /><a target='_blank' href={INST_URL}> Instagram</a><br />
+              {/*<Icon type='twitter' /><a> Twitter</a><br />*/}
             </Col>
           </Row>
           <Row>
             <Divider />
             <Col span={24}>
-               © 2018 NOME DA APP
+               © 2018 FEEDBACK IS COOL
             </Col>
           </Row>
         </Footer>

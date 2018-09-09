@@ -2,6 +2,7 @@ import { API } from 'settings';
 
 export const API_MAP = {
   login: `${API}/Users/login`,
+  loginFacebook: `${API}/auth/facebook`,
   profile: `${API}/profile`,
   register: ``,
   recover: ``,

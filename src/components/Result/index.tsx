@@ -69,6 +69,7 @@ class Result extends Component<any, any> {
       <div className={'result-list'}>
         <List
           itemLayout='vertical'
+          locale={{ emptyText: 'Não foram encontradas escolas nessa cidade.'}}
           size='large'
           dataSource={schools}
           renderItem={item}

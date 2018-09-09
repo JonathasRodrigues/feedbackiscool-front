@@ -89,7 +89,7 @@ class Information extends React.Component<IProps, IStates> {
         <Row>
           <Col span={24}>
                 <Row className={'with-padding'}>
-                  <Col className={'tab-content'} md={16} xs={24}>
+                  <Col className={'tab-content'} md={{ span: 18, offset: 3 }} xs={24}>
                     <Row type='flex' justify='space-around' align='middle'>
                       <Col md={20} xs={24}>
                         <strong style={{ fontSize: '1.5rem' }}>{school && school.name} </strong>
@@ -163,13 +163,13 @@ class Information extends React.Component<IProps, IStates> {
                       <BackTop />
                     </Row>
                   </Col>
-                  <Col md={{ span: 7, offset: 1}} xs={24}>
+                  {/* <Col md={{ span: 7, offset: 1}} xs={24}>
                     <Row>
                       <Col className={'tab-content'} span={24}>
                         Mensaginha Inspiradora!
                       </Col>
                     </Row>
-                  </Col>
+                  </Col> */}
                 </Row>
           </Col>
         </Row>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Row, Col, Icon, Input, Button, notification } from 'antd';
-import { login, drawer } from 'store/Authentication/actions';
+import { login, drawer , loginFacebook } from 'store/Authentication/actions';
 import './index.css';
 import { connect } from 'react-redux';
 
@@ -28,7 +28,7 @@ class NormalLoginForm extends React.Component< any, any> {
           } catch (error) {
             notification.error({
               message: 'Ops',
-              description: 'E-mail ou senha estão incorretos',
+              description: 'E-mail e/ou senha estão incorretos',
             });
           }
         })();
@@ -42,6 +42,10 @@ class NormalLoginForm extends React.Component< any, any> {
     this.setState({ email: true });
   }
 
+  loginOnFacebook = () => {
+    this.props.dispatch(loginFacebook());
+  }
+
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
@@ -49,9 +53,9 @@ class NormalLoginForm extends React.Component< any, any> {
         <h2> Faça seu login </h2>
         <Row>
           <Col span={24} style={{ paddingTop: '2%'}}>
-           <Button size={'large'} icon='facebook' type='primary' className={'bt-facebook'}>
-                Entrar com Facebook
-            </Button>
+            <Button onClick={this.loginOnFacebook} size={'large'} icon='facebook' type='primary' className={'bt-facebook'}>
+                  Entrar com Facebook
+              </Button>
           </Col>
           <Col span={24} style={{ paddingTop: '2%'}}>
             <Button size={'large'} icon='google' type='primary' className={'bt-google'}>

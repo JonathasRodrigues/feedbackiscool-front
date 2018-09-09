@@ -26,6 +26,18 @@ export function login(email: string, password: string) {
     }
   };
 }
+export function loginFacebook() {
+  return async (dispatch: any) => {
+    try {
+      dispatch({ type: enAuthenticationActions.requestFacebookLogin });
+      const { data } = await AuthenticationService.loginFacebook();
+      dispatch({ type: enAuthenticationActions.receiveFacebookLoginSuccess, data });
+    } catch (error) {
+      dispatch({ type: enAuthenticationActions.receiveFacebookLoginError, error });
+      logError(error);
+    }
+  };
+}
 export function recover(identification: string) {
   return async (dispatch: any) => {
     try {

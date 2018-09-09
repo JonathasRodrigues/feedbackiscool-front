@@ -20,6 +20,10 @@ class AuthenticationService {
     console.log('Login');
     return agent.post(`${API_MAP.login}`, { email, password });
   }
+  static loginFacebook() {
+    console.log('Login Facebook');
+    return agent.get(`${API_MAP.loginFacebook}`);
+  }
   static recover(identification: string) {
     return agent.post(`${API_MAP.recover}`, { identification }, {
       token: '8ec59ea38df2da81b9cca2510297557f52fe4473'
