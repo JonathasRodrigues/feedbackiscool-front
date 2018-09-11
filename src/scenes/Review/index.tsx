@@ -373,14 +373,14 @@ class Home extends Component<any,any> {
             <h2> Avalie uma escola ou adicione um interesse para acessar todo conteúdo de avaliações</h2>
             <Divider />
             <Row>
-              <Col span={24}>
+              {/* <Col span={24}>
                 <Form.Item>
                   <Radio.Group defaultValue={true} onChange={(e) => this.onSelectType(e.target.value)}>
                     <Radio value={true}>Sou estudante / Ex-estudante</Radio>
                     <Radio value={false}>Quero fazer intercâmbio (futuro estudante)</Radio>
                   </Radio.Group>
                 </Form.Item>
-              </Col>
+              </Col> */}
             </Row>
               {this.state.student ? isStudent : isProspect}
           </Col>

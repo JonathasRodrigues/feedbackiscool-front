@@ -15,7 +15,9 @@ class Map extends Component<any, any> {
   }
   render() {
     const key = GOOGLE_API_MAPS_KEY;
+    console.log(key);
     const { schools } = this.props;
+    console.log(schools);
     let placesArray = [];
     if (schools && schools.length > -1) {
       for(let i = 0; i < schools.length; i++) {

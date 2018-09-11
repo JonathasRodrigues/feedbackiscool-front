@@ -7,6 +7,7 @@ import Information from 'scenes/School/Information';
 import School from 'scenes/Admin/School';
 import Profile from 'scenes/Profile';
 import Review from 'scenes/Review';
+import Authentication from 'scenes/Authentication';
 import { drawer } from 'store/Authentication/actions';
 import ScrollToTop from 'components/ScrollToTop';
 
@@ -19,6 +20,7 @@ const Routes = ({ store }: any) => {
             <MyLayout>
               <Route exact path='/' component={Home} />
               <Route path='/information/:id' component={Information} />
+              <Route path='/auth/facebook/callback' component={Authentication} />
               <PrivateRoute path='/admin' component={School} store={store} />
               <PrivateRoute path='/profile' component={Profile} store={store}/>
               <PrivateRoute path='/review/:id?' component={Review}  store={store} />
@@ -47,9 +49,9 @@ const PrivateRoute = ({ component: Component, path, store }: any) => {
       <Route path={path}
         render={
           props => {
-            if (path === props.location.pathname) {
+            //if (path === props.location.pathname) {
               store.dispatch(drawer(true));
-            }
+            //}
             return (
               <Redirect to={{
                 pathname: '/',

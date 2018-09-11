@@ -1,6 +1,7 @@
 import React from 'react';
-import { Form, Row, Col, Icon, Input, Button, notification } from 'antd';
-import { login, drawer , loginFacebook } from 'store/Authentication/actions';
+import { Form, Row, Icon, Input, Button, notification } from 'antd';
+import { login, drawer } from 'store/Authentication/actions';
+import { SERVER_URL } from 'settings';
 import './index.css';
 import { connect } from 'react-redux';
 
@@ -43,7 +44,8 @@ class NormalLoginForm extends React.Component< any, any> {
   }
 
   loginOnFacebook = () => {
-    this.props.dispatch(loginFacebook());
+    window.location.href = `${SERVER_URL}/auth/facebook`;
+    //this.props.dispatch(loginFacebook());
   }
 
   render() {
@@ -52,28 +54,30 @@ class NormalLoginForm extends React.Component< any, any> {
       <div>
         <h2> Faça seu login </h2>
         <Row>
-          <Col span={24} style={{ paddingTop: '2%'}}>
+          {/* <Col span={24} style={{ paddingTop: '2%'}}>
             <Button onClick={this.loginOnFacebook} size={'large'} icon='facebook' type='primary' className={'bt-facebook'}>
                   Entrar com Facebook
               </Button>
-          </Col>
-          <Col span={24} style={{ paddingTop: '2%'}}>
+          </Col> */}
+          {/* <Col span={24} style={{ paddingTop: '2%'}}>
             <Button size={'large'} icon='google' type='primary' className={'bt-google'}>
                 Entrar com Google
             </Button>
-          </Col>
-          <Col span={24} style={{ paddingTop: '2%'}}>
+          </Col> */}
+          {/* <Col span={24} style={{ paddingTop: '2%'}}>
             <Button onClick={this.onActiveEmail} size={'large'} icon='mail' type='primary' className={'bt-email'}>
                 Entrar com E-mail
             </Button>
-          </Col>
+          </Col> */}
         </Row>
-        {this.state.email &&
+        {/* {this.state.email && */}
           <div>
             <Form onSubmit={this.handleSubmit} layout={'horizontal'}>
               <FormItem label={'E-mail'} colon={false}>
-                {getFieldDecorator('email', {
-                  rules: [{ required: true, message: 'Por favor informe seu email' }],
+                {getFieldDecorator('email',{
+                  rules: [
+                    { type: 'email', message: 'Por favor insira um email válido' },
+                    { required: true, message: 'Por favor informe seu email' }],
                 })(
                   <Input prefix={<Icon type='user' style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder='Seu email cadastrado' />
                 )}
@@ -85,12 +89,14 @@ class NormalLoginForm extends React.Component< any, any> {
                   <Input prefix={<Icon type='lock' style={{ color: 'rgba(0,0,0,.25)' }} />} type='password' placeholder='Sua senha' />
                 )}
               </FormItem>
-              <Button icon={'email'} size='large' type='primary' style={{ width: '100%'}} htmlType='submit'>
-                  Entrar
-              </Button>
+              <FormItem>
+                <Button icon={'email'} size='large' type='primary' style={{ width: '100%'}} htmlType='submit'>
+                    Entrar
+                </Button>
+              </FormItem>
             </Form>
           </div>
-        }
+        {/* } */}
       </div>
     );
   }

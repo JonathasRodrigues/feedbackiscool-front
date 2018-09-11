@@ -26,11 +26,11 @@ export function login(email: string, password: string) {
     }
   };
 }
-export function loginFacebook() {
+export function loginFacebook(code: string) {
   return async (dispatch: any) => {
     try {
       dispatch({ type: enAuthenticationActions.requestFacebookLogin });
-      const { data } = await AuthenticationService.loginFacebook();
+      const { data } = await AuthenticationService.loginFacebook(code);
       dispatch({ type: enAuthenticationActions.receiveFacebookLoginSuccess, data });
     } catch (error) {
       dispatch({ type: enAuthenticationActions.receiveFacebookLoginError, error });

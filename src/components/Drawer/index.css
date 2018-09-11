@@ -4,8 +4,12 @@
 */
 
 @media (min-width: 1281px) {
-  
-  
+  .drawer {
+    height: 'calc(100% - 55px)';
+    overflow: 'auto';
+    padding-bottom: 53;
+    width: 30%;
+  } 
 }
 
 /* 
@@ -14,7 +18,12 @@
 */
 
 @media (min-width: 1025px) and (max-width: 1280px) {
-  
+  .drawer {
+    height: 'calc(100% - 55px)';
+    overflow: 'auto';
+    padding-bottom: 53;
+    width: 30%;
+  } 
   
 }
 
@@ -24,8 +33,12 @@
 */
 
 @media (min-width: 768px) and (max-width: 1024px) {
-  
-  
+  .drawer {
+    height: 'calc(100% - 55px)';
+    overflow: 'auto';
+    padding-bottom: 53;
+    width: 100%;
+  } 
 }
 
 /* 
@@ -34,7 +47,12 @@
 */
 
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-  
+  .drawer {
+    height: 'calc(100% - 55px)';
+    overflow: 'auto';
+    padding-bottom: 53;
+    width: 100%;
+  } 
   
 }
 
@@ -44,8 +62,12 @@
 */
 
 @media (min-width: 481px) and (max-width: 767px) {
-  
-  
+  .drawer {
+    height: 'calc(100% - 55px)';
+    overflow: 'auto';
+    padding-bottom: 53;
+    width: 100%;
+  } 
 }
 
 /* 

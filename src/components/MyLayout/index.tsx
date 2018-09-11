@@ -6,6 +6,7 @@ import { connect, DispatchProp } from 'react-redux';
 import { drawer, logout } from 'store/Authentication/actions';
 import { Link } from 'react-router-dom';
 import { APP_NAME, FB_URL, INST_URL } from 'settings';
+import logo from 'assets/images/logo.jpg';
 import './index.css';
 
 interface IProps extends DispatchProp<any> {
@@ -35,8 +36,11 @@ class MyLayout extends React.Component<IProps, IStates> {
   render(){
     const menu = (
       <Menu>
-        <Menu.Item>
+        {/* <Menu.Item>
           <Link to='/profile'> Meu Perfil </Link>
+        </Menu.Item> */}
+        <Menu.Item>
+          <Link to='/review'> Avaliar uma escola </Link>
         </Menu.Item>
         <Menu.Divider />
         <Menu.Item>
@@ -47,7 +51,8 @@ class MyLayout extends React.Component<IProps, IStates> {
     return(
       <Layout>
         <Header className={'my-header'}>
-          <Link to='/' className='logo'>
+          <Link to='/'>
+          <img className='logo' src={logo} />
           </Link>
           <div className='user'>
             { this.props.isAuthenticated ?

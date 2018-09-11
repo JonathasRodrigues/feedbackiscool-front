@@ -1,36 +1,65 @@
 import React from 'react';
-import { Form, Row, Col, Input, Button, Checkbox } from 'antd';
+import { Form, Row, Col, Input, Button, notification } from 'antd';
+import { register, login, drawer } from 'store/Authentication/actions';
+import { connect } from 'react-redux';
 
 const FormItem = Form.Item;
 
 class RegisterForm extends React.Component< any, any> {
   handleSubmit = (e: any) => {
     e.preventDefault();
-    this.props.form.validateFields((err: any, values: any) => {
+    this.props.form.validateFieldsAndScroll((err: any, values: any) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        (async () => {
+          try {
+            await this.props.dispatch(register(values));
+            await notification.success({
+              message: 'Sucesso',
+              description: 'Registrado com sucesso, você será logado automaticamente',
+            });
+            await this.props.dispatch(login(values.email, values.password));
+            this.props.dispatch(drawer(false));
+          } catch (error) {
+            notification.error({
+              message: 'Ops',
+              description: 'Por favor informe corretamente os campos',
+            });
+          }
+        })();
       }
     });
+  }
+
+  compareToFirstPassword = (rule: any, value: any, callback: any) => {
+    const form = this.props.form;
+    if (value && value !== form.getFieldValue('password')) {
+      callback('As senhas não são iguais!');
+    } else {
+      callback();
+    }
   }
 
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
       <Form onSubmit={this.handleSubmit} className='login-form'>
+        <h2> Cadastrar-se </h2>
         <Row>
         <Col span={24}>
             <FormItem label={'Nome'}>
               {getFieldDecorator('name', {
                 rules: [{ required: true, message: 'Por favor informe seu nome completo' }],
               })(
-                <Input type='email' placeholder={'Informe seu nome completo'} />
+                <Input placeholder={'Informe seu nome completo'} />
               )}
             </FormItem>
           </Col>
           <Col span={24}>
             <FormItem label={'E-mail'}>
               {getFieldDecorator('email', {
-                rules: [{ required: true, message: 'Por favor informe seu email' }],
+                rules: [
+                  { type: 'email', message: 'Por favor insira um email válido' },
+                  { required: true, message: 'Por favor informe seu email' }],
               })(
                 <Input type='email' placeholder={'Informe um e-mail válido'} />
               )}
@@ -48,13 +77,16 @@ class RegisterForm extends React.Component< any, any> {
           <Col span={24}>
             <FormItem label={'Confirme sua senha'}>
               {getFieldDecorator('password2', {
-                rules: [{ required: true, message: 'Por favor informe sua senha' }],
+                rules: [{ required: true, message: 'Por favor informe sua senha' },
+                {
+                  validator: this.compareToFirstPassword,
+                }],
               })(
                 <Input type='password' placeholder='Confirme sua senha' />
               )}
             </FormItem>
           </Col>
-          <Col span={24}>
+          {/* <Col span={24}>
             <FormItem>
               {getFieldDecorator('remember', {
                 valuePropName: 'checked',
@@ -63,7 +95,7 @@ class RegisterForm extends React.Component< any, any> {
                 <Checkbox>Quero receber ofertas e dicas para intercâmbio</Checkbox>
               )}
             </FormItem>
-          </Col>
+          </Col> */}
           {/* <Col span={24}>
             <a  href=''>Esqueci minha senha</a>
           </Col> */}
@@ -80,4 +112,4 @@ class RegisterForm extends React.Component< any, any> {
 
 const Register = Form.create()(RegisterForm);
 
-export default Register;
+export default connect()(Register);

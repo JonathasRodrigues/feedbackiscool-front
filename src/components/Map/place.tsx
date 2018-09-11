@@ -9,7 +9,7 @@ export default class MyGreatPlaceWithControllableHover extends PureComponent<any
   render() {
     return (
       <div>
-        <Icon style={{ fontSize: '2.0rem', color: '#0f73d0' }} type='environment' />
+        <Icon style={{ fontSize: '1.0rem', color: '#0f73d0' }} type='environment' />
         <strong>{this.props.text}</strong>
       </div>
     );

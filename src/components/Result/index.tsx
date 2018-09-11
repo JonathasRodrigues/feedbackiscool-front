@@ -1,4 +1,4 @@
-import { List, Rate, Icon, BackTop } from 'antd';
+import { List, Rate, Icon, BackTop, Row, Col } from 'antd';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -10,7 +10,7 @@ class Result extends Component<any, any> {
     this.props.dispatch(selected(item));
   }
   render() {
-   const { schools } = this.props;
+   const { schools, isFetching } = this.props;
    const IconText = ({ type, text }: any) => (
     <span>
       <Icon type={type} style={{ marginRight: 8 }} />
@@ -45,21 +45,22 @@ class Result extends Component<any, any> {
 
     const item = (it: any) => {
       return (
-          <List.Item
-            key={it.name}
-            extra={desc(it)}
-            actions={[<IconText type='star-o' text={`${it.reviews ? it.reviews : 0 } avaliações`} />,
-             <IconText type='like-o' text={`${it.recommend ? it.recommend : 0 } aluno(s) recomendam essa escola`} />,
-             <IconText type='dislike-o' text={`${it.noRecommend ? it.noRecommend : 0} aluno(s) não recomendam essa escola`} />]}
-          >
-            <List.Item.Meta
-              title={<Link onClick={() => this.onClick(it)} to={{ pathname: `/information/${it.id}` }} href={it.href}><h3>{it.name}</h3></Link>}
-              description={info(it)}
-            />
-          </List.Item>
+        <Row key={it.name} className='item'>
+          <Col  xs={24} md={10}>
+            <Link onClick={() => this.onClick(it)} to={{ pathname: `/information/${it.id}` }} href={it.href}><h3>{it.name}</h3></Link>
+            {info(it)}
+            <br />
+            <IconText type='star-o' text={`${it.reviews ? it.reviews : 0 } avaliações`} />,
+            <IconText type='like-o' text={`${it.recommend ? it.recommend : 0 } recomendam`} />,
+            <IconText type='dislike-o' text={`${it.noRecommend ? it.noRecommend : 0} não recomendam`} />
+          </Col>
+          <Col className='rating' xs={24} md={{span: 10, offset: 4 }}>
+            {desc(it)}
+          </Col>
+        </Row>
       );
     };
-    if (schools && schools.length < 0) {
+    if (isFetching) {
       return(
         <div></div>
       );
@@ -82,7 +83,8 @@ class Result extends Component<any, any> {
 
 function mapStateToProps(state: any, ownProps: any) {
   return {
-    schools: state.app.School.list.data
+    schools: state.app.School.list.data,
+    isFetching: state.app.School.list.isFetching
   };
 }
 export default connect(mapStateToProps)(Result);

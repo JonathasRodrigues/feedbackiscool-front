@@ -43,6 +43,7 @@ class Home extends Component<any,any> {
             <Icon type='home' style={{ fontSize: 65, color: '#08c' }} /><br /><br/>
             Saiba o que os alunos acham da <b>escola</b> onde estudam
           </Col>
+          <div className='nowrap'/>
           <Col md={8} xs={24}>
           <Icon type='line-chart' style={{ fontSize: 65, color: '#08c' }} /><br /><br/>
             Descubra o <b>histórico de preços</b> das escolas

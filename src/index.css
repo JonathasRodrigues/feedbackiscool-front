@@ -15,3 +15,7 @@ body {
 .no-margin { 
   margin: 0px;
 }
+
+.nowrap {
+  white-space: nowrap;
+}

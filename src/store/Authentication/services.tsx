@@ -1,18 +1,16 @@
 import { API_MAP }  from 'helpers/api';
 import { agent } from 'helpers/agent';
+import { SERVER_URL } from 'settings';
 class AuthenticationService {
   static register(user: any) {
     return agent.post(
       `${API_MAP.register}`,
       {
-        name: user.name,
-        business_name: user.name,
+        realm: 'user',
+        username: user.name,
+        emailVerified: false,
         email: user.email,
-        password: user.password,
-        password_confirmation: user.confirm
-      },
-      {
-        token: '8ec59ea38df2da81b9cca2510297557f52fe4473'
+        password: user.password
       }
     );
   }
@@ -20,19 +18,15 @@ class AuthenticationService {
     console.log('Login');
     return agent.post(`${API_MAP.login}`, { email, password });
   }
-  static loginFacebook() {
+  static loginFacebook(code: string) {
     console.log('Login Facebook');
-    return agent.get(`${API_MAP.loginFacebook}`);
+    return agent.get(`${SERVER_URL}/auth/facebook/callback?code=${code}`);
   }
   static recover(identification: string) {
-    return agent.post(`${API_MAP.recover}`, { identification }, {
-      token: '8ec59ea38df2da81b9cca2510297557f52fe4473'
-    });
+    return agent.post(`${API_MAP.recover}`, { identification });
   }
   static changePassword(newPassword: any) {
-    return agent.post(`${API_MAP.changePassword}`, newPassword, {
-      token: '8ec59ea38df2da81b9cca2510297557f52fe4473'
-    });
+    return agent.post(`${API_MAP.changePassword}`, newPassword);
   }
 }
 export default AuthenticationService;
