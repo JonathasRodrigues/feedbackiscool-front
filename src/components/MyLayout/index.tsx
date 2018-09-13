@@ -71,18 +71,18 @@ class MyLayout extends React.Component<IProps, IStates> {
         </Content>
         <Footer className='footer'>
           <Row type='flex' justify='start'>
-            <Col md={8} xs={24}>
+            <Col md={8} xs={24} className='footer_item'>
               <b>{APP_NAME}</b>
               <br />
               <span>{APP_NAME} é uma plataforma que ajuda encontrar a escola ideal para você, avaliada por estudantes e ex-estudantes.</span>
             </Col>
-            <Col md={8} xs={24}>
+            <Col md={8} xs={24} className='footer_item'>
                 <b>Links</b><br />
                 <Link to='/'>Página inicial</Link><br />
                 <a>Sobre</a><br />
                 <Link to='/review'>Avaliar uma escola</Link><br />
             </Col>
-            <Col md={8} xs={24}>
+            <Col md={8} xs={24} className='footer_item'>
               <b>Redes Sociais</b><br />
               <Icon type='facebook' /><a target='_blank' href={FB_URL}> Facebook</a><br />
               <Icon type='instagram' /><a target='_blank' href={INST_URL}> Instagram</a><br />
@@ -91,7 +91,7 @@ class MyLayout extends React.Component<IProps, IStates> {
           </Row>
           <Row>
             <Divider />
-            <Col span={24}>
+            <Col span={24} className={'final'}>
                © 2018 FEEDBACK IS COOL
             </Col>
           </Row>

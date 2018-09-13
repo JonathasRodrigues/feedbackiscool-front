@@ -24,14 +24,8 @@ class MyDrawer extends Component<IProps, any> {
       <Drawer
       placement='right'
       onClose={this.closeDrawer}
-      width={'30%'}
       maskClosable={true}
       visible={this.props.open}
-      style={{
-        height: 'calc(100% - 55px)',
-        overflow: 'auto',
-        paddingBottom: 53,
-      }}
     >
     <Tabs defaultActiveKey='1'>
       <TabPane tab='Entrar' key='1'><Login /></TabPane>

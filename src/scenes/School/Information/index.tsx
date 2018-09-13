@@ -8,6 +8,7 @@ import { list as listReviews } from 'store/Review/actions';
 import './index.css';
 import ChartRecommend from './ChartRecommend';
 import moment from 'moment';
+import ContentLoader, { Facebook } from 'react-content-loader';
 
 const formItemLayout = {
   labelCol: { span: 6 },
@@ -20,6 +21,7 @@ interface IProps extends DispatchProp<any>, RouteComponentProps<any> {
   reviews?: any;
   selected?: any;
   isAuthenticated?: any;
+  isFetching: boolean;
 }
 
 interface IStates {
@@ -41,7 +43,7 @@ class Information extends React.Component<IProps, IStates> {
     console.log(error);
   }
   render(){
-    const { school, reviews, isAuthenticated } = this.props;
+    const { school, reviews, isAuthenticated, isFetching } = this.props;
     const reviewDetails = (item: any, index: any) => {
       let content = (
         <div>
@@ -84,6 +86,13 @@ class Information extends React.Component<IProps, IStates> {
         </div>
       );
     };
+    if (isFetching) {
+      return (
+        <ContentLoader>
+          <Facebook/>
+        </ContentLoader>
+      );
+    }
     return(
       <div>
         <Row>
@@ -180,6 +189,7 @@ class Information extends React.Component<IProps, IStates> {
 
 function mapStateToProps(state: any, ownProps: any) {
   return {
+    isFetching: state.app.School.findById.isFetching,
     school: state.app.School.findById.data,
     reviews: state.app.Review.list.data,
     isAuthenticated: state.app.Authentication.authentication.isAuthenticated

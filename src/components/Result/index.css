@@ -1,19 +1,24 @@
-.result-list {
-  margin-top:1%;
-  margin-bottom: 1%;
-  margin-left: 2%;
-  margin-right: 2%;
-  background: #fff;
-  padding: 2%;
+
+.results {
+  background: #f5f5f5;
 }
 
 @media (min-width: 1281px) {
   .item {
-    padding: 1% 0 1% 0;
-    border-bottom: 1px solid #c1c1c1;
+    background: #ffffff;
+    padding: 4%;
+    border: 1px solid #c1c1c1;
+    margin: 2%;
   }
   .rating {
     text-align: right;
+  }
+  .status {
+    margin-top: 2%;
+  }
+  .title {
+    font-size: 1.7em;
+    margin:0;
   }
 }
 
@@ -24,13 +29,21 @@
 
 @media (min-width: 1025px) and (max-width: 1280px) {
   .item {
-    padding: 1% 0 1% 0;
-    border-bottom: 1px solid #c1c1c1;
+    background: #ffffff;
+    padding: 4%;
+    border: 1px solid #c1c1c1;
+    margin: 2%;
   }
   .rating {
     text-align: right;
   }
-  
+  .status {
+    margin-top: 2%;
+  }
+  .title {
+    font-size: 1.7em;
+    margin:0;
+  }
 }
 
 /* 
@@ -40,11 +53,20 @@
 
 @media (min-width: 768px) and (max-width: 1024px) {
   .item {
-    padding: 1% 0 1% 0;
-    border-bottom: 1px solid #c1c1c1;
+    background: #ffffff;
+    padding: 4%;
+    border: 1px solid #c1c1c1;
+    margin: 2%;
   }
   .rating {
     text-align: right;
+  }
+  .status {
+    margin-top: 2%;
+  }
+  .title {
+    font-size: 1.7em;
+    margin:0;
   }
 }
 
@@ -56,11 +78,21 @@
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
   
   .item {
-    padding: 1% 0 1% 0;
-    border-bottom: 1px solid #c1c1c1;
+    background: #ffffff;
+    padding: 4%;
+    border: 1px solid #c1c1c1;
+    margin: 2%;
+    width: 100%;
   }
   .rating {
     text-align: right;
+  }
+  .status {
+    margin-top: 2%;
+  }
+  .title {
+    font-size: 1.7em;
+    margin:0;
   }
   
 }
@@ -72,12 +104,20 @@
 
 @media (min-width: 481px) and (max-width: 767px) {
   .item {
-    padding: 4% 4%;
-    border-bottom: 1px solid #c1c1c1;
-    text-align: center;
+    background: #ffffff;
+    padding: 4%;
+    border: 1px solid #c1c1c1;
+    margin: 2%;
   }
   .rating {
-    text-align: center;
+    text-align: right;
+  }
+  .status {
+    margin-top: 2%;
+  }
+  .title {
+    font-size: 1.7em;
+    margin:0;
   }
 }
 
@@ -88,12 +128,20 @@
 
 @media (min-width: 320px) and (max-width: 480px) {
   .item {
-    padding: 4% 4%;
-    border-bottom: 1px solid #c1c1c1;
-    text-align: center;
+    background: #ffffff;
+    padding: 4%;
+    border: 1px solid #c1c1c1;
+    margin: 2%;
   }
   .rating {
-    text-align: center;
+    text-align: left;
+  }
+  .status {
+    margin-top: 2%;
+  }
+  .title {
+    font-size: 1.7em;
+    margin:0;
   }
   
 }

@@ -56,7 +56,7 @@ class School extends React.Component<IProps, IStates> {
           try {
             await this.props.dispatch(insert(values));
             this.openNotificationWithIcon('success', 'Eba!', `Escola cadastrada com sucesso!`);
-            this.props.form.resetFields;
+            this.props.form.resetFields();
           } catch(error) {
             this.openNotificationWithIcon('error', 'Ops!', error);
           }

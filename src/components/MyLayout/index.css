@@ -13,12 +13,15 @@
   flex-shrink: 0;
   background: #0f73d0;
   color: #fff;
-  text-align: center;
-  padding-top: 4%;
+  width: 100%;
+}
+
+.footer_item {
+  padding: 6%;
 }
 
 .logo {
-  height: 4vh;
+  height: 3.5vh;
   margin: 16px 24px 16px 0;
   float: left;
 }
@@ -28,4 +31,8 @@
 }
 .footer a {
   color: #fff;
+}
+.final {
+  background: #0f73d0;
+  text-align: center;
 }

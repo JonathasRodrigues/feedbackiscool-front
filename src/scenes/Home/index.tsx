@@ -20,7 +20,7 @@ class Home extends Component<any,any> {
         <div className={'map'}>
           <Row>
             <Col span={24} >
-              <Map zoom={12} center={{
+              <Map zoom={13} center={{
                 lat: city.latitude,
                 lng: city.longitude
               }} />
@@ -38,17 +38,16 @@ class Home extends Component<any,any> {
           <Divider className={'no-margin'} />
         </div>
        }
-        <Row className={'we-do'} type='flex' justify='center'>
-          <Col md={8} xs={24}>
+        <Row type='flex' justify='center'>
+          <Col md={8} xs={24} className={'we-do'}>
             <Icon type='home' style={{ fontSize: 65, color: '#08c' }} /><br /><br/>
             Saiba o que os alunos acham da <b>escola</b> onde estudam
           </Col>
-          <div className='nowrap'/>
-          <Col md={8} xs={24}>
+          <Col md={8} xs={24} className={'we-do'}>
           <Icon type='line-chart' style={{ fontSize: 65, color: '#08c' }} /><br /><br/>
             Descubra o <b>histórico de preços</b> das escolas
           </Col>
-          <Col md={8} xs={24}>
+          <Col md={8} xs={24} className={'we-do'}>
           <Icon type='smile-o' style={{ fontSize: 65, color: '#08c' }} /><br /><br/>
             Encontre a melhor escola para <b>seu perfil e seu bolso</b>
           </Col>

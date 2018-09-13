@@ -11,12 +11,12 @@ class Result extends Component<any, any> {
   }
   render() {
    const { schools, isFetching } = this.props;
-   const IconText = ({ type, text }: any) => (
-    <span>
-      <Icon type={type} style={{ marginRight: 8 }} />
-      {text}
-    </span>
-  );
+  //  const IconText = ({ type, text }: any) => (
+  //   <span>
+  //     <Icon type={type} style={{ marginRight: 8 }} />
+  //     {text}
+  //   </span>
+  // );
     const desc = (it: any) => (
       <div>
         {it.reviews ?
@@ -46,17 +46,30 @@ class Result extends Component<any, any> {
     const item = (it: any) => {
       return (
         <Row key={it.name} className='item'>
-          <Col  xs={24} md={10}>
-            <Link onClick={() => this.onClick(it)} to={{ pathname: `/information/${it.id}` }} href={it.href}><h3>{it.name}</h3></Link>
+          <Col xs={24} md={12}>
+            <Link onClick={() => this.onClick(it)} to={{ pathname: `/information/${it.id}` }} href={it.href}><p className='title'>{it.name}</p></Link>
             {info(it)}
-            <br />
-            <IconText type='star-o' text={`${it.reviews ? it.reviews : 0 } avaliações`} />,
-            <IconText type='like-o' text={`${it.recommend ? it.recommend : 0 } recomendam`} />,
-            <IconText type='dislike-o' text={`${it.noRecommend ? it.noRecommend : 0} não recomendam`} />
+            {/* <br />
+            <IconText type='star-o' text={`${it.reviews ? it.reviews : 0 } avaliações`} />
+            <IconText type='like-o' text={`${it.recommend ? it.recommend : 0 } recomendam`} />
+            <IconText type='dislike-o' text={`${it.noRecommend ? it.noRecommend : 0} não recomendam`} /> */}
           </Col>
-          <Col className='rating' xs={24} md={{span: 10, offset: 4 }}>
+          <Col className='rating' xs={24} md={{span: 10, offset: 2 }}>
             {desc(it)}
           </Col>
+          {/* <Col span={24}>
+            <Row className={'status'}>
+              <Col md={{ span: 6 }} xs={{ span: 24, offset: 2 }}>
+                <IconText type='star-o' text={`${it.reviews ? it.reviews : 0 } avaliações`} />
+              </Col>
+              <Col md={{ span: 6 }} xs={{ span: 24, offset: 2 }}>
+                <IconText type='like-o' text={`${it.recommend ? it.recommend : 0 } recomendam`} />
+              </Col>
+              <Col md={{ span: 6 }} xs={{ span: 24, offset: 2 }}>
+                <IconText type='dislike-o' text={`${it.noRecommend ? it.noRecommend : 0} não recomendam`} />
+              </Col>
+            </Row>
+          </Col> */}
         </Row>
       );
     };
@@ -67,16 +80,18 @@ class Result extends Component<any, any> {
     }
 
     return (
-      <div className={'result-list'}>
-        <List
-          itemLayout='vertical'
-          locale={{ emptyText: 'Não foram encontradas escolas nessa cidade.'}}
-          size='large'
-          dataSource={schools}
-          renderItem={item}
-        />
-        <BackTop />
-      </div>
+      <Row className={'results'}>
+        <Col lg={{ span:15, offset: 5 }} md={24} xs={24}>
+          <List
+            itemLayout='vertical'
+            locale={{ emptyText: 'Não foram encontradas escolas nessa cidade.'}}
+            size='small'
+            dataSource={schools}
+            renderItem={item}
+          />
+        </Col>
+          <BackTop />
+      </Row>
     );
   }
 }

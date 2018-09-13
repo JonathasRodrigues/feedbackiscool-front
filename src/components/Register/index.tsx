@@ -43,7 +43,8 @@ class RegisterForm extends React.Component< any, any> {
     const { getFieldDecorator } = this.props.form;
     return (
       <Form onSubmit={this.handleSubmit} className='login-form'>
-        <h2> Cadastrar-se </h2>
+        <br />
+        <h2 style={{ textAlign: 'center' }}> Cadastrar-se </h2>
         <Row>
         <Col span={24}>
             <FormItem label={'Nome'}>

@@ -52,7 +52,8 @@ class NormalLoginForm extends React.Component< any, any> {
     const { getFieldDecorator } = this.props.form;
     return (
       <div>
-        <h2> Faça seu login </h2>
+        <br />
+        <h2 style={{ textAlign: 'center' }}> Faça seu login </h2>
         <Row>
           {/* <Col span={24} style={{ paddingTop: '2%'}}>
             <Button onClick={this.loginOnFacebook} size={'large'} icon='facebook' type='primary' className={'bt-facebook'}>
