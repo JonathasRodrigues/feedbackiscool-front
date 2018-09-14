@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Rate, Icon, Divider, Form, List, Avatar, Button, Popover, BackTop } from 'antd';
+import { Row, Col, Rate, Icon, Divider, Form, List, Avatar, Button, Popover, BackTop, Spin } from 'antd';
 import { connect, DispatchProp } from 'react-redux';
 import { findById } from 'store/School/actions';
 import { RouteComponentProps, Link } from 'react-router-dom';
@@ -8,7 +8,6 @@ import { list as listReviews } from 'store/Review/actions';
 import './index.css';
 import ChartRecommend from './ChartRecommend';
 import moment from 'moment';
-import ContentLoader, { Facebook } from 'react-content-loader';
 
 const formItemLayout = {
   labelCol: { span: 6 },
@@ -88,98 +87,104 @@ class Information extends React.Component<IProps, IStates> {
     };
     if (isFetching) {
       return (
-        <ContentLoader>
-          <Facebook/>
-        </ContentLoader>
+        <Row>
+          <Col span={24}>
+            <Row className={'with-padding'}>
+              <Col style={{ textAlign: 'center' }} className={'tab-content'} md={{ span: 18, offset: 3 }} xs={24}>
+                <Spin indicator={<Icon type='loading' style={{ fontSize: '7vh' }} spin />} />
+              </Col>
+            </Row>
+          </Col>
+        </Row>
       );
     }
     return(
       <div>
         <Row>
           <Col span={24}>
-                <Row className={'with-padding'}>
-                  <Col className={'tab-content'} md={{ span: 18, offset: 3 }} xs={24}>
-                    <Row type='flex' justify='space-around' align='middle'>
-                      <Col md={20} xs={24}>
-                        <strong style={{ fontSize: '1.5rem' }}>{school && school.name} </strong>
-                        <Icon style={{ color: '#fadb12', fontSize: '1.5rem' }} type='star'></Icon> <strong style={{ fontSize: '1.5rem' }}>{school && school.generalPoints}</strong><br />
-                        {school &&
-                          <div>
-                            {school.address && <span><Icon type='environment'/> <b>Endereço:</b> {school.address}<br/></span>}
-                            {school.phone && <span> <Icon type='phone' /> <b>Telefone:</b> {school.phone}<br/></span>}
-                            {school.email && <span><Icon type='mail' /> <b>E-mail:</b> {school.email}<br/></span> }
-                            {school.site && <span><Icon type='chrome' /> <b>Site:</b> <a target='_blank' href={`http://${school.site}`}>{school.site}</a><br/></span>}
-                            {school.facebook && <span><Icon type='facebook' /> <a target='_blank' href={`http://fb.com/${school.facebook}`}>Facebook</a><br/></span>}
-                            {school.instagram && <span><Icon type='instagram' /> <a target='_blank' href={`http://instagram.com/${school.instagram}`}>Instagram</a><br/></span>}
-                          </div>
-                        }
-                      </Col>
-                      <Col md={4} xs={24}>
-                        <Link to={`/review/${school && school.id}`}> <Button size={'large'} icon={'star-o'} type={'primary'}> Avaliar </Button></Link>
-                      </Col>
-                    </Row>
-                    <Divider/>
-                    <h2> Como é estudar na {school && school.name} ?</h2>
-                    <span> {reviews && reviews.length} avaliações nos últimos 12 meses</span>
-                    <Divider />
-                    <Row>
-                      { school &&
-                        <div>
-                          <Col style={{ textAlign: 'center' }} span={24}>
-                            <h3> Satisfação dos alunos </h3>
-                            <span style={{ fontSize: 36 }}><Rate style={{ fontSize: 36 }} allowClear={false} defaultValue={school.generalPoints} allowHalf disabled /> {school.generalPoints}</span>
-                          </Col>
-                          <Col md={12} xs={24}>
-                            <Form.Item {...formItemLayout} label={'Localização'}>
-                              <Rate allowHalf disabled defaultValue={school.localizationPoints} /> {school.localizationPoints}
-                            </Form.Item>
-                            <Form.Item {...formItemLayout} label={'Estrutura'}>
-                              <Rate allowHalf disabled defaultValue={school.structurePoints}  /> {school.structurePoints}
-                            </Form.Item>
-                            <Form.Item {...formItemLayout} label={'Didática'}>
-                              <Rate allowHalf disabled defaultValue={school.teachingMethodPoints}  /> {school.teachingMethodPoints}
-                            </Form.Item>
-                            <Form.Item {...formItemLayout} label={'Professores'}>
-                              <Rate allowHalf disabled defaultValue={school.teachersPoints}  /> {school.teachersPoints}
-                            </Form.Item>
-                            <Form.Item {...formItemLayout} label={'Staff'}>
-                              <Rate allowHalf disabled defaultValue={school.staffPoints}  /> {school.staffPoints}
-                            </Form.Item>
-                          </Col>
-                          <Col md={12} xs={24}>
-                            <ChartRecommend recommend={school && school.recommend} norecommend={school && school.noRecommend} />
-                          </Col>
-                        </div>
-                      }
-                    </Row>
-                    <Divider />
-                    <Row>
-                      <Col span={24}>
-                      <List
-                          itemLayout='horizontal'
-                          dataSource={reviews}
-                          renderItem={(item: any, index: any) => (
-                            <List.Item>
-                              <List.Item.Meta
-                                avatar={<Avatar icon='user' />}
-                                title={<span className={'review-title'}>"{item.title}"</span>}
-                                description={reviewDetails(item, index)}
-                              />
-                            </List.Item>
-                          )}
-                        />,
-                      </Col>
-                      <BackTop />
-                    </Row>
+            <Row className={'with-padding'}>
+              <Col className={'tab-content'} md={{ span: 18, offset: 3 }} xs={24}>
+                <Row type='flex' justify='space-around' align='middle'>
+                  <Col md={20} xs={24}>
+                    <strong style={{ fontSize: '1.5rem' }}>{school && school.name} </strong>
+                    <Icon style={{ color: '#fadb12', fontSize: '1.5rem' }} type='star'></Icon> <strong style={{ fontSize: '1.5rem' }}>{school && school.generalPoints}</strong><br />
+                    {school &&
+                      <div>
+                        {school.address && <span><Icon type='environment'/> <b>Endereço:</b> {school.address}<br/></span>}
+                        {school.phone && <span> <Icon type='phone' /> <b>Telefone:</b> {school.phone}<br/></span>}
+                        {school.email && <span><Icon type='mail' /> <b>E-mail:</b> {school.email}<br/></span> }
+                        {school.site && <span><Icon type='chrome' /> <b>Site:</b> <a target='_blank' href={`http://${school.site}`}>{school.site}</a><br/></span>}
+                        {school.facebook && <span><Icon type='facebook' /> <a target='_blank' href={`http://fb.com/${school.facebook}`}>Facebook</a><br/></span>}
+                        {school.instagram && <span><Icon type='instagram' /> <a target='_blank' href={`http://instagram.com/${school.instagram}`}>Instagram</a><br/></span>}
+                      </div>
+                    }
                   </Col>
-                  {/* <Col md={{ span: 7, offset: 1}} xs={24}>
-                    <Row>
-                      <Col className={'tab-content'} span={24}>
-                        Mensaginha Inspiradora!
-                      </Col>
-                    </Row>
-                  </Col> */}
+                  <Col md={4} xs={24}>
+                    <Link to={`/review/${school && school.id}`}> <Button size={'large'} icon={'star-o'} type={'primary'}> Avaliar </Button></Link>
+                  </Col>
                 </Row>
+                <Divider/>
+                <h2> Como é estudar na {school && school.name} ?</h2>
+                <span> {reviews && reviews.length} avaliações nos últimos 12 meses</span>
+                <Divider />
+                <Row>
+                  { school &&
+                    <div>
+                      <Col style={{ textAlign: 'center' }} span={24}>
+                        <h3> Satisfação dos alunos </h3>
+                        <span style={{ fontSize: 36 }}><Rate style={{ fontSize: 36 }} allowClear={false} defaultValue={school.generalPoints} allowHalf disabled /> {school.generalPoints}</span>
+                      </Col>
+                      <Col md={12} xs={24}>
+                        <Form.Item {...formItemLayout} label={'Localização'}>
+                          <Rate allowHalf disabled defaultValue={school.localizationPoints} /> {school.localizationPoints}
+                        </Form.Item>
+                        <Form.Item {...formItemLayout} label={'Estrutura'}>
+                          <Rate allowHalf disabled defaultValue={school.structurePoints}  /> {school.structurePoints}
+                        </Form.Item>
+                        <Form.Item {...formItemLayout} label={'Didática'}>
+                          <Rate allowHalf disabled defaultValue={school.teachingMethodPoints}  /> {school.teachingMethodPoints}
+                        </Form.Item>
+                        <Form.Item {...formItemLayout} label={'Professores'}>
+                          <Rate allowHalf disabled defaultValue={school.teachersPoints}  /> {school.teachersPoints}
+                        </Form.Item>
+                        <Form.Item {...formItemLayout} label={'Staff'}>
+                          <Rate allowHalf disabled defaultValue={school.staffPoints}  /> {school.staffPoints}
+                        </Form.Item>
+                      </Col>
+                      <Col md={12} xs={24}>
+                        <ChartRecommend recommend={school && school.recommend} norecommend={school && school.noRecommend} />
+                      </Col>
+                    </div>
+                  }
+                </Row>
+                <Divider />
+                <Row>
+                  <Col span={24}>
+                  <List
+                      itemLayout='horizontal'
+                      dataSource={reviews}
+                      renderItem={(item: any, index: any) => (
+                        <List.Item>
+                          <List.Item.Meta
+                            avatar={<Avatar icon='user' />}
+                            title={<span className={'review-title'}>"{item.title}"</span>}
+                            description={reviewDetails(item, index)}
+                          />
+                        </List.Item>
+                      )}
+                    />,
+                  </Col>
+                  <BackTop />
+                </Row>
+              </Col>
+              {/* <Col md={{ span: 7, offset: 1}} xs={24}>
+                <Row>
+                  <Col className={'tab-content'} span={24}>
+                    Mensaginha Inspiradora!
+                  </Col>
+                </Row>
+              </Col> */}
+            </Row>
           </Col>
         </Row>
       </div>
