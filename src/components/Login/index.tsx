@@ -11,25 +11,29 @@ class NormalLoginForm extends React.Component< any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      email: false
+      email: false,
+      authentication: false,
     };
   }
   handleSubmit = (e: any) => {
     e.preventDefault();
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
+        this.setState({ authentication: true });
         (async () => {
           try {
             await this.props.dispatch(login(values.email, values.password));
             this.props.dispatch(drawer(false));
+            this.setState({ authentication: false });
             // notification.success({
             //   message: '',
             //   description: 'Olá seja bem vindo!',
             // });
           } catch (error) {
+            this.setState({ authentication: false });
             notification.error({
               message: 'Ops',
-              description: 'E-mail e/ou senha estão incorretos',
+              description: 'Email e ou senha inválidos',
             });
           }
         })();
@@ -50,6 +54,7 @@ class NormalLoginForm extends React.Component< any, any> {
 
   render() {
     const { getFieldDecorator } = this.props.form;
+    const { authentication } = this.state;
     return (
       <div>
         <br />
@@ -91,7 +96,7 @@ class NormalLoginForm extends React.Component< any, any> {
                 )}
               </FormItem>
               <FormItem>
-                <Button icon={'email'} size='large' type='primary' style={{ width: '100%'}} htmlType='submit'>
+                <Button loading={authentication} icon={'email'} size='large' type='primary' style={{ width: '100%'}} htmlType='submit'>
                     Entrar
                 </Button>
               </FormItem>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Badge, Avatar, Dropdown, Menu, Row, Col, Divider, Icon } from 'antd';
+import { Layout, Badge, Avatar, Dropdown, Menu, Row, Col, Divider, Icon, Button } from 'antd';
 const { Content, Header, Footer } = Layout;
 import MyDrawer from 'components/Drawer';
 import { connect, DispatchProp } from 'react-redux';
@@ -64,6 +64,11 @@ class MyLayout extends React.Component<IProps, IStates> {
               : (<a onClick={this.showDrawer} style={{ marginRight: 24 }}>
                 <Icon type='user' /> Entrar
                </a>)}
+          </div>
+          <div className='bt-review'>
+            <Col xs={0} md={24} lg={24}>
+             <Link to='/review'><Button icon={'star'}>Avaliar uma escola</Button></Link>
+            </Col>
           </div>
         </Header>
         <Content className={'main'}>

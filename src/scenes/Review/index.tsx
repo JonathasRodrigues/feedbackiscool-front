@@ -1,4 +1,4 @@
-import { Form, Col, Row, Select, Rate, Divider, Radio, Input, Button, InputNumber, DatePicker, notification } from 'antd';
+import { Form, Col, Row, Select, Rate, Divider, Radio, Input, Button, InputNumber, DatePicker, Switch, notification } from 'antd';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { list as ListCities } from 'store/City/actions';
@@ -281,6 +281,15 @@ class Home extends Component<any,any> {
             </Col>
           </Row>
           <Row>
+            <Col md={24} xs={24} >
+                <Form.Item colon={false} label={'Deseja que apareça seu nome no feedback ?'} extra={'Acreditamos que quanto mais informações no seu feedback melhor é a integridade da informação mas se não deseja que seu nome apareça no feedback não tem problema.'}>
+                  {getFieldDecorator('anonymous', { valuePropName: 'checked' })(
+                    <Switch checkedChildren='Sim' unCheckedChildren='Não' />
+                  )}
+                </Form.Item>
+              </Col>
+            </Row>
+          <Row>
             <Col span={24}>
               <Button type='primary' size='large' style={{ width: '100%' }} htmlType='submit'>Enviar avaliação</Button>
             </Col>
@@ -373,24 +382,37 @@ class Home extends Component<any,any> {
             <h2> Avalie uma escola ou adicione um interesse para acessar todo conteúdo de avaliações</h2>
             <Divider />
             <Row>
-              {/* <Col span={24}>
+              <Col span={24}>
                 <Form.Item>
-                  <Radio.Group defaultValue={true} onChange={(e) => this.onSelectType(e.target.value)}>
-                    <Radio value={true}>Sou estudante / Ex-estudante</Radio>
-                    <Radio value={false}>Quero fazer intercâmbio (futuro estudante)</Radio>
+                  <Radio.Group buttonStyle='solid' defaultValue={true} onChange={(e) => this.onSelectType(e.target.value)}>
+                    <Radio.Button value={true}>Sou estudante / Ex-estudante</Radio.Button>
+                    <Radio.Button value={false}>Quero fazer intercâmbio (futuro estudante)</Radio.Button>
                   </Radio.Group>
                 </Form.Item>
-              </Col> */}
+              </Col>
             </Row>
               {this.state.student ? isStudent : isProspect}
           </Col>
           <Col md={{ span: 10, offset: 1, order: 2}} xs={{ span: 24, order: 1}} className={'tips'}>
             <Row>
               <Col span={24}>
-                <h2> Faça parte da comunidade e ajude futuros intercambistas a escolherem a melhor escola para um intercâmbio</h2>
+                <h2> Faça parte da comunidade e ajude futuros estudantes a escolherem a melhor escola para um intercâmbio</h2>
               </Col>
               <Col span={24}>
-                <span>Somos uma comunidade de intercambistas onde você descobre o histórico de preços e a satisfação dos estudantes em cada escola.</span>
+                <span>Somos uma comunidade de estudantes onde você descobre o histórico de preços e a satisfação dos estudantes em cada escola.</span>
+              </Col>
+              <Col span={24}>
+                 <span> O acesso a todo o conteúdo é gratuito,<br />
+                  mas pedimos que você contribua com a comunidade fornecendo sua colaboração para ter acesso ilimitado a opiniões e históricos de preços oferecidos em todas as escolas.</span>
+              </Col>
+            </Row>
+           <br/>
+            <Row>
+              <Col span={24}>
+                <h3>Lembre-se</h3>
+              </Col>
+              <Col span={24}>
+                <span>Somos uma plataforma séria, sempre faça seu feedback com seu verdadeiro ponto de vista e <b>não</b> usar comentários inapropriados como xingamentos ou coisas do gênero, nossa equipe sempre estará monitorando os feedbacks, aliás nosso principal objetivo é ajudar futuros estudantes a conhecer melhor as escolas. Se algum feedback quebrar as regras ele será brevemente bloqueado e o usuário será informado ou se depender o feedback poderá ser excluído da nossa base.</span>
               </Col>
               <Col span={24}>
                  <span> O acesso a todo o conteúdo é gratuito,<br />

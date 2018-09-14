@@ -6,20 +6,26 @@ import { connect } from 'react-redux';
 const FormItem = Form.Item;
 
 class RegisterForm extends React.Component< any, any> {
+  state = {
+    register: false
+  };
   handleSubmit = (e: any) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err: any, values: any) => {
       if (!err) {
+        this.setState({ register: true });
         (async () => {
           try {
             await this.props.dispatch(register(values));
             await notification.success({
               message: 'Sucesso',
-              description: 'Registrado com sucesso, você será logado automaticamente',
+              description: 'Registrado com sucesso, você será autenticado automaticamente',
             });
             await this.props.dispatch(login(values.email, values.password));
+            this.setState({ register: false });
             this.props.dispatch(drawer(false));
           } catch (error) {
+            this.setState({ register: false });
             notification.error({
               message: 'Ops',
               description: 'Por favor informe corretamente os campos',
@@ -41,6 +47,7 @@ class RegisterForm extends React.Component< any, any> {
 
   render() {
     const { getFieldDecorator } = this.props.form;
+    const { register } = this.state;
     return (
       <Form onSubmit={this.handleSubmit} className='login-form'>
         <br />
@@ -101,7 +108,7 @@ class RegisterForm extends React.Component< any, any> {
             <a  href=''>Esqueci minha senha</a>
           </Col> */}
           <Col span={24}>
-            <Button type='primary' style={{ width: '100%'}} htmlType='submit'>
+            <Button loading={register} type='primary' style={{ width: '100%'}} htmlType='submit'>
                 Cadastrar
             </Button>
           </Col>

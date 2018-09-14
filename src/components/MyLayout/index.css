@@ -4,6 +4,13 @@
   width: '100%';
   background: #0f73d0;
 }
+.user {
+  float: right;
+}
+.bt-review {
+  float: right;
+  margin-right: 25px;
+}
 .main {
   flex-grow: 1;
   padding: '2%';
@@ -14,15 +21,16 @@
   background: #0f73d0;
   color: #fff;
   width: 100%;
+  text-align: center;
 }
 
 .footer_item {
-  padding: 6%;
+  padding: 2%;
 }
 
 .logo {
-  height: 3.5vh;
-  margin: 16px 24px 16px 0;
+  height: 50%;
+  margin: 16px 0 16px 0;
   float: left;
 }
 
