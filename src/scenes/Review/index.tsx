@@ -145,7 +145,7 @@ class Home extends Component<any,any> {
             </Col>
           </Row>
         }
-        { getFieldValue('schoolId') &&
+        {/* { getFieldValue('schoolId') && */}
         <div>
           <Row gutter={8}>
             <Col md={18} xs={24} >
@@ -295,7 +295,7 @@ class Home extends Component<any,any> {
             </Col>
           </Row>
         </div>
-      }
+      {/* } */}
       </Form>
     );
 

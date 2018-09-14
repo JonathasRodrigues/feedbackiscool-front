@@ -84,7 +84,7 @@ class MyLayout extends React.Component<IProps, IStates> {
             <Col md={8} xs={24} className='footer_item'>
                 <b>Links</b><br />
                 <Link to='/'>Página inicial</Link><br />
-                <a>Sobre</a><br />
+                <Link to='/about'>Sobre</Link><br />
                 <Link to='/review'>Avaliar uma escola</Link><br />
             </Col>
             <Col md={8} xs={24} className='footer_item'>

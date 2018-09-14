@@ -8,6 +8,7 @@ import School from 'scenes/Admin/School';
 import Profile from 'scenes/Profile';
 import Review from 'scenes/Review';
 import Authentication from 'scenes/Authentication';
+import About from 'scenes/About';
 import { drawer } from 'store/Authentication/actions';
 import ScrollToTop from 'components/ScrollToTop';
 
@@ -20,6 +21,7 @@ const Routes = ({ store }: any) => {
             <MyLayout>
               <Route exact path='/' component={Home} />
               <Route path='/information/:id' component={Information} />
+              <Route path='/about' component={About} />
               <Route path='/auth/facebook/callback' component={Authentication} />
               <PrivateRoute path='/broadleaf' component={School} store={store} />
               <PrivateRoute path='/profile' component={Profile} store={store}/>

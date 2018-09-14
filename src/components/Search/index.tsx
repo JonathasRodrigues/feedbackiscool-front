@@ -1,4 +1,4 @@
-import { AutoComplete, Button, Col, Form, Row } from 'antd';
+import { AutoComplete, Button, Col, Form, Row, Input, Icon } from 'antd';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { list as ListCities, selected } from 'store/City/actions';
@@ -57,11 +57,12 @@ class Search extends Component<any, any> {
               <Form.Item>
               <AutoComplete size='large'
                 disabled={true}
-                defaultValue={'Irlanda'}
+                defaultValue={' Irlanda'}
                 dataSource={dataSource2}
                 placeholder='Selecione um país'
-                filterOption={filter}
-              />
+                filterOption={filter}>
+                <Input prefix={<Icon type='environment'/>} />
+              </AutoComplete>
               </Form.Item>
             </Col>
             <Col md={6} xs={24}>
