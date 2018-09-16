@@ -46,8 +46,10 @@ class Result extends Component<any, any> {
     const item = (it: any) => {
       return (
         <Row key={it.name} className='item'>
-          <Col xs={24} md={12}>
+          <Col span={24}>
             <Link onClick={() => this.onClick(it)} to={{ pathname: `/information/${it.id}` }} href={it.href}><p className='title'>{it.name}</p></Link>
+          </Col>
+          <Col xs={24} md={12}>
             {info(it)}
             {/* <br />
             <IconText type='star-o' text={`${it.reviews ? it.reviews : 0 } avaliações`} />

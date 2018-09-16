@@ -5,7 +5,7 @@ class ReviewService {
     console.log('List Reviews');
     console.log(id);
     if (id) {
-    const filter = `filter[where][schoolId]=${id}`;
+    const filter = `filter[where][schoolId]=${id}&filter[order]=created%20DESC`;
     return agent.get(`${API_MAP.listReviews}?${filter}`);
     } else {
       return agent.get(`${API_MAP.listReviews}`);

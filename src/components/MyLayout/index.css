@@ -30,10 +30,21 @@
   padding: 2%;
 }
 
-.logo {
-  height: 50%;
-  margin: 16px 0 16px 0;
-  float: left;
+@media (min-width: 720px) {
+  .logo {
+    height: 50%;
+    margin: 16px 0 16px 0;
+    float: left;
+  }
+}
+
+@media (max-width: 720px) {
+  .logo {
+    line-height: 64px;
+    max-width: 50%;
+    margin: 20px 0 0 0;
+    float: left;
+  }
 }
 
 .my-header a {

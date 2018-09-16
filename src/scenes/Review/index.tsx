@@ -43,9 +43,6 @@ class Home extends Component<any,any> {
   onSelectType = (value: boolean) => {
     this.setState({ student: value });
   }
-  onRecommend = (value: boolean) => {
-    this.setState({ recommend: value });
-  }
   handleSubmitStudent = (e: any) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err: any, values: any) => {
@@ -237,37 +234,41 @@ class Home extends Component<any,any> {
               </Form.Item>
             </Col>
           </Row>
-          <span>Qual a sua satisfação quanto a:</span>
+          <br />
           <Row>
+            <Col span={24}>
+              <b>Qual a sua satisfação quanto a:</b>
+            </Col>
+          </Row>
+          < br />
+          <Row type='flex' justify='start'>
             {reviews.map((item: any) => (
               <Col span={24}>
-                <Form.Item colon={false} labelCol={{ xs: {span: 12 }, md:{ span: 12 } }} label={item.label}>
-                  {getFieldDecorator(`${item.field}Points`, {
-                    rules: [{
-                      required: true, message: `Por favor preencha o campo ${item.label}`,
-                    }],
-                  })(
-                    <Rate allowClear={false} allowHalf />
-                  )}
-                  {getFieldValue(`${item.field}Points`)}
-                </Form.Item>
+                <Col span={12}>
+                  <span>{item.label}</span>
+                </Col>
+                <Col span={12}>
+                  <Form.Item colon={false}>
+                    {getFieldDecorator(`${item.field}Points`, {
+                      rules: [{
+                        required: true, message: `Por favor dê uma nota para ${item.label}`,
+                      }],
+                    })(
+                      <Rate allowClear={false} allowHalf />
+                    )}
+                    {getFieldValue(`${item.field}Points`)}
+                  </Form.Item>
+                </Col>
               </Col>
             ))}
           </Row>
           <Row>
             <Col span={24}>
-              <Form.Item colon={false} label={'Recomendaria essa escola ?'}>
-              {getFieldDecorator('recommend', {
-                  rules: [{
-                    required: true, message: 'Por favor preencha o campo Recomendaria essa escola',
-                  }],
-                })(
-                  <Radio.Group defaultValue={true} onChange={(e) => this.onRecommend(e.target.value)}>
-                    <Radio value={true}>Sim</Radio>
-                    <Radio value={false}>Não</Radio>
-                  </Radio.Group>
-                )}
-              </Form.Item>
+                <Form.Item colon={false} label={'Recomendaria essa escola ?'}>
+                  {getFieldDecorator('recommend', { valuePropName: 'checked', initialValue: true })(
+                    <Switch checkedChildren='Sim' unCheckedChildren='Não' />
+                  )}
+                </Form.Item>
             </Col>
           </Row>
           <Row>
@@ -283,7 +284,7 @@ class Home extends Component<any,any> {
           <Row>
             <Col md={24} xs={24} >
                 <Form.Item colon={false} label={'Deseja que apareça seu nome no feedback ?'} extra={'Acreditamos que quanto mais informações no seu feedback melhor é a integridade da informação mas se não deseja que seu nome apareça no feedback não tem problema.'}>
-                  {getFieldDecorator('anonymous', { valuePropName: 'checked' })(
+                  {getFieldDecorator('anonymous', { valuePropName: 'checked', initialValue: true })(
                     <Switch checkedChildren='Sim' unCheckedChildren='Não' />
                   )}
                 </Form.Item>
