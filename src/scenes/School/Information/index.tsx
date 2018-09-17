@@ -90,7 +90,7 @@ class Information extends React.Component<IProps, IStates> {
         <Row>
           <Col span={24}>
             <Row className={'with-padding'}>
-              <Col style={{ textAlign: 'center' }} className={'tab-content'} md={{ span: 18, offset: 3 }} xs={24}>
+              <Col style={{ textAlign: 'center', height: '50vh', padding: '10%' }} className={'tab-content'} md={{ span: 18, offset: 3 }} xs={24}>
                 <Spin tip={'Carregando informações da escola ...'} indicator={<Icon type='loading' style={{ fontSize: '7vh' }} spin />} />
               </Col>
             </Row>
