@@ -50,3 +50,16 @@ export function findById(id?: any) {
     }
   };
 }
+
+export function insertProspect(prospect: any) {
+  return async (dispatch: any) => {
+    try {
+      dispatch({ type: enReviewActions.requestInsertProspect });
+      const { data } = await ReviewService.insertProspect(prospect);
+      dispatch({ type: enReviewActions.receiveInsertProspectSuccess, data });
+    } catch (error) {
+      dispatch({ type: enReviewActions.receiveInsertProspectError, error });
+      logError(error);
+    }
+  };
+}

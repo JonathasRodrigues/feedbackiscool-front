@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { list as ListCities } from 'store/City/actions';
 import { list as ListSchool, findById } from 'store/School/actions';
-import { insert as insertReview } from'store/Review/actions';
+import { insert as insertReview, insertProspect } from'store/Review/actions';
 import './index.css';
 import { withRouter } from 'react-router';
 //const dataSource2 = ['Irlanda'];
@@ -51,7 +51,7 @@ class Home extends Component<any,any> {
           try {
             let review = values;
             review.userId = localStorage.getItem('id');
-            await this.props.dispatch(insertReview(values));
+            await this.props.dispatch(insertReview(review));
             notification.success({
               message: 'Sucesso',
               description: 'Obrigado por ajudar com sua avaliação.',
@@ -71,14 +71,34 @@ class Home extends Component<any,any> {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err: any, values: any) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        (async () => {
+          try {
+            let prospect = values;
+            prospect.userId = localStorage.getItem('id');
+            await this.props.dispatch(insertProspect(prospect));
+            notification.success({
+              message: 'Sucesso',
+              description: 'Obrigado por ajudar com suas informações.',
+            });
+            this.props.history.push('/');
+          } catch(error) {
+            notification.error({
+              message: 'Erro',
+              description: error,
+            });
+          }
+        })();
       }
+      console.log('opa contem erros');
+      console.log(err);
     });
   }
   render() {
     //const filter = (inputValue: any, option: any) => option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1;
     const { cities, schools, isLoadingSchools, isLoadingCities } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
+    const studentRequired = this.state.student ? true : false;
+    const prospectRequired = this.state.student ? false : true;
 
     const isStudent = (
       <Form onSubmit={this.handleSubmitStudent}>
@@ -87,7 +107,7 @@ class Home extends Component<any,any> {
           <Form.Item hasFeedback validateStatus={isLoadingCities ? 'validating': null} colon={false} label={'Selecione a cidade da escola que você esta estudando ou estudou'}>
             {getFieldDecorator('cityId', {
               rules: [{
-                required: true, message: 'Por favor escolha uma cidade',
+                required: studentRequired, message: 'Por favor escolha uma cidade',
               }],
             })(
               <Select
@@ -123,7 +143,7 @@ class Home extends Component<any,any> {
               <Form.Item hasFeedback validateStatus={isLoadingSchools ? 'validating': null} colon={false} label={'Selecione a escola que você esta estudando ou estudou'}>
                 {getFieldDecorator('schoolId', {
                   rules: [{
-                    required: true, message: 'Por favor selecione uma escola',
+                    required: studentRequired, message: 'Por favor selecione uma escola',
                   }]
                 })(
                   <Select
@@ -149,7 +169,7 @@ class Home extends Component<any,any> {
               <Form.Item colon={false} label={'Qual o tipo de curso'}>
               {getFieldDecorator('course', {
                 rules: [{
-                  required: true, message: 'Por favor selecione um tipo de curso',
+                  required: studentRequired, message: 'Por favor selecione um tipo de curso',
                 }],
               })(
                 <Select
@@ -164,7 +184,7 @@ class Home extends Component<any,any> {
               <Form.Item colon={false} label={'Qtd. de semanas'}>
                 {getFieldDecorator('weeks', {
                   rules: [{
-                    required: true, message: 'Por favor preencha o campo quantidade de semanas',
+                    required: studentRequired, message: 'Por favor preencha o campo quantidade de semanas',
                   }],
                 })(
                   <InputNumber min={1} style={{ width: '100%' }} placeholder={'Ex: 25'} />
@@ -177,7 +197,7 @@ class Home extends Component<any,any> {
               <Form.Item colon={false} label={'Quando você começou o curso'} extra={'Não lembra o mês? Não tem problema! Coloque um mês próximo que você acha que começou o curso.'}>
               {getFieldDecorator('startDate', {
                 rules: [{
-                  required: true, message: 'Por favor preencha o campo data que começou o curso',
+                  required: studentRequired, message: 'Por favor preencha o campo data que começou o curso',
                 }],
               })(
                 <DatePicker.MonthPicker format={'MMMM/YYYY'} placeholder='Selecione o mês e ano' style={{ width: '100%' }}/>
@@ -190,7 +210,7 @@ class Home extends Component<any,any> {
               <Form.Item colon={false} label={'Qual é o seu grau de satisfação geral?'}>
                 {getFieldDecorator('generalPoints', {
                   rules: [{
-                    required: true, message: 'Por favor preencha o campo satisfação geral',
+                    required: studentRequired, message: 'Por favor preencha o campo satisfação geral',
                   }],
                 })(
                   <Rate style={{ fontSize: '20px'}} allowClear={false} allowHalf />
@@ -204,7 +224,7 @@ class Home extends Component<any,any> {
               <Form.Item colon={false} label={'Pontos positivos'} extra={'Mínimo de 140 caracteres'}>
                 {getFieldDecorator('pros', {
                   rules: [{
-                    required: true, message: 'Por favor preencha o campo pontos positivos',
+                    required: studentRequired, message: 'Por favor preencha o campo pontos positivos',
                   }],
                 })(
                   <Input.TextArea placeholder={'Reconheça o que é legal na escola'} autosize={{ minRows: 4, maxRows: 6 }} />
@@ -215,7 +235,7 @@ class Home extends Component<any,any> {
               <Form.Item colon={false} label={'Pontos negativos'} extra={'Mínimo de 140 caracteres'}>
                 {getFieldDecorator('contras', {
                   rules: [{
-                    required: true, message: 'Por favor preencha o campo pontos negativos',
+                    required: studentRequired, message: 'Por favor preencha o campo pontos negativos',
                   }],
                 })(
                   <Input.TextArea placeholder={'Explique de maneira construtiva'} autosize={{ minRows: 4, maxRows: 6 }} />
@@ -226,7 +246,7 @@ class Home extends Component<any,any> {
               <Form.Item colon={false} label={'Título da avaliação'}>
                 {getFieldDecorator('title', {
                   rules: [{
-                    required: true, message: 'Por favor preencha o campo título da avaliação',
+                    required: studentRequired, message: 'Por favor preencha o campo título da avaliação',
                   }],
                 })(
                   <Input placeholder={'Uma frase, resuma sua avaliação'} />
@@ -251,7 +271,7 @@ class Home extends Component<any,any> {
                   <Form.Item colon={false}>
                     {getFieldDecorator(`${item.field}Points`, {
                       rules: [{
-                        required: true, message: `Por favor dê uma nota para ${item.label}`,
+                        required: studentRequired, message: `Por favor dê uma nota para ${item.label}`,
                       }],
                     })(
                       <Rate allowClear={false} allowHalf />
@@ -305,9 +325,9 @@ class Home extends Component<any,any> {
         <Row gutter={8}>
           <Col md={24} xs={24} >
             <Form.Item colon={false} label={'Selecione as cidades que você tem interesse em fazer intercâmbio'}>
-              {getFieldDecorator('cityId', {
+              {getFieldDecorator('citiesId', {
                   rules: [{
-                    required: true, message: 'Por favor selecione uma cidade',
+                    required: prospectRequired, message: 'Por favor selecione uma cidade',
                   }],
                 })(
                   <Select
@@ -330,9 +350,9 @@ class Home extends Component<any,any> {
           <Row gutter={8}>
             <Col md={18} xs={24} >
               <Form.Item colon={false} label={'Qual o tipo de curso'}>
-                {getFieldDecorator('course', {
+                {getFieldDecorator('courseType', {
                   rules: [{
-                    required: true, message: 'Por favor selecione um curso',
+                    required: prospectRequired, message: 'Por favor selecione um curso',
                   }],
                 })(
                   <Select
@@ -348,7 +368,7 @@ class Home extends Component<any,any> {
               <Form.Item colon={false} label={'Qtd. de semanas'}>
               {getFieldDecorator('weeks', {
                   rules: [{
-                    required: true, message: 'Por favor informe a qunatidade de semanas',
+                    required: prospectRequired, message: 'Por favor informe a quantidade de semanas',
                   }],
                 })(
                   <InputNumber min={1} style={{ width: '100%' }} placeholder={'Ex: 25'} />
@@ -359,9 +379,9 @@ class Home extends Component<any,any> {
           <Row>
             <Col md={24} xs={24} >
               <Form.Item colon={false} label={'Quando você deseja começar o curso'} extra={'Não faz ideia do mês? Não tem problema! Coloque um mês próximo que você deseja começar.'}>
-                {getFieldDecorator('startDate', {
+                {getFieldDecorator('expectedDate', {
                   rules: [{
-                    required: true, message: 'Por favor selecione uma data que você pretende começar seu curso',
+                    required: prospectRequired, message: 'Por favor selecione uma data que você pretende começar seu curso',
                   }],
                 })(
                   <DatePicker.MonthPicker format={'MMMM/YYYY'} placeholder='Selecione o mês e ano' style={{ width: '100%' }}/>

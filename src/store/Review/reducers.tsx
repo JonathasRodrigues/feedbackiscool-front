@@ -11,6 +11,10 @@ export enum enReviewActions {
   requestFindById = 'REQUEST_FIND_BY_ID_REVIEW',
   receiveFindByIdSuccess = 'RECEIVE_FIND_BY_ID_REVIEW_SUCCESS',
   receiveFindByIdError = 'RECEIVE_FIND_BY_ID_REVIEW_ERROR',
+
+  requestInsertProspect = 'REQUEST_INSERT_PROSPECT',
+  receiveInsertProspectSuccess = 'RECEIVE_INSERT_PROSPECT_SUCCESS',
+  receiveInsertProspectError = 'RECEIVE_INSERT_PROSPECT_ERROR',
 }
 
 const list = (state = { isFetching: false }, action: any) => {
@@ -91,9 +95,33 @@ const findById = (state = { isFetching: false }, action: any) => {
   }
 };
 
+const insertProspect = (state = { isFetching: false }, action: any) => {
+  switch (action.type) {
+    case enReviewActions.requestInsertProspect:
+      return {
+        ...state,
+        isFetching: true
+      };
+    case enReviewActions.receiveInsertProspectSuccess:
+    return {
+        ...state,
+        data: action.data,
+        isFetching: false
+      };
+    case enReviewActions.receiveInsertProspectError:
+      return {
+        ...state,
+        isFetching: false
+      };
+    default:
+      return state;
+  }
+};
+
 export const reducer = combineReducers({
     list,
     insert,
+    insertProspect,
     selected,
     findById
 });

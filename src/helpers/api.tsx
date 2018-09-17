@@ -12,5 +12,6 @@ export const API_MAP = {
   findSchoolById: `${API}/Schools/{id}`,
   listReviews: `${API}/Reviews`,
   insertReview: `${API}/Reviews`,
+  insertProspect: `${API}/Prospects`,
   findReviewById: `${API}/Reviews/{id}`,
  };

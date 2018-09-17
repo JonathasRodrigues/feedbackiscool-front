@@ -15,6 +15,10 @@ class ReviewService {
     return agent.post(`${API_MAP.insertReview}`, review);
   }
 
+  static insertProspect(prospect: any) {
+    return agent.post(`${API_MAP.insertProspect}`, prospect);
+  }
+
   static findById(id?: any) {
     return agent.get(`${API_MAP.findReviewById}`.replace('{id}', id));
   }
