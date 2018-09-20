@@ -1,25 +1,21 @@
 import React from 'react';
-import { Row, Col, Rate, Icon, Divider, Form, List, Avatar, Button, Popover, BackTop, Spin } from 'antd';
+import { Row, Col, Rate, Icon, Divider, List, Avatar, Button, Popover, BackTop, Spin } from 'antd';
 import { connect, DispatchProp } from 'react-redux';
 import { findById } from 'store/School/actions';
 import { RouteComponentProps, Link } from 'react-router-dom';
 import Locked from 'components/Locked';
 import { list as listReviews } from 'store/Review/actions';
+import { canAccessContent } from 'store/Profile/actions';
 import './index.css';
 import ChartRecommend from './ChartRecommend';
 import moment from 'moment';
-
-const formItemLayout = {
-  labelCol: { span: 6 },
-  wrapperCol: { span: 14 },
-  colon: false
-};
 
 interface IProps extends DispatchProp<any>, RouteComponentProps<any> {
   school?: any;
   reviews?: any;
   selected?: any;
   isAuthenticated?: any;
+  hasAccess: boolean;
   isFetching: boolean;
 }
 
@@ -34,6 +30,10 @@ class Information extends React.Component<IProps, IStates> {
     if (id) {
       (async() => {
         await this.props.dispatch(findById(id));
+        if (props.isAuthenticated) {
+          const userId = localStorage.getItem('id');
+          await this.props.dispatch(canAccessContent(userId));
+        }
       })();
       this.props.dispatch(listReviews(id));
     }
@@ -42,7 +42,7 @@ class Information extends React.Component<IProps, IStates> {
     console.log(error);
   }
   render(){
-    const { school, reviews, isAuthenticated, isFetching } = this.props;
+    const { school, reviews, isAuthenticated, hasAccess, isFetching } = this.props;
     const reviewDetails = (item: any, index: any) => {
       let content = (
         <div>
@@ -53,7 +53,7 @@ class Information extends React.Component<IProps, IStates> {
             Staff<br/> <Rate defaultValue={item.staffPoints} allowHalf disabled/> {item.staffPoints} <br />
         </div>
       );
-      if (index > 0 && !isAuthenticated) {
+      if (index > 0 && (!isAuthenticated || (isAuthenticated && !hasAccess))) {
         return (
           <div>
             <Popover placement='bottom' content={content}>
@@ -127,39 +127,60 @@ class Information extends React.Component<IProps, IStates> {
                 <h2> Como é estudar na {school && school.name} ?</h2>
                 <span> {reviews && reviews.length} avaliações nos últimos 12 meses</span>
                 <Divider />
-                <Row>
                   { school &&
                     <div>
                       <Col style={{ textAlign: 'center' }} span={24}>
                         <h3> Satisfação dos alunos </h3>
                         <span style={{ fontSize: 36 }}><Rate style={{ fontSize: 36 }} allowClear={false} defaultValue={school.generalPoints} allowHalf disabled /> {school.generalPoints}</span>
                       </Col>
-                      <Col md={12} xs={24}>
-                        <Form.Item {...formItemLayout} label={'Localização'}>
-                          <Rate allowHalf disabled defaultValue={school.localizationPoints} /> {school.localizationPoints}
-                        </Form.Item>
-                        <Form.Item {...formItemLayout} label={'Estrutura'}>
-                          <Rate allowHalf disabled defaultValue={school.structurePoints}  /> {school.structurePoints}
-                        </Form.Item>
-                        <Form.Item {...formItemLayout} label={'Didática'}>
-                          <Rate allowHalf disabled defaultValue={school.teachingMethodPoints}  /> {school.teachingMethodPoints}
-                        </Form.Item>
-                        <Form.Item {...formItemLayout} label={'Professores'}>
-                          <Rate allowHalf disabled defaultValue={school.teachersPoints}  /> {school.teachersPoints}
-                        </Form.Item>
-                        <Form.Item {...formItemLayout} label={'Staff'}>
-                          <Rate allowHalf disabled defaultValue={school.staffPoints}  /> {school.staffPoints}
-                        </Form.Item>
+                      <Col className={'points'} md={12} xs={24}>
+                        <Row type='flex' justify='start'>
+                          <Col span={24}>
+                            <Col span={12}>
+                              <span>Localização</span>
+                            </Col>
+                            <Col span={12}>
+                              <Rate allowHalf disabled defaultValue={school.localizationPoints} /> {school.localizationPoints}
+                            </Col>
+
+                            <Col span={12}>
+                              <span>Estrutura</span>
+                            </Col>
+                            <Col span={12}>
+                              <Rate allowHalf disabled defaultValue={school.structurePoints}  /> {school.structurePoints}
+                            </Col>
+
+                            <Col span={12}>
+                              <span>Didática</span>
+                            </Col>
+                            <Col span={12}>
+                              <Rate allowHalf disabled defaultValue={school.teachingMethodPoints}  /> {school.teachingMethodPoints}
+                            </Col>
+
+                            <Col span={12}>
+                              <span>Professores</span>
+                            </Col>
+                            <Col span={12}>
+                              <Rate allowHalf disabled defaultValue={school.teachersPoints}  /> {school.teachersPoints}
+                            </Col>
+
+                            <Col span={12}>
+                              <span>Staff</span>
+                            </Col>
+                            <Col span={12}>
+                              <Rate allowHalf disabled defaultValue={school.staffPoints}  /> {school.staffPoints}
+                            </Col>
+                          </Col>
+                        </Row>
                       </Col>
                       <Col md={12} xs={24}>
                         <ChartRecommend recommend={school && school.recommend} norecommend={school && school.noRecommend} />
                       </Col>
                     </div>
                   }
-                </Row>
                 <Divider />
                 <Row>
-                  <Col span={24}>
+                  <Col className={'text-mobile'} span={24}>
                   <List
                       itemLayout='horizontal'
                       dataSource={reviews}
@@ -197,7 +218,8 @@ function mapStateToProps(state: any, ownProps: any) {
     isFetching: state.app.School.findById.isFetching,
     school: state.app.School.findById.data,
     reviews: state.app.Review.list.data,
-    isAuthenticated: state.app.Authentication.authentication.isAuthenticated
+    isAuthenticated: state.app.Authentication.authentication.isAuthenticated,
+    hasAccess: state.app.Profile.hasAccess,
   };
 }
 export default connect(mapStateToProps)(Information);

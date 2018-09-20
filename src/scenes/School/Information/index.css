@@ -16,6 +16,17 @@
   padding: 2%;
 }
 
+@media (max-width: 768px) {
+  .tab-content {
+    background: #fff;
+    padding: 2%;
+    text-align: center;
+  }
+  .text-mobile {
+    text-align: initial;
+  }
+}
+
 .review-title {
   color: #7b7be0;
   font-size: 18px;
@@ -33,4 +44,8 @@
 .review-text {
   text-align: justify;
   padding-right: 7%;
+}
+
+.points {
+  text-align: initial;
 }

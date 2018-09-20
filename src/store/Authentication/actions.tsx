@@ -1,6 +1,7 @@
 import AuthenticationService from './services';
 import { logError } from 'errors/errorHandler';
 import { enAuthenticationActions } from './reducers';
+import { canAccessContent} from 'store/Profile/actions';
 
 export function register(user: any) {
   return async (dispatch: any) => {
@@ -20,6 +21,7 @@ export function login(email: string, password: string) {
       dispatch({ type: enAuthenticationActions.requestLogin });
       const { data } = await AuthenticationService.login(email, password);
       dispatch({ type: enAuthenticationActions.receiveLoginSuccess, data });
+      dispatch(canAccessContent(data.userId));
     } catch (error) {
       dispatch({ type: enAuthenticationActions.receiveLoginError, error });
       logError(error);

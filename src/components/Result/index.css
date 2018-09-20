@@ -57,6 +57,7 @@
     padding: 4%;
     border: 1px solid #c1c1c1;
     margin: 2%;
+    text-align: center;
   }
   .rating {
     text-align: right;
@@ -83,6 +84,7 @@
     border: 1px solid #c1c1c1;
     margin: 2%;
     width: 100%;
+    text-align: center;
   }
   .rating {
     text-align: right;
@@ -108,6 +110,7 @@
     padding: 4%;
     border: 1px solid #c1c1c1;
     margin: 2%;
+    text-align: center;
   }
   .rating {
     text-align: right;
@@ -132,9 +135,10 @@
     padding: 4%;
     border: 1px solid #c1c1c1;
     margin: 2%;
+    text-align: center;
   }
   .rating {
-    text-align: left;
+    text-align: center;
   }
   .status {
     margin-top: 2%;

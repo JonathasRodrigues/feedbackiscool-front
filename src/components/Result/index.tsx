@@ -1,4 +1,4 @@
-import { List, Rate, Icon, BackTop, Row, Col } from 'antd';
+import { List, Rate, Icon, BackTop, Row, Col, Tag } from 'antd';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -11,12 +11,12 @@ class Result extends Component<any, any> {
   }
   render() {
    const { schools, isFetching } = this.props;
-  //  const IconText = ({ type, text }: any) => (
-  //   <span>
-  //     <Icon type={type} style={{ marginRight: 8 }} />
-  //     {text}
-  //   </span>
-  // );
+   const IconText = ({ type, text }: any) => (
+    <span>
+      <Icon type={type} style={{ marginRight: 8 }} />
+      {text}
+    </span>
+  );
     const desc = (it: any) => (
       <div>
         {it.reviews ?
@@ -51,27 +51,27 @@ class Result extends Component<any, any> {
           </Col>
           <Col xs={24} md={12}>
             {info(it)}
-            {/* <br />
-            <IconText type='star-o' text={`${it.reviews ? it.reviews : 0 } avaliações`} />
-            <IconText type='like-o' text={`${it.recommend ? it.recommend : 0 } recomendam`} />
-            <IconText type='dislike-o' text={`${it.noRecommend ? it.noRecommend : 0} não recomendam`} /> */}
+            <br />
+            {/* <IconText type='star-o' text={`${it.reviews ? it.reviews : 0 } Avaliações`} /><br />
+            <IconText type='like-o' text={`${it.recommend ? it.recommend : 0 } Recomendam`} /><br />
+            <IconText type='dislike-o' text={`${it.noRecommend ? it.noRecommend : 0} Não recomendam`} /><br /> */}
           </Col>
           <Col className='rating' xs={24} md={{span: 10, offset: 2 }}>
             {desc(it)}
           </Col>
-          {/* <Col span={24}>
+          <Col span={24}>
             <Row className={'status'}>
               <Col md={{ span: 6 }} xs={{ span: 24, offset: 2 }}>
-                <IconText type='star-o' text={`${it.reviews ? it.reviews : 0 } avaliações`} />
+              <Tag><IconText type='star-o' text={<b>{`${it.reviews ? it.reviews : 0 } Avaliações`}</b>} /></Tag>
               </Col>
               <Col md={{ span: 6 }} xs={{ span: 24, offset: 2 }}>
-                <IconText type='like-o' text={`${it.recommend ? it.recommend : 0 } recomendam`} />
+                <Tag><IconText type='like-o' text={<b>{`${it.recommend ? it.recommend : 0 } Recomendam`}</b>} /></Tag>
               </Col>
               <Col md={{ span: 6 }} xs={{ span: 24, offset: 2 }}>
-                <IconText type='dislike-o' text={`${it.noRecommend ? it.noRecommend : 0} não recomendam`} />
+                <Tag><IconText type='dislike-o' text={<b>{`${it.noRecommend ? it.noRecommend : 0} Não Recomendam`}</b>} /></Tag>
               </Col>
             </Row>
-          </Col> */}
+          </Col>
         </Row>
       );
     };
