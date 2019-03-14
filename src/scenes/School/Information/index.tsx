@@ -75,7 +75,7 @@ class Information extends React.Component<IProps, IStates> {
           <Popover placement='bottom' content={content}>
             <Rate defaultValue={item.generalPoints} allowHalf disabled/> <Icon type= 'down-circle'/> <br />
           </Popover>
-          <p>{!item.anonynous ? `${item.user.username} `: 'Usuário '}
+          <p>{!item.anonynous && item.user ? `${item.user.username} `: 'Usuário '}
               estudou {item.course === 'GE' ? 'General English ' : 'Preparatório Trinity '}
               em {moment(item.startDate).format('MMMM/YYYY')}</p>
           <p> <strong>Prós:</strong> {item.pros}</p>
