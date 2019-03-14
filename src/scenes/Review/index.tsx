@@ -225,6 +225,9 @@ class Home extends Component<any,any> {
                 {getFieldDecorator('pros', {
                   rules: [{
                     required: studentRequired, message: 'Por favor preencha o campo pontos positivos',
+                  },
+                  {
+                    min: 140, message: 'Por favor pontos positivos tem que conter pelo menos 140 caracteres'
                   }],
                 })(
                   <Input.TextArea placeholder={'Reconheça o que é legal na escola'} autosize={{ minRows: 4, maxRows: 6 }} />
@@ -236,6 +239,9 @@ class Home extends Component<any,any> {
                 {getFieldDecorator('contras', {
                   rules: [{
                     required: studentRequired, message: 'Por favor preencha o campo pontos negativos',
+                  },
+                  {
+                    min: 140, message: 'Por favor pontos positivos tem que conter pelo menos 140 caracteres'
                   }],
                 })(
                   <Input.TextArea placeholder={'Explique de maneira construtiva'} autosize={{ minRows: 4, maxRows: 6 }} />

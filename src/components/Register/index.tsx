@@ -49,7 +49,7 @@ class RegisterForm extends React.Component< any, any> {
     const { getFieldDecorator } = this.props.form;
     const { register } = this.state;
     return (
-      <Form onSubmit={this.handleSubmit} className='login-form'>
+      <Form onSubmit={this.handleSubmit} style={{ padding: 10 }} className='login-form'>
         <br />
         <h2 style={{ textAlign: 'center' }}> Cadastrar-se </h2>
         <Row>
