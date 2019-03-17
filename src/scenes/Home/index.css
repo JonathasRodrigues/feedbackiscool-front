@@ -7,16 +7,60 @@
   background-size: cover;
   height: 100%;
   overflow: hidden;
-  padding-top: 12%;
-  padding-bottom: 12%;
+  padding: 8%;
 }
 
 .we-do {
   background: #fff;
   text-align: center;
-  padding: 6%;
+  padding: 2%;
+}
+
+.we-do h2 {
+  color: #0f73d0;
+  padding-bottom: 2%;
 }
 
 .map {
   width:100%;
+}
+
+.info {
+  background: transparent;
+  padding: 4%;
+  text-align: center;
+  font-size: 2.5vh;
+  text-transform: uppercase;
+}
+.info .number {
+  font-size: 5vh;
+}
+
+.ant-carousel .slick-slide {
+  text-align: center;
+  background: #fff;
+  overflow: hidden;
+}
+
+.ant-carousel .slick-slide h3 {
+  color: #fff;
+}
+
+.lastFeedbacks {
+  background: #fff;
+  text-align: center;
+  padding-top: 2%;
+}
+
+.reviewItem {
+  background: #fff;
+}
+.reviewItem .review-title {
+  color: #7b7be0;
+  font-size: 2.5vh;
+}
+.reviewItem .review-text {
+  padding: 0 0 2% 0;
+  text-align: center;
+  color:rgba(0, 0, 0, 0.45);
 }

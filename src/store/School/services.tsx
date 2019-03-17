@@ -18,5 +18,8 @@ class SchoolService {
   static findById(id?: any) {
     return agent.get(`${API_MAP.findSchoolById}`.replace('{id}', id));
   }
+  static totalSchools() {
+    return agent.get(`${API_MAP.totalSchools}`);
+  }
 }
 export default SchoolService;

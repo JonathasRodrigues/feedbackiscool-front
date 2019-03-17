@@ -15,10 +15,33 @@ export function list() {
   };
 }
 
+export function totalCities() {
+  return async (dispatch: any) => {
+    try {
+      dispatch({ type: enCityActions.requestTotalCities });
+      const { data } = await CityService.totalCities();
+      dispatch({ type: enCityActions.successTotalCities, data });
+    } catch (error) {
+      dispatch({ type: enCityActions.errorTotalCities, error });
+      logError(error);
+    }
+  };
+}
+
 export function selected(item: any) {
   return async (dispatch: any) => {
     try {
       dispatch({ type: enCityActions.selected, item });
+    } catch (error) {
+      logError(error);
+    }
+  };
+}
+
+export function unSelected() {
+  return async (dispatch: any) => {
+    try {
+      dispatch({ type: enCityActions.unselected });
     } catch (error) {
       logError(error);
     }

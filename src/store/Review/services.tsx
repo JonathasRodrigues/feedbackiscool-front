@@ -22,5 +22,14 @@ class ReviewService {
   static findById(id?: any) {
     return agent.get(`${API_MAP.findReviewById}`.replace('{id}', id));
   }
+
+  static totalReviews() {
+    return agent.get(`${API_MAP.totalReviews}`);
+  }
+  static listLast() {
+    console.log('List Reviews');
+    const filter = `&filter[order]=created%20DESC&filter[limit]=5`;
+    return agent.get(`${API_MAP.listReviews}?${filter}`);
+  }
 }
 export default ReviewService;

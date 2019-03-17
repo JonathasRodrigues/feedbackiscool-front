@@ -1,0 +1,8 @@
+.loading {
+  min-height: 70vh;
+  text-align: center;
+  padding: 6%;
+}
+.loading p {
+  font-size: 2.5vh;
+}

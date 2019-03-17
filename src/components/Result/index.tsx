@@ -26,6 +26,7 @@ class Result extends Component<any, any> {
           Didática <Rate allowHalf disabled defaultValue={it.teachingMethodPoints}  /> {it.teachingMethodPoints}<br />
           Professores <Rate allowHalf disabled defaultValue={it.teachersPoints}  /> {it.teachersPoints}<br />
           Staff <Rate allowHalf disabled defaultValue={it.staffPoints}  /> {it.staffPoints}<br />
+          Mix de nacionalidade <Rate allowHalf disabled defaultValue={it.mixNacionalityPoints}  /> {it.mixNacionalityPoints ? it.mixNacionalityPoints  : 'N/A' }<br />
         </span>
         : <span> A escola não tem nenhuma avaliação,<Link to={`review/${it.id}`}> <a>seja o primeiro a avaliar!</a> </Link></span> }
       </div>
@@ -101,7 +102,7 @@ class Result extends Component<any, any> {
 function mapStateToProps(state: any, ownProps: any) {
   return {
     schools: state.app.School.list.data,
-    isFetching: state.app.School.list.isFetching
+    isFetching: state.app.School.list.isFetching,
   };
 }
 export default connect(mapStateToProps)(Result);

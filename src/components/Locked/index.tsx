@@ -24,7 +24,7 @@ class MyDrawer extends Component<IProps, any> {
            <Icon style={{ fontSize: '4.5rem'}} type='lock' />
          </Col>
          <Col span={18}>
-          <span> Para acessar, <Link to={'/review'}><strong>avalie uma escola ou preço do curso, e ajude a comunidade.</strong></Link></span><br />
+          <span> Para acessar, <Link to={'/review'}><strong>avalie uma escola ou nos diga o que está pretendendo estudar e ajude a comunidade.</strong></Link></span><br />
           {!this.props.authenticated ?
              <div><span>Já avaliou uma escola?</span><strong><a onClick={this.login}> Entrar</a></strong></div>
              : <span> É rápidinho e fácil :) </span>

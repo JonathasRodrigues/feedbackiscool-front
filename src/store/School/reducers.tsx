@@ -11,6 +11,9 @@ export enum enSchoolActions {
   requestFindById = 'REQUEST_FIND_BY_ID_SCHOOL',
   receiveFindByIdSuccess = 'RECEIVE_FIND_BY_ID_SCHOOL_SUCCESS',
   receiveFindByIdError = 'RECEIVE_FIND_BY_ID_SCHOOL_ERROR',
+  requestTotalSchools = 'REQUEST_TOTAL_SCHOOLS',
+  successTotalSchools = 'SUCCESS_TOTAL_SCHOOLS',
+  errorTotalSchools = 'ERROR_TOTAL_SCHOOLS',
 }
 
 const list = (state = { isFetching: false }, action: any) => {
@@ -91,9 +94,33 @@ const findById = (state = { isFetching: false }, action: any) => {
   }
 };
 
+const total = (state = { isFetching: false }, action: any) => {
+  switch (action.type) {
+    case enSchoolActions.requestTotalSchools:
+      return {
+        ...state,
+        isFetching: true
+      };
+    case enSchoolActions.successTotalSchools:
+    return {
+        ...state,
+        data: action.data.count,
+        isFetching: false
+      };
+    case enSchoolActions.errorTotalSchools:
+      return {
+        ...state,
+        isFetching: false
+      };
+    default:
+      return state;
+  }
+};
+
 export const reducer = combineReducers({
     list,
     insert,
     selected,
-    findById
+    findById,
+    total
 });

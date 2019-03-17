@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { list as ListCities, selected } from 'store/City/actions';
 import { list as ListSchool } from 'store/School/actions';
+import { withRouter } from 'react-router-dom';
 import './index.css';
 
 const dataSource2 = ['Irlanda'];
@@ -11,20 +12,19 @@ class Search extends Component<any, any> {
   constructor(props: any) {
     super(props);
     this.props.dispatch(ListCities());
-    this.state = {
-      selected: null
-    };
   }
 
   onSelected = (item: any) => {
-    this.setState({ selected : item });
+    this.props.dispatch(selected(item));
   }
   onOk = (e: any) => {
     e.preventDefault();
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
-        this.props.dispatch(selected(this.state.selected));
-        this.props.dispatch(ListSchool(this.state.selected.id));
+        if (this.props.selected) {
+          this.props.dispatch(ListSchool(this.props.selected.id));
+          this.props.history.push(`/result/${this.props.selected.id}`);
+        }
       }
     });
   }
@@ -48,6 +48,7 @@ class Search extends Component<any, any> {
                   dataSource={(cities && cities.data && cities.data.length > 0) ? cities.data.map((item: any) => item.name) : null}
                   placeholder='Selecione uma cidade'
                   filterOption={filter}
+                  value={this.props.selected}
                   onSelect={(item) => this.onSelected(cities.data.filter((it: any) => it.name === item)[0])}
                 />
                 )}
@@ -79,9 +80,10 @@ class Search extends Component<any, any> {
 
 function mapStateToProps(state: any, ownProps: any) {
   return {
-    cities: state.app.City.list
+    cities: state.app.City.list,
+    selected: state.app.City.selected,
   };
 }
 const SearchForm = Form.create()(Search);
 
-export default connect(mapStateToProps)(SearchForm);
+export default withRouter(connect(mapStateToProps)(SearchForm));

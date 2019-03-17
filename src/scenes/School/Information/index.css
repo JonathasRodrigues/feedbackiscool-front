@@ -34,6 +34,7 @@
 
 .is-locked {
   color: transparent;
+  background: rgb(202, 179, 179);
   cursor: pointer;
   opacity: .75;
   outline-style: none;

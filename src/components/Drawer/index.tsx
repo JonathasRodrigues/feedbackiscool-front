@@ -21,16 +21,16 @@ class MyDrawer extends Component<IProps, any> {
   }
   render() {
    return(
-      <Drawer
+    <Drawer
       placement='right'
       onClose={this.closeDrawer}
       maskClosable={true}
       visible={this.props.open}
     >
-    <Tabs defaultActiveKey='1'>
-      <TabPane tab='Entrar' key='1'><Login /></TabPane>
-      <TabPane tab='Cadastrar' key='2'><Register /></TabPane>
-    </Tabs>
+      <Tabs defaultActiveKey='1'>
+        <TabPane tab='Entrar' key='1'><Login /></TabPane>
+        <TabPane tab='Cadastrar' key='2'><Register /></TabPane>
+      </Tabs>
     </Drawer>
    );
   }

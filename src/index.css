@@ -1,8 +1,8 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
   height: 100%;
+  font-family: 'Roboto', sans-serif;
 }
 
 html {
@@ -23,4 +23,8 @@ html {
 
 .nowrap {
   white-space: nowrap;
+}
+
+.paddingTop {
+  padding-top: 4%;
 }

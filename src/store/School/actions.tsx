@@ -50,3 +50,16 @@ export function findById(id?: any) {
     }
   };
 }
+
+export function totalSchools() {
+  return async (dispatch: any) => {
+    try {
+      dispatch({ type: enSchoolActions.requestTotalSchools });
+      const { data } = await SchoolService.totalSchools();
+      dispatch({ type: enSchoolActions.successTotalSchools, data });
+    } catch (error) {
+      dispatch({ type: enSchoolActions.errorTotalSchools, error });
+      logError(error);
+    }
+  };
+}

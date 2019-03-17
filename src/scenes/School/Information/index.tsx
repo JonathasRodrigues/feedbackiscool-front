@@ -1,14 +1,14 @@
 import React from 'react';
-import { Row, Col, Rate, Icon, Divider, List, Avatar, Button, Popover, BackTop, Spin } from 'antd';
+import { Row, Col, Rate, Icon, Divider, List, Avatar, Button, BackTop } from 'antd';
 import { connect, DispatchProp } from 'react-redux';
 import { findById } from 'store/School/actions';
 import { RouteComponentProps, Link } from 'react-router-dom';
-import Locked from 'components/Locked';
 import { list as listReviews } from 'store/Review/actions';
 import { canAccessContent } from 'store/Profile/actions';
 import './index.css';
 import ChartRecommend from './ChartRecommend';
-import moment from 'moment';
+import Loading from 'components/Loading';
+import ReviewDetails from 'components/ReviewDetails';
 
 interface IProps extends DispatchProp<any>, RouteComponentProps<any> {
   school?: any;
@@ -42,61 +42,9 @@ class Information extends React.Component<IProps, IStates> {
     console.log(error);
   }
   render(){
-    const { school, reviews, isAuthenticated, hasAccess, isFetching } = this.props;
-    const reviewDetails = (item: any, index: any) => {
-      let content = (
-        <div>
-            Localização<br/> <Rate defaultValue={item.localizationPoints} allowHalf disabled/> {item.localizationPoints} <br />
-            Estrutura<br/> <Rate defaultValue={item.structurePoints} allowHalf disabled/> {item.structurePoints} <br />
-            Didática<br/> <Rate defaultValue={item.teachingMethodPoints} allowHalf disabled/> {item.teachingMethodPoints} <br />
-            Professores<br/> <Rate defaultValue={item.teachersPoints} allowHalf disabled/> {item.teachersPoints} <br />
-            Staff<br/> <Rate defaultValue={item.staffPoints} allowHalf disabled/> {item.staffPoints} <br />
-        </div>
-      );
-      if (index > 0 && (!isAuthenticated || (isAuthenticated && !hasAccess))) {
-        return (
-          <div>
-            <Popover placement='bottom' content={content}>
-              <Rate defaultValue={item.generalPoints} allowHalf disabled/> <Icon type= 'down-circle'/> <br />
-            </Popover>
-            <p>{!item.anonymous && item.user ? `${item.user.username} ` : 'Usuário '}
-              estudou {item.course === 'GE' ? 'General English ' : 'Preparatório Trinity '}
-              em {moment(item.startDate).format('MMMM/YYYY')}</p>
-            <div className='is-locked'>
-              <Locked />
-              <p><strong>Prós:</strong>&nbsp;pariatur provident temporibus est laborum ab excepturi commodi hic a accusamus dolores qui doloremque cumque ex illo sint quis velit quia perferendis dolorum odit ut id modi debitis atque suscipit et aliquam rem perspiciatis molestias libero voluptas ipsum vero eos est voluptatem corrupti incidunt quasi in quia est laboriosam sed</p>
-              <p><strong>Contras:</strong>&nbsp;omnis id ratione laborum et provident aut autem aut perspiciatis dolore odio itaque qui quod ut repellendus unde perferendis nisi non porro qui facere earum occaecati rerum optio delectus ipsa et iure voluptatem ea numquam temporibus eos est ut libero expedita qui veritatis blanditiis assumenda est sunt rem qui quae</p>
-            </div>
-          </div>
-        );
-      }
-      return (
-        <div className={'review-text'}>
-          <Popover placement='bottom' content={content}>
-            <Rate defaultValue={item.generalPoints} allowHalf disabled/> <Icon type= 'down-circle'/> <br />
-          </Popover>
-          <p>{!item.anonymous && item.user ? `${item.user.username} `: 'Usuário '}
-              estudou {item.course === 'GE' ? 'General English ' : 'Preparatório Trinity '}
-              em {moment(item.startDate).format('MMMM/YYYY')}</p>
-          <p> <strong>Prós:</strong> {item.pros}</p>
-          <p> <strong>Contras:</strong> {item.contras} </p>
-          {item.advise && <p> <strong>Conselho a diretoria:</strong> {item.advise} </p> }
-          <p> <strong> Recomenda a escola: </strong> {item.recommend ? <span><Icon type='check-circle' style={{ fontSize: 16, color: 'green' }}/> Sim</span> : <span><Icon type='close-circle' style={{ fontSize: 16, color: 'red' }}/> Não</span>} </p>
-        </div>
-      );
-    };
+    const { school, reviews, isFetching } = this.props;
     if (isFetching) {
-      return (
-        <Row>
-          <Col span={24}>
-            <Row className={'with-padding'}>
-              <Col style={{ textAlign: 'center', height: '50vh', padding: '10%' }} className={'tab-content'} md={{ span: 18, offset: 3 }} xs={24}>
-                <Spin tip={'Carregando informações da escola ...'} indicator={<Icon type='loading' style={{ padding: 10, fontSize: '7vh' }} spin />} />
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-      );
+     return <Loading />;
     }
     return(
       <div>
@@ -170,6 +118,12 @@ class Information extends React.Component<IProps, IStates> {
                             <Col span={12}>
                               <Rate allowHalf disabled defaultValue={school.staffPoints}  /> {school.staffPoints}
                             </Col>
+                            <Col span={12}>
+                              <span>Mix de nacionalidade</span>
+                            </Col>
+                            <Col span={12}>
+                              <Rate allowHalf disabled defaultValue={school.mixNacionality}  /> {school.mixNacionality ? school.mixNacionality : 'N/A' }
+                            </Col>
                           </Col>
                         </Row>
                       </Col>
@@ -189,7 +143,7 @@ class Information extends React.Component<IProps, IStates> {
                           <List.Item.Meta
                             avatar={<Avatar icon='user' />}
                             title={<span className={'review-title'}>"{item.title}"</span>}
-                            description={reviewDetails(item, index)}
+                            description={<ReviewDetails item={item} index={index} />}
                           />
                         </List.Item>
                       )}

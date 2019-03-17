@@ -14,6 +14,12 @@
   width: 100%
 }
 
-.h2 {
-  text-align: center;
+.formLogin {
+  padding: 2%;
 }
+
+.formLogin h2 {
+  text-align: center;
+  padding: 2%;
+}
+

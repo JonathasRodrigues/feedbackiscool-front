@@ -13,7 +13,8 @@ const reviews = [
   { label: 'Estrutura', field: 'structure' },
   { label: 'Professores', field: 'teachers' },
   { label: 'Funciónarios', field: 'staff' },
-  { label: 'Método de ensino', field: 'teachingMethod' }
+  { label: 'Método de ensino', field: 'teachingMethod' },
+  { label: 'Mix de nacionalidade', field: 'mixNacionality'}
 ];
 
 class Home extends Component<any,any> {

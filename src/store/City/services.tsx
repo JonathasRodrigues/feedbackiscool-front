@@ -6,5 +6,8 @@ class CityService {
     let filters = `%7B%20%22order%22%3A%20%22name%22%20%20%7D`;
     return agent.get(`${API_MAP.listCities}?filter=${filters}`);
   }
+  static totalCities() {
+    return agent.get(`${API_MAP.totalCities}`);
+  }
 }
 export default CityService;

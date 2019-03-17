@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Row, Icon, Input, Button, notification } from 'antd';
+import { Form, Row, Icon, Input, Button, notification, Col } from 'antd';
 import { login, drawer } from 'store/Authentication/actions';
 import { SERVER_URL } from 'settings';
 import './index.css';
@@ -56,27 +56,26 @@ class NormalLoginForm extends React.Component< any, any> {
     const { getFieldDecorator } = this.props.form;
     const { authentication } = this.state;
     return (
-      <div>
-        <br />
-        <h2 style={{ textAlign: 'center' }}> Faça seu login </h2>
+      <div className={'formLogin'}>
+        <h2> Faça seu login </h2>
         <Row>
-          {/* <Col span={24} style={{ paddingTop: '2%'}}>
+           <Col span={24}>
             <Button onClick={this.loginOnFacebook} size={'large'} icon='facebook' type='primary' className={'bt-facebook'}>
                   Entrar com Facebook
               </Button>
-          </Col> */}
-          {/* <Col span={24} style={{ paddingTop: '2%'}}>
+          </Col>
+           <Col span={24} style={{ paddingTop: '2%'}}>
             <Button size={'large'} icon='google' type='primary' className={'bt-google'}>
                 Entrar com Google
             </Button>
-          </Col> */}
-          {/* <Col span={24} style={{ paddingTop: '2%'}}>
-            <Button onClick={this.onActiveEmail} size={'large'} icon='mail' type='primary' className={'bt-email'}>
+          </Col>
+           <Col span={24} style={{ paddingTop: '2%'}}>
+            <Button disabled={this.state.email} onClick={this.onActiveEmail} size={'large'} icon='mail' type='primary' className={'bt-email'}>
                 Entrar com E-mail
             </Button>
-          </Col> */}
+          </Col>
         </Row>
-        {/* {this.state.email && */}
+         {this.state.email &&
           <div>
             <Form onSubmit={this.handleSubmit} layout={'horizontal'}>
               <FormItem label={'E-mail'} colon={false}>
@@ -95,14 +94,14 @@ class NormalLoginForm extends React.Component< any, any> {
                   <Input prefix={<Icon type='lock' style={{ color: 'rgba(0,0,0,.25)' }} />} type='password' placeholder='Sua senha' />
                 )}
               </FormItem>
-              <FormItem>
+              <FormItem className={'paddingTop'}>
                 <Button loading={authentication} icon={'email'} size='large' type='primary' style={{ width: '100%'}} htmlType='submit'>
                     Entrar
                 </Button>
               </FormItem>
             </Form>
           </div>
-        {/* } */}
+        }
       </div>
     );
   }

@@ -63,3 +63,29 @@ export function insertProspect(prospect: any) {
     }
   };
 }
+
+export function totalReviews() {
+  return async (dispatch: any) => {
+    try {
+      dispatch({ type: enReviewActions.requestTotalReviews });
+      const { data } = await ReviewService.totalReviews();
+      dispatch({ type: enReviewActions.successTotalReviews, data });
+    } catch (error) {
+      dispatch({ type: enReviewActions.errorTotalReviews, error });
+      logError(error);
+    }
+  };
+}
+
+export function listLast() {
+  return async (dispatch: any) => {
+    try {
+      dispatch({ type: enReviewActions.requestListLast });
+      const { data } = await ReviewService.listLast();
+      dispatch({ type: enReviewActions.receiveListLastSuccess, data });
+    } catch (error) {
+      dispatch({ type: enReviewActions.receiveListLastError, error });
+      logError(error);
+    }
+  };
+}

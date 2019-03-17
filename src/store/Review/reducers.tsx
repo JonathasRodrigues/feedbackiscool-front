@@ -15,6 +15,13 @@ export enum enReviewActions {
   requestInsertProspect = 'REQUEST_INSERT_PROSPECT',
   receiveInsertProspectSuccess = 'RECEIVE_INSERT_PROSPECT_SUCCESS',
   receiveInsertProspectError = 'RECEIVE_INSERT_PROSPECT_ERROR',
+  requestTotalReviews = 'REQUEST_TOTAL_REVIEWS',
+  successTotalReviews = 'SUCCESS_TOTAL_REVIEWS',
+  errorTotalReviews = 'ERROR_TOTAL_REVIEWS',
+
+  requestListLast = 'REQUEST_LIST_REVIEW',
+  receiveListLastSuccess = 'RECEIVE_LIST_LAST_REVIEW_SUCCESS',
+  receiveListLastError = 'RECEIVE_LIST_LAST_REVIEW_ERROR',
 }
 
 const list = (state = { isFetching: false }, action: any) => {
@@ -118,10 +125,58 @@ const insertProspect = (state = { isFetching: false }, action: any) => {
   }
 };
 
+const total = (state = { isFetching: false }, action: any) => {
+  switch (action.type) {
+    case enReviewActions.requestTotalReviews:
+      return {
+        ...state,
+        isFetching: true
+      };
+    case enReviewActions.successTotalReviews:
+    return {
+        ...state,
+        data: action.data.count,
+        isFetching: false
+      };
+    case enReviewActions.errorTotalReviews:
+      return {
+        ...state,
+        isFetching: false
+      };
+    default:
+      return state;
+  }
+};
+
+const listLast = (state = { isFetching: false }, action: any) => {
+  switch (action.type) {
+    case enReviewActions.requestListLast:
+      return {
+        ...state,
+        isFetching: true
+      };
+    case enReviewActions.receiveListLastSuccess:
+    return {
+        ...state,
+        data: action.data,
+        isFetching: false
+      };
+    case enReviewActions.receiveListLastError:
+      return {
+        ...state,
+        isFetching: false
+      };
+    default:
+      return state;
+  }
+};
+
 export const reducer = combineReducers({
     list,
     insert,
     insertProspect,
     selected,
-    findById
+    findById,
+    total,
+    listLast
 });
