@@ -8,10 +8,13 @@ import { Link } from 'react-router-dom';
 import { APP_NAME, FB_URL, INST_URL } from 'settings';
 import logo from 'assets/images/logo.jpg';
 import './index.css';
+import { FormattedMessage } from 'react-intl';
 
 interface IProps extends DispatchProp<any> {
   open: boolean;
   isAuthenticated: boolean;
+  currentLanguage: any;
+  languages: any;
 }
 
 interface IStates {
@@ -30,22 +33,42 @@ class MyLayout extends React.Component<IProps, IStates> {
     this.props.dispatch(logout());
   }
 
+  changeLanguage = (newLanguage: any) => {
+    this.props.dispatch({ type: 'CHANGE_CURRENT_LANGUAGE', newLanguage });
+  }
+
   componentDidCatch(error: any, info: any) {
     console.log(error);
   }
   render(){
     const menu = (
       <Menu>
-        {/* <Menu.Item>
-          <Link to='/profile'> Meu Perfil </Link>
-        </Menu.Item> */}
+      {/* <Menu.Item>
+        <Link to='/profile'> Meu Perfil </Link>
+      </Menu.Item> */}
         <Menu.Item>
-          <Link to='/review'> Avaliar uma escola </Link>
+          <Link to='/review'><FormattedMessage id={'searchButton'} defaultMessage={'Avaliar uma escola'}/> </Link>
         </Menu.Item>
         <Menu.Divider />
         <Menu.Item>
-          <a onClick={this.logout}> Sair </a>
+          <a onClick={this.logout}> <FormattedMessage id={'logout'} defaultMessage={'Sair'}/></a>
         </Menu.Item>
+      </Menu>
+    );
+    const menuLanguages = (
+      <Menu className={'menuLanguages'}>
+        {Array.isArray(this.props.languages) && this.props.languages.map((language: any) => {
+          if (language.locale === this.props.currentLanguage.locale) {
+             return null;
+          } else {
+            return (
+              <Menu.Item key={`language-${language.lg}`} onClick={() => this.changeLanguage(language)}>
+                <img className={'brand'} src={`brands/${language.locale}.svg`} />
+                <FormattedMessage id={`language${language.locale}`} defaultMessage={language.lg}/>
+              </Menu.Item>
+            );
+          }
+        })}
       </Menu>
     );
     return(
@@ -54,20 +77,27 @@ class MyLayout extends React.Component<IProps, IStates> {
           <Link to='/'>
           <img className='logo' src={logo} />
           </Link>
-          <div className='user'>
-            { this.props.isAuthenticated ?
+            <Dropdown trigger={['hover']} overlay={menuLanguages} placement='bottomLeft'>
+              <div className={'language'}>
+                <img src={`brands/${this.props.currentLanguage.locale}.svg`} />
+              </div>
+            </Dropdown>
+            {this.props.isAuthenticated ?
               (<Dropdown overlay={menu} placement='bottomRight'>
-                   <span style={{ marginRight: 24 }}>
-                    <Badge count={0}><Avatar icon='user' /></Badge>
-                  </span>
-                </Dropdown>)
-              : (<a onClick={this.showDrawer} style={{ marginRight: 24 }}>
-                <Icon type='user' /> Entrar
-               </a>)}
-          </div>
+                <div className='user'>
+                   <Badge count={0}><Avatar icon='user' /></Badge>
+                </div>
+                </Dropdown>
+              )
+              : (
+                <div className='user'>
+                  <a onClick={this.showDrawer}>
+                    <Icon type='user' /> <FormattedMessage id={'login'} defaultMessage={'Entrar'}/>
+                  </a>
+                </div>)}
           <div className='bt-review'>
             <Col xs={0} md={24} lg={24}>
-             <Link to='/review'><Button icon={'star'}>Avaliar uma escola</Button></Link>
+             <Link to='/review'><Button icon={'star'}><FormattedMessage id={'feedbackButton'} defaultMessage={'Avaliar uma escola'}/></Button></Link>
             </Col>
           </div>
         </Header>
@@ -79,16 +109,16 @@ class MyLayout extends React.Component<IProps, IStates> {
             <Col md={8} xs={24} className='footer_item'>
               <b>{APP_NAME}</b>
               <br />
-              <span>{APP_NAME} é uma plataforma que ajuda encontrar a escola ideal para você, avaliada por estudantes e ex-estudantes.</span>
+              <span>{APP_NAME}<FormattedMessage id={'principle'} defaultMessage={'é uma plataforma que ajuda encontrar a escola ideal para você, avaliada por estudantes e ex-estudantes.'}/></span>
             </Col>
             <Col md={8} xs={24} className='footer_item'>
                 <b>Links</b><br />
-                <Link to='/'>Página inicial</Link><br />
-                <Link to='/about'>Sobre</Link><br />
-                <Link to='/review'>Avaliar uma escola</Link><br />
+                <Link to='/'><FormattedMessage id={'home'} defaultMessage={'Página inicial'}/></Link><br />
+                <Link to='/about'><FormattedMessage id={'about'} defaultMessage={'Sobre'}/></Link><br />
+                <Link to='/review'><FormattedMessage id={'searchButton'} defaultMessage={'Avaliar uma escola'}/></Link><br />
             </Col>
             <Col md={8} xs={24} className='footer_item'>
-              <b>Redes Sociais</b><br />
+              <b><FormattedMessage id={'socialMedia'} defaultMessage={'Redes Sociais'}/></b><br />
               <Icon type='facebook' /><a target='_blank' href={FB_URL}> Facebook</a><br />
               <Icon type='instagram' /><a target='_blank' href={INST_URL}> Instagram</a><br />
               {/*<Icon type='twitter' /><a> Twitter</a><br />*/}
@@ -110,6 +140,8 @@ function mapStateToProps(state: any, ownProps: any) {
   return {
     open: state.app.Authentication.drawer,
     isAuthenticated: state.app.Authentication.authentication.isAuthenticated,
+    languages: state.app.Language.all,
+    currentLanguage: state.app.Language.current
   };
 }
 export default connect(mapStateToProps)(MyLayout);

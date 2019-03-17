@@ -6,6 +6,22 @@
 }
 .user {
   float: right;
+  width: 80px;
+  text-align: center;
+}
+.user:hover {
+  background: #1890ff;
+}
+.language {
+  float: right;
+  width: 80px;
+  height: 100%;
+}
+.language img {
+  max-height: 50%;
+}
+.language:hover {
+  background: #1890ff;
 }
 .bt-review {
   float: right;
@@ -56,4 +72,15 @@
 .final {
   background: #0f73d0;
   text-align: center;
+}
+
+.menuLanguages {
+  padding: 2%;
+  min-width: 100px;
+}
+
+.menuLanguages .brand {
+  width: 30px;
+  height: 30px;
+  padding-right: 2%;
 }

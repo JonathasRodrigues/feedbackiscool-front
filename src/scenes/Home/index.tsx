@@ -8,6 +8,8 @@ import { totalCities, unSelected } from 'store/City/actions';
 import { totalSchools } from 'store/School/actions';
 import { totalReviews, listLast } from 'store/Review/actions';
 import ReviewDetails from 'components/ReviewDetails';
+import { FormattedMessage } from 'react-intl';
+import Loading from 'components/Loading';
 
 class Home extends Component<any,any> {
   componentWillMount() {
@@ -20,7 +22,7 @@ class Home extends Component<any,any> {
   render() {
     if (this.props.isFetchingSchools) {
       return (
-        <p>Loading</p>
+        <Loading />
       );
     }
     return (
@@ -32,19 +34,19 @@ class Home extends Component<any,any> {
         </Row>
         <Row type='flex' justify='center' className={'we-do'}>
           <Col xs={24}>
-            <h2>Como funciona </h2>
+            <h2><FormattedMessage id={'howItWorks'} defaultMessage={'Como funciona'}/></h2>
           </Col>
           <Col md={8} xs={24}>
             <Icon type='home' style={{ fontSize: 65, color: '#08c' }} /><br /><br/>
-            Saiba o que os alunos acham da <b>escola</b> onde estudam
+            <FormattedMessage id={'infoSchool'} defaultMessage={'Fique por dentro de experiências de alunos nas escolas que estudam'}/>
           </Col>
           <Col md={8} xs={24}>
           <Icon type='line-chart' style={{ fontSize: 65, color: '#08c' }} /><br /><br/>
-            Descubra o <b>histórico de preços</b> das escolas
+            <FormattedMessage id={'infoPrices'} defaultMessage={'Descubra o histórico de preços das escolas'}/>
           </Col>
           <Col md={8} xs={24}>
-          <Icon type='smile-o' style={{ fontSize: 65, color: '#08c' }} /><br /><br/>
-            Encontre a melhor escola para <b>seu perfil e seu bolso</b>
+            <Icon type='smile-o' style={{ fontSize: 65, color: '#08c' }} /><br /><br/>
+            <FormattedMessage id={'infoHappy'} defaultMessage={'Encontre a melhor escola para seu perfil e seu bolso'}/>
           </Col>
         </Row>
         <Row className={'info'} type='flex' justify='center'>
@@ -54,7 +56,7 @@ class Home extends Component<any,any> {
             :
             <div className={'number'}><CountUp duration={8} start={0} end={this.props.totalReviews} /></div>
             }
-            <p>Feedbacks realizados</p>
+            <p><FormattedMessage id={'infoFeedbacks'} defaultMessage={'Feedbacks realizados'}/></p>
           </Col>
           <Col md={8} xs={24}>
             {this.props.isFetchingTotalCities ?
@@ -62,7 +64,7 @@ class Home extends Component<any,any> {
             :
             <div className={'number'}><CountUp duration={8} start={0} end={this.props.totalCities} /></div>
             }
-            <p>Cidades cadastradas</p>
+            <p><FormattedMessage id={'infoCities'} defaultMessage={'Cidades cadastradas'}/></p>
           </Col>
           <Col md={8} xs={24}>
             {this.props.isFetchingTotalSchools ?
@@ -70,12 +72,12 @@ class Home extends Component<any,any> {
             :
             <div className={'number'}><CountUp duration={8} start={0} end={this.props.totalSchools} /></div>
             }
-            <p> Escolas cadastradas </p>
+            <p><FormattedMessage id={'infoSchools'} defaultMessage={'Escolas cadastradas'}/></p>
           </Col>
         </Row>
         <Row type='flex' justify='center' className={'lastFeedbacks'}>
           <Col xs={24}>
-            <h2>Últimos feedbacks </h2>
+            <h2><FormattedMessage id={'lastFeedbacks'} defaultMessage={'Últimos feedbacks'}/></h2>
           </Col>
           {this.props.isFetchingListLast ?
             <Spin />

@@ -5,6 +5,7 @@ import { list as ListCities, selected } from 'store/City/actions';
 import { list as ListSchool } from 'store/School/actions';
 import { withRouter } from 'react-router-dom';
 import './index.css';
+import { FormattedMessage } from 'react-intl';
 
 const dataSource2 = ['Irlanda'];
 
@@ -36,7 +37,7 @@ class Search extends Component<any, any> {
       <div className='search-form'>
         <Form onSubmit={this.onOk}>
           <Row>
-            <h2> Encontre a melhor escola para seu intercâmbio</h2>
+            <h2> <FormattedMessage id='searchMainText' defaultMessage='Encontre a melhor escola para seu intercâmbio' /> </h2>
           </Row>
           <Row gutter={16}>
             <Col md={12} xs={24}>
@@ -46,7 +47,7 @@ class Search extends Component<any, any> {
                 })(
                 <AutoComplete size='large'
                   dataSource={(cities && cities.data && cities.data.length > 0) ? cities.data.map((item: any) => item.name) : null}
-                  placeholder='Selecione uma cidade'
+                  placeholder={<FormattedMessage id='inputSearch' defaultMessage='Selecione uma cidade' />}
                   filterOption={filter}
                   value={this.props.selected}
                   onSelect={(item) => this.onSelected(cities.data.filter((it: any) => it.name === item)[0])}
@@ -68,7 +69,7 @@ class Search extends Component<any, any> {
             </Col>
             <Col md={6} xs={24}>
               <Form.Item>
-                <Button size='large' type='primary' style={{ width: '100%'}} icon='search' htmlType='submit'>Buscar</Button>
+                <Button size='large' type='primary' className={'buttonSearch'} icon='search' htmlType='submit'><FormattedMessage id='searchButton' defaultMessage='Buscar' /></Button>
               </Form.Item>
             </Col>
           </Row>
