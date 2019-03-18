@@ -29,11 +29,11 @@
   background: transparent;
   padding: 4%;
   text-align: center;
-  font-size: 2.5vh;
+  font-size: 1.5vw;
   text-transform: uppercase;
 }
 .info .number {
-  font-size: 5vh;
+  font-size: 3vw;
 }
 
 .ant-carousel .slick-slide {
@@ -57,7 +57,7 @@
 }
 .reviewItem .review-title {
   color: #7b7be0;
-  font-size: 2.5vh;
+  font-size: 1.5vw;
 }
 .reviewItem .review-text {
   padding: 0 0 2% 0;

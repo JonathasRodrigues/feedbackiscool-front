@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, BrowserRouter, Switch, Redirect } from 'react-router-dom';
-import { Provider } from 'react-redux';
 import MyLayout from 'components/MyLayout';
 import Home from 'scenes/Home';
 import Information from 'scenes/School/Information';
@@ -12,27 +11,27 @@ import About from 'scenes/About';
 import Result from 'scenes/Result';
 import { drawer } from 'store/Authentication/actions';
 import ScrollToTop from 'components/ScrollToTop';
+//import NotFound from 'components/NotFound';
 
 const Routes = ({ store }: any) => {
   return (
-    <Provider store={store}>
-        <BrowserRouter>
-        <ScrollToTop>
-            <Switch>
-            <MyLayout>
-              <Route exact path='/' component={Home} />
-              <Route path='/result/:cityId?' component={Result} />
-              <Route path='/information/:id' component={Information} />
-              <Route path='/about' component={About} />
-              <Route path='/tlogin' component={Authentication} />
-              <PrivateRoute path='/broadleaf' component={School} store={store} />
-              <PrivateRoute path='/profile' component={Profile} store={store}/>
-              <PrivateRoute path='/review/:id?' component={Review}  store={store} />
-            </MyLayout>
-          </Switch>
-        </ScrollToTop>
-        </BrowserRouter>
-    </Provider>
+    <BrowserRouter>
+      <ScrollToTop>
+        <Switch>
+          <MyLayout>
+            <Route exact path='/' component={Home} />
+            <Route path='/result/:cityId?' component={Result} />
+            <Route path='/information/:id' component={Information} />
+            <Route path='/about' component={About} />
+            <Route path='/tlogin' component={Authentication} />
+            <PrivateRoute path='/broadleaf' component={School} store={store} />
+            <PrivateRoute path='/profile' component={Profile} store={store}/>
+            <PrivateRoute path='/review/:id?' component={Review}  store={store} />
+            {/* <Route path='*' component={NotFound} /> */}
+          </MyLayout>
+        </Switch>
+      </ScrollToTop>
+    </BrowserRouter>
   );
 };
 

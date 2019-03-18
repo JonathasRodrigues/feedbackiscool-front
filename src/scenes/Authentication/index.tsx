@@ -5,6 +5,8 @@ import { logComponentError } from 'errors/errorHandler';
 import Cookies from 'js-cookie';
 import Loading from 'components/Loading';
 import { withRouter} from 'react-router-dom';
+import { notification } from 'antd';
+import { FormattedMessage } from 'react-intl';
 
 class Authentication extends React.Component<any, any> {
   constructor(props: any) {
@@ -16,6 +18,12 @@ class Authentication extends React.Component<any, any> {
   }
 
   componentDidMount() {
+    const notify = () => {
+      notification.open({
+        message: <FormattedMessage id='errorHeaderDefault' defaultMessage='Ops, ocorreu um problema' />,
+        description: <FormattedMessage id='errorBodyDefault' defaultMessage='Erro ao tentar efetuar o login' />,
+      });
+    };
     (async() => {
       try {
         const userId = Cookies.get('userId');
@@ -23,10 +31,14 @@ class Authentication extends React.Component<any, any> {
         if (userId && token) {
           await this.props.dispatch(loginThird(userId, token));
           this.props.history.push('/');
+        } else {
+          this.props.history.push('/');
+          notify();
         }
       } catch (error) {
         console.log(error);
         this.props.history.push('/');
+        notify();
       }
     })();
   }
