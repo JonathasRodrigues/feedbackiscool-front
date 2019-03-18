@@ -23,7 +23,8 @@ const messages = {
   languagept: 'Portugues',
   languageen: 'Inglês',
   languagees: 'Espanhol',
-  logout: 'Sair'
+  logout: 'Sair',
+  requiredCity: 'Por favor informe uma cidade'
 };
 
 export default messages;

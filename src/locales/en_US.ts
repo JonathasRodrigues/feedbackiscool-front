@@ -24,6 +24,7 @@ const messages = {
   languageen: 'English',
   languagees: 'Spanish',
   logout: 'Logout',
+  requiredCity: 'Please choose a city'
 };
 
 export default messages;

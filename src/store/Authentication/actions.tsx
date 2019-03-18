@@ -28,14 +28,12 @@ export function login(email: string, password: string) {
     }
   };
 }
-export function loginFacebook(code: string) {
+export function loginThird(userId: any, token: any) {
   return async (dispatch: any) => {
     try {
-      dispatch({ type: enAuthenticationActions.requestFacebookLogin });
-      const { data } = await AuthenticationService.loginFacebook(code);
-      dispatch({ type: enAuthenticationActions.receiveFacebookLoginSuccess, data });
+      dispatch({ type: enAuthenticationActions.receiveLoginSuccess, data: { id: token, userId } });
+      dispatch(canAccessContent(userId));
     } catch (error) {
-      dispatch({ type: enAuthenticationActions.receiveFacebookLoginError, error });
       logError(error);
     }
   };

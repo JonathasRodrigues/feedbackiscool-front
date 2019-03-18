@@ -8,8 +8,20 @@
   width: 100%;
 }
 
+.bt-google:hover {
+  background: #e27768;
+  border-color: #f06a58;
+  width: 100%;
+}
+
 .bt-facebook {
   background: #3b5998;
+  border-color: #3b5998;
+  width: 100%
+}
+
+.bt-facebook:hover {
+  background: #5178ca;
   border-color: #3b5998;
   width: 100%
 }

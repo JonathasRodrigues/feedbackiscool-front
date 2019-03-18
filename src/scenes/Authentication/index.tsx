@@ -1,25 +1,13 @@
 import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
-import { loginFacebook } from 'store/Authentication/actions';
+import { connect } from 'react-redux';
+import { loginThird } from 'store/Authentication/actions';
 import { logComponentError } from 'errors/errorHandler';
+import Cookies from 'js-cookie';
+import Loading from 'components/Loading';
+import { withRouter} from 'react-router-dom';
 
-interface IProps extends DispatchProp<any> {
-
-}
-
-interface IStates {
-
-}
-
-function getUrlParameter (name: string) {
-  name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-  let regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-  let results = regex.exec(window.location.search);
-  return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-}
-
-class Authentication extends React.Component<IProps, IStates> {
-  constructor(props: IProps) {
+class Authentication extends React.Component<any, any> {
+  constructor(props: any) {
     super(props);
 
   }
@@ -30,19 +18,21 @@ class Authentication extends React.Component<IProps, IStates> {
   componentDidMount() {
     (async() => {
       try {
-        const code = getUrlParameter('code');
-        if (code) {
-          await this.props.dispatch(loginFacebook(code));
+        const userId = Cookies.get('userId');
+        const token = Cookies.get('access_token');
+        if (userId && token) {
+          await this.props.dispatch(loginThird(userId, token));
+          this.props.history.push('/');
         }
       } catch (error) {
         console.log(error);
-        // window.location.href = '/';
+        this.props.history.push('/');
       }
     })();
   }
   render(){
     return(
-      <p> Por favor aguarde, estamos autenticando ... </p>
+      <Loading />
     );
   }
 }
@@ -52,4 +42,4 @@ function mapStateToProps(state: any, ownProps: any) {
   };
 }
 
-export default connect(mapStateToProps)(Authentication);
+export default withRouter(connect(mapStateToProps)(Authentication));

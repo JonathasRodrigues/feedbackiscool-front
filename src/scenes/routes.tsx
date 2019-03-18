@@ -24,7 +24,7 @@ const Routes = ({ store }: any) => {
               <Route path='/result/:cityId?' component={Result} />
               <Route path='/information/:id' component={Information} />
               <Route path='/about' component={About} />
-              <Route path='/auth/facebook/callback' component={Authentication} />
+              <Route path='/tlogin' component={Authentication} />
               <PrivateRoute path='/broadleaf' component={School} store={store} />
               <PrivateRoute path='/profile' component={Profile} store={store}/>
               <PrivateRoute path='/review/:id?' component={Review}  store={store} />

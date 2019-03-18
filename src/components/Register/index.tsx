@@ -1,7 +1,8 @@
 import React from 'react';
-import { Form, Row, Col, Input, Button, notification, Checkbox } from 'antd';
+import { Form, Row, Col, Input, Button, notification, Checkbox, Icon } from 'antd';
 import { register, login, drawer } from 'store/Authentication/actions';
 import { connect } from 'react-redux';
+import { SERVER_URL } from 'settings';
 import './index.css';
 
 const FormItem = Form.Item;
@@ -51,9 +52,12 @@ class RegisterForm extends React.Component< any, any> {
     this.setState({ email: true });
   }
 
-  registerByFacebook = () => {
-    //window.location.href = `${SERVER_URL}/auth/facebook`;
-    //this.props.dispatch(loginFacebook());
+  loginOnFacebook = () => {
+    window.location.href = `${SERVER_URL}/auth/facebook`;
+  }
+
+  loginOnGoogle = () => {
+    window.location.href = `${SERVER_URL}/auth/google`;
   }
 
   render() {
@@ -64,13 +68,13 @@ class RegisterForm extends React.Component< any, any> {
         <h2> Cadastrar-se </h2>
         <Row>
            <Col span={24}>
-            <Button onClick={this.registerByFacebook} size={'large'} icon='facebook' type='primary' className={'bt-facebook'}>
-                  Registrar com Facebook
+            <Button onClick={this.loginOnFacebook} size={'large'} icon='facebook' type='primary' className={'bt-facebook'}>
+                  Cadastrar-se com Facebook
               </Button>
           </Col>
            <Col span={24} style={{ paddingTop: '2%'}}>
-            <Button size={'large'} icon='google' type='primary' className={'bt-google'}>
-                Registrar com Google
+            <Button onClick={this.loginOnGoogle}  size={'large'} icon='google' type='primary' className={'bt-google'}>
+                Cadastrar-se com Google
             </Button>
           </Col>
            <Col span={24} style={{ paddingTop: '2%'}}>
@@ -86,7 +90,7 @@ class RegisterForm extends React.Component< any, any> {
                   {getFieldDecorator('name', {
                     rules: [{ required: true, message: 'Por favor informe seu nome completo' }],
                   })(
-                    <Input placeholder={'Informe seu nome completo'} />
+                    <Input prefix={<Icon type='smile' style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={'Informe seu nome completo'} />
                   )}
                 </FormItem>
               </Col>
@@ -97,16 +101,17 @@ class RegisterForm extends React.Component< any, any> {
                       { type: 'email', message: 'Por favor insira um email válido' },
                       { required: true, message: 'Por favor informe seu email' }],
                   })(
-                    <Input type='email' placeholder={'Informe um e-mail válido'} />
+                    <Input prefix={<Icon type='user' style={{ color: 'rgba(0,0,0,.25)' }} />} type='email' placeholder={'Informe um e-mail válido'} />
                   )}
                 </FormItem>
               </Col>
               <Col span={24}>
                 <FormItem label={'Senha'}>
                   {getFieldDecorator('password', {
-                    rules: [{ required: true, message: 'Por favor informe sua senha' }],
+                    rules: [{ required: true, message: 'Por favor informe sua senha' },
+                            { min: 7, message: 'A senha deve conter pelo menos 7 caracteres' }],
                   })(
-                    <Input type='password' placeholder='Informe sua senha' />
+                    <Input prefix={<Icon type='lock' style={{ color: 'rgba(0,0,0,.25)' }} />} type='password' placeholder='Informe sua senha' />
                   )}
                 </FormItem>
               </Col>
@@ -118,7 +123,7 @@ class RegisterForm extends React.Component< any, any> {
                       validator: this.compareToFirstPassword,
                     }],
                   })(
-                    <Input type='password' placeholder='Confirme sua senha' />
+                    <Input prefix={<Icon type='lock' style={{ color: 'rgba(0,0,0,.25)' }} />} type='password' placeholder='Confirme sua senha' />
                   )}
                 </FormItem>
               </Col>

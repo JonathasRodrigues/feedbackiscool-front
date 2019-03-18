@@ -43,7 +43,7 @@ class Search extends Component<any, any> {
             <Col md={12} xs={24}>
               <Form.Item>
               {getFieldDecorator('city', {
-                  rules: [{ required: true, message: 'Por favor informe uma cidade' }],
+                  rules: [{ required: true, message: <FormattedMessage id='requiredCity' defaultMessage='Por favor informe uma cidade'/> }],
                 })(
                 <AutoComplete size='large'
                   dataSource={(cities && cities.data && cities.data.length > 0) ? cities.data.map((item: any) => item.name) : null}

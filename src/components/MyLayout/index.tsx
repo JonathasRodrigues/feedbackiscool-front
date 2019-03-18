@@ -90,11 +90,9 @@ class MyLayout extends React.Component<IProps, IStates> {
                 </Dropdown>
               )
               : (
-                <div className='user'>
-                  <a onClick={this.showDrawer}>
+                <a onClick={this.showDrawer} className='user'>
                     <Icon type='user' /> <FormattedMessage id={'login'} defaultMessage={'Entrar'}/>
-                  </a>
-                </div>)}
+                </a>)}
           <div className='bt-review'>
             <Col xs={0} md={24} lg={24}>
              <Link to='/review'><Button icon={'star'}><FormattedMessage id={'feedbackButton'} defaultMessage={'Avaliar uma escola'}/></Button></Link>

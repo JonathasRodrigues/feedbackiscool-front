@@ -49,7 +49,10 @@ class NormalLoginForm extends React.Component< any, any> {
 
   loginOnFacebook = () => {
     window.location.href = `${SERVER_URL}/auth/facebook`;
-    //this.props.dispatch(loginFacebook());
+  }
+
+  loginOnGoogle = () => {
+    window.location.href = `${SERVER_URL}/auth/google`;
   }
 
   render() {
@@ -65,7 +68,7 @@ class NormalLoginForm extends React.Component< any, any> {
               </Button>
           </Col>
            <Col span={24} style={{ paddingTop: '2%'}}>
-            <Button size={'large'} icon='google' type='primary' className={'bt-google'}>
+            <Button onClick={this.loginOnGoogle} size={'large'} icon='google' type='primary' className={'bt-google'}>
                 Entrar com Google
             </Button>
           </Col>
