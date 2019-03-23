@@ -1,6 +1,10 @@
 {
   "root": "build/",
   "https_only": true,
+  "error_page": "index.html",
+  "routes": {
+    "/**": "index.html"
+  },
   "proxies": {
     "/batcave/": {
       "origin": "${API_URL_STATIC}"
