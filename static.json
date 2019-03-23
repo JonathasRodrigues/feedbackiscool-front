@@ -3,7 +3,7 @@
   "https_only": true,
   "proxies": {
     "/api/": {
-      "origin": "${SERVER_URL}/"
+      "origin": "${REACT_APP_SERVER_URL}/"
     }
   }
 }
