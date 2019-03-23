@@ -9,6 +9,9 @@ import './index.css';
 import ChartRecommend from './ChartRecommend';
 import Loading from 'components/Loading';
 import ReviewDetails from 'components/ReviewDetails';
+import SchoolInfo from 'components/SchoolInfo/index';
+import SchoolRatings from 'components/SchoolRatings/index';
+import { FormattedMessage } from 'react-intl';
 
 interface IProps extends DispatchProp<any>, RouteComponentProps<any> {
   school?: any;
@@ -53,79 +56,30 @@ class Information extends React.Component<IProps, IStates> {
             <Row className={'with-padding'}>
               <Col className={'tab-content'} md={{ span: 18, offset: 3 }} xs={24}>
                 <Row type='flex' justify='space-around' align='middle'>
-                  <Col md={20} xs={24}>
+                  <Col md={18} xs={24}>
                     <strong style={{ fontSize: '1.5rem' }}>{school && school.name} </strong>
                     <Icon style={{ color: '#fadb12', fontSize: '1.5rem' }} type='star'></Icon> <strong style={{ fontSize: '1.5rem' }}>{school && school.generalPoints}</strong><br />
                     {school &&
-                      <div>
-                        {school.address && <span><Icon type='environment'/> <b>Endereço:</b> {school.address}<br/></span>}
-                        {school.phone && <span> <Icon type='phone' /> <b>Telefone:</b> {school.phone}<br/></span>}
-                        {school.email && <span><Icon type='mail' /> <b>E-mail:</b> {school.email}<br/></span> }
-                        {school.site && <span><Icon type='chrome' /> <b>Site:</b> <a target='_blank' href={`http://${school.site}`}>{school.site}</a><br/></span>}
-                        {school.facebook && <span><Icon type='facebook' /> <a target='_blank' href={`http://fb.com/${school.facebook}`}>Facebook</a><br/></span>}
-                        {school.instagram && <span><Icon type='instagram' /> <a target='_blank' href={`http://instagram.com/${school.instagram}`}>Instagram</a><br/></span>}
-                      </div>
+                      <SchoolInfo school={school} />
                     }
                   </Col>
-                  <Col md={4} xs={24}>
-                    <Link to={`/review/${school && school.id}`}> <Button size={'large'} icon={'star-o'} type={'primary'}> Avaliar </Button></Link>
+                  <Col md={6} xs={24}>
+                    <Link to={`/review/${school && school.id}`}> <Button size={'large'} icon={'star-o'} type={'primary'}><FormattedMessage id='feedbackButton' defaultMessage='Avaliar'/> </Button></Link>
                   </Col>
                 </Row>
                 <Divider/>
-                <h2> Como é estudar na {school && school.name} ?</h2>
-                <span> {reviews && reviews.length} avaliações nos últimos 12 meses</span>
+                <h2> <FormattedMessage id='howStudy' defaultMessage='Como é estudar na '/> {school && school.name} ?</h2>
+                <span><FormattedMessage id='frequencyFeedback' defaultMessage='{feedbacks} avaliações nos últimos 12 meses'
+                  values={{ feedbacks: reviews ? reviews.length : 0 }} /></span>
                 <Divider />
                   { school &&
                     <div>
                       <Col style={{ textAlign: 'center' }} span={24}>
-                        <h3> Satisfação dos alunos </h3>
+                        <h3><FormattedMessage id='satisfactionTitle' defaultMessage='Satisfação dos alunos' /> </h3>
                         <span style={{ fontSize: 36 }}><Rate style={{ fontSize: 36 }} allowClear={false} defaultValue={school.generalPoints} allowHalf disabled /> {school.generalPoints}</span>
                       </Col>
                       <Col className={'points'} md={12} xs={24}>
-                        <Row type='flex' justify='start'>
-                          <Col span={24}>
-                            <Col span={12}>
-                              <span>Localização</span>
-                            </Col>
-                            <Col span={12}>
-                              <Rate allowHalf disabled defaultValue={school.localizationPoints} /> {school.localizationPoints}
-                            </Col>
-
-                            <Col span={12}>
-                              <span>Estrutura</span>
-                            </Col>
-                            <Col span={12}>
-                              <Rate allowHalf disabled defaultValue={school.structurePoints}  /> {school.structurePoints}
-                            </Col>
-
-                            <Col span={12}>
-                              <span>Didática</span>
-                            </Col>
-                            <Col span={12}>
-                              <Rate allowHalf disabled defaultValue={school.teachingMethodPoints}  /> {school.teachingMethodPoints}
-                            </Col>
-
-                            <Col span={12}>
-                              <span>Professores</span>
-                            </Col>
-                            <Col span={12}>
-                              <Rate allowHalf disabled defaultValue={school.teachersPoints}  /> {school.teachersPoints}
-                            </Col>
-
-                            <Col span={12}>
-                              <span>Staff</span>
-                            </Col>
-                            <Col span={12}>
-                              <Rate allowHalf disabled defaultValue={school.staffPoints}  /> {school.staffPoints}
-                            </Col>
-                            <Col span={12}>
-                              <span>Mix de nacionalidade</span>
-                            </Col>
-                            <Col span={12}>
-                              <Rate allowHalf disabled defaultValue={school.mixNacionality}  /> {school.mixNacionality ? school.mixNacionality : 'N/A' }
-                            </Col>
-                          </Col>
-                        </Row>
+                        <SchoolRatings school={school} />
                       </Col>
                       <Col md={12} xs={24}>
                         <ChartRecommend recommend={school && school.recommend} norecommend={school && school.noRecommend} />

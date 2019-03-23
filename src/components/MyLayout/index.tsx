@@ -9,6 +9,9 @@ import { APP_NAME, FB_URL, INST_URL } from 'settings';
 import logo from 'assets/images/logo.jpg';
 import './index.css';
 import { FormattedMessage } from 'react-intl';
+import Portuguese from 'assets/images/brands/pt.svg';
+import English from 'assets/images/brands/en.svg';
+import Spanish from 'assets/images/brands/es.svg';
 
 interface IProps extends DispatchProp<any> {
   open: boolean;
@@ -55,6 +58,19 @@ class MyLayout extends React.Component<IProps, IStates> {
         </Menu.Item>
       </Menu>
     );
+
+    const imageLanguage = (language: any) => {
+      switch(language) {
+        case 'pt':
+          return Portuguese;
+        case 'es':
+          return Spanish;
+        case 'en':
+        default:
+          return English;
+      }
+    };
+
     const menuLanguages = (
       <Menu className={'menuLanguages'}>
         {Array.isArray(this.props.languages) && this.props.languages.map((language: any) => {
@@ -63,7 +79,7 @@ class MyLayout extends React.Component<IProps, IStates> {
           } else {
             return (
               <Menu.Item key={`language-${language.lg}`} onClick={() => this.changeLanguage(language)}>
-                <img className={'brand'} src={`brands/${language.locale}.svg`} />
+                <img className={'brand'} src={imageLanguage(language.locale)} />
                 <FormattedMessage id={`language${language.locale}`} defaultMessage={language.lg}/>
               </Menu.Item>
             );
@@ -79,7 +95,7 @@ class MyLayout extends React.Component<IProps, IStates> {
           </Link>
             <Dropdown trigger={['hover']} overlay={menuLanguages} placement='bottomLeft'>
               <div className={'language'}>
-                <img src={`brands/${this.props.currentLanguage.locale}.svg`} />
+                <img src={imageLanguage(this.props.currentLanguage.locale)} />
               </div>
             </Dropdown>
             {this.props.isAuthenticated ?
@@ -113,7 +129,7 @@ class MyLayout extends React.Component<IProps, IStates> {
                 <b>Links</b><br />
                 <Link to='/'><FormattedMessage id={'home'} defaultMessage={'Página inicial'}/></Link><br />
                 <Link to='/about'><FormattedMessage id={'about'} defaultMessage={'Sobre'}/></Link><br />
-                <Link to='/review'><FormattedMessage id={'searchButton'} defaultMessage={'Avaliar uma escola'}/></Link><br />
+                <Link to='/review'><FormattedMessage id={'feedbackButton'} defaultMessage={'Avaliar uma escola'}/></Link><br />
             </Col>
             <Col md={8} xs={24} className='footer_item'>
               <b><FormattedMessage id={'socialMedia'} defaultMessage={'Redes Sociais'}/></b><br />

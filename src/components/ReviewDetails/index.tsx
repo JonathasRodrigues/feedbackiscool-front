@@ -3,18 +3,25 @@ import { Rate, Popover, Icon } from 'antd';
 import moment from 'moment';
 import Locked from 'components/Locked';
 import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 
 const ReviewDetails = (props: any) => {
     const {  isAuthenticated, hasAccess, item, index } = props;
     let content = (
-      <div>
-          Localização<br/> <Rate defaultValue={item.localizationPoints} allowHalf disabled/> {item.localizationPoints} <br />
-          Estrutura<br/> <Rate defaultValue={item.structurePoints} allowHalf disabled/> {item.structurePoints} <br />
-          Didática<br/> <Rate defaultValue={item.teachingMethodPoints} allowHalf disabled/> {item.teachingMethodPoints} <br />
-          Professores<br/> <Rate defaultValue={item.teachersPoints} allowHalf disabled/> {item.teachersPoints} <br />
-          Staff<br/> <Rate defaultValue={item.staffPoints} allowHalf disabled/> {item.staffPoints} <br />
-          Mix de nacionalidade<br/> <Rate defaultValue={item.mixNacionality} allowHalf disabled/> {item.mixNacionality ? item.mixNacionality : 'N/A'} <br />
-      </div>
+      <React.Fragment>
+          <span><FormattedMessage id={'localization'} defaultMessage='Localização' /> </span><br />
+          <Rate allowHalf disabled defaultValue={item.localizationPoints} /> {item.localizationPoints}<br />
+          <span><FormattedMessage id={'facilities'} defaultMessage='Estrutura' /></span><br />
+          <Rate allowHalf disabled defaultValue={item.structurePoints}  /> {item.structurePoints}<br />
+          <span><FormattedMessage id={'teaching'} defaultMessage='Didática' /></span><br />
+          <Rate allowHalf disabled defaultValue={item.teachingMethodPoints}  /> {item.teachingMethodPoints}<br />
+          <span><FormattedMessage id={'teachers'} defaultMessage='Professores' /></span><br />
+          <Rate allowHalf disabled defaultValue={item.teachersPoints}  /> {item.teachersPoints}<br />
+          <span><FormattedMessage id={'staff'} defaultMessage='Staff' /></span><br />
+          <Rate allowHalf disabled defaultValue={item.staffPoints}  /> {item.staffPoints}<br />
+          <span><FormattedMessage id={'nacionalities'} defaultMessage='Mix de nacionalidades' /></span><br />
+          <Rate allowHalf disabled defaultValue={item.mixNacionality}  /> {item.mixNacionality ? item.mixNacionality : 'N/A' }
+      </React.Fragment>
     );
       if (index > 0 && (!isAuthenticated || (isAuthenticated && !hasAccess))) {
         return (

@@ -14,6 +14,7 @@
   background: #fff;
   text-align: center;
   padding: 2%;
+  font-size: 1rem;
 }
 
 .we-do h2 {
@@ -29,11 +30,11 @@
   background: transparent;
   padding: 4%;
   text-align: center;
-  font-size: 1.5vw;
+  font-size: 1rem;
   text-transform: uppercase;
 }
 .info .number {
-  font-size: 3vw;
+  font-size: 3rem;
 }
 
 .ant-carousel .slick-slide {
@@ -49,7 +50,12 @@
 .lastFeedbacks {
   background: #fff;
   text-align: center;
-  padding-top: 2%;
+  padding: 2%;
+}
+
+.lastFeedbacks h2 {
+  color: #0f73d0;
+  padding-bottom: 2%;
 }
 
 .reviewItem {
@@ -57,10 +63,10 @@
 }
 .reviewItem .review-title {
   color: #7b7be0;
-  font-size: 1.5vw;
+  font-size: 1.2rem;
 }
 .reviewItem .review-text {
-  padding: 0 0 2% 0;
   text-align: center;
   color:rgba(0, 0, 0, 0.65);
+  font-size: 1rem;
 }
