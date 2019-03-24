@@ -5,6 +5,7 @@ import { reducer as languageReducer } from './Language/reducers';
 import { reducer as profileReducer } from './Profile/reducers';
 import { reducer as reviewReducer } from './Review/reducers';
 import { reducer as schoolReducer } from './School/reducers';
+import { reducer as HelperReducer } from './Helpers/reducers';
 //ALPHBETICAL ORDER
 
 export const reducer = combineReducers({
@@ -14,4 +15,5 @@ export const reducer = combineReducers({
   Profile: profileReducer,
   Review: reviewReducer,
   School: schoolReducer,
+  Helpers: HelperReducer
 });

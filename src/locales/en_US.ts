@@ -65,7 +65,10 @@ const messages = {
   lockedText2:'Make a feedback of a school or tell us what you are looking foward studying and help the community.',
   lockedTextAuth1: 'Already made a feedback?',
   lockedTextAuth2: 'Enter',
-  lockedTextAuth3: 'It is quick and easy'
-
+  lockedTextAuth3: 'It is quick and easy',
+  country: 'Country of birth',
+  countryMessage: 'Please choose a country of birth',
+  termsConditions: 'Terms and Conditions',
+  accept: 'I agree to Feedbackiscool '
 };
 export default messages;
