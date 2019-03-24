@@ -1,6 +1,7 @@
 import React from 'react';
 import { Form, Row, Col, Input, Button, notification, Icon, Select, Checkbox } from 'antd';
 import { register, login, drawer } from 'store/Authentication/actions';
+import { canAccessContent } from 'store/Profile/actions';
 import { connect } from 'react-redux';
 import { SERVER_URL } from 'settings';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -20,15 +21,15 @@ class RegisterForm extends React.Component< any, any> {
         this.setState({ register: true });
         (async () => {
           try {
-            console.log(values);
             await this.props.dispatch(register(values));
-            await notification.success({
-              message: 'Sucesso',
-              description: 'Registrado com sucesso, você será autenticado automaticamente',
-            });
             await this.props.dispatch(login(values.email, values.password));
-            this.setState({ register: false });
-            this.props.dispatch(drawer(false));
+            await this.setState({ register: false });
+            await this.props.dispatch(drawer(false));
+            const userId = localStorage.getItem('id');
+            await this.props.dispatch(canAccessContent(userId));
+            if (!this.props.hasAccess) {
+              this.props.dispatch({ type: 'MODAL_WELCOME_OPEN' });
+            }
           } catch (error) {
             this.setState({ register: false });
             notification.error({
@@ -173,7 +174,8 @@ const Register = Form.create()(RegisterForm);
 
 function mapStateToProps(state: any, ownProps: any) {
   return {
-    countries: state.app.Helpers.countries
+    countries: state.app.Helpers.countries,
+    hasAccess: state.app.Profile.hasAccess,
   };
 }
 

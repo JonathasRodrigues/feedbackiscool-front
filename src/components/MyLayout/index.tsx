@@ -50,7 +50,7 @@ class MyLayout extends React.Component<IProps, IStates> {
         <Link to='/profile'> Meu Perfil </Link>
       </Menu.Item> */}
         <Menu.Item>
-          <Link to='/review'><FormattedMessage id={'searchButton'} defaultMessage={'Avaliar uma escola'}/> </Link>
+          <Link to='/review'><FormattedMessage id={'feedbackButton'} defaultMessage={'Avaliar uma escola'}/> </Link>
         </Menu.Item>
         <Menu.Divider />
         <Menu.Item>
@@ -80,7 +80,7 @@ class MyLayout extends React.Component<IProps, IStates> {
             return (
               <Menu.Item key={`language-${language.lg}`} onClick={() => this.changeLanguage(language)}>
                 <img className={'brand'} src={imageLanguage(language.locale)} />
-                <FormattedMessage id={`language${language.locale}`} defaultMessage={language.lg}/>
+                <b style={{ paddingLeft: '2%'}}><FormattedMessage id={`language${language.locale}`} defaultMessage={language.lg}/></b>
               </Menu.Item>
             );
           }

@@ -11,6 +11,7 @@ import About from 'scenes/About';
 import Result from 'scenes/Result';
 import { drawer } from 'store/Authentication/actions';
 import ScrollToTop from 'components/ScrollToTop';
+import ModalWelcome from 'components/ModalWelcome';
 //import NotFound from 'components/NotFound';
 
 const Routes = ({ store }: any) => {
@@ -30,6 +31,7 @@ const Routes = ({ store }: any) => {
             {/* <Route path='*' component={NotFound} /> */}
           </MyLayout>
         </Switch>
+        <ModalWelcome />
       </ScrollToTop>
     </BrowserRouter>
   );
