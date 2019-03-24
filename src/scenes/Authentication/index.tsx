@@ -7,6 +7,7 @@ import Loading from 'components/Loading';
 import { withRouter} from 'react-router-dom';
 import { notification } from 'antd';
 import { FormattedMessage } from 'react-intl';
+import { canAccessContent } from 'store/Profile/actions';
 
 class Authentication extends React.Component<any, any> {
   constructor(props: any) {
@@ -31,6 +32,10 @@ class Authentication extends React.Component<any, any> {
         if (userId && token) {
           await this.props.dispatch(loginThird(userId, token));
           this.props.history.push('/');
+          await this.props.dispatch(canAccessContent(userId));
+          if (!this.props.hasAccess) {
+            this.props.dispatch({ type: 'MODAL_WELCOME_OPEN' });
+          }
         } else {
           this.props.history.push('/');
           notify();
@@ -51,6 +56,7 @@ class Authentication extends React.Component<any, any> {
 
 function mapStateToProps(state: any, ownProps: any) {
   return {
+    hasAccess: state.app.Profile.hasAccess,
   };
 }
 
