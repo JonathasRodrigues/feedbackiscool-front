@@ -5,7 +5,7 @@ const messages = {
   inputSearch: 'Choose a city',
   howItWorks: 'How it works',
   infoSchool: 'Stay stuned with experiences of students in the schools',
-  infoPrices: 'Discover prices history of schools',
+  infoPrices: 'Discover history prices of schools',
   infoHappy: 'Find the best school for your profile and your pocket',
   infoFeedbacks: 'Feedbacks registered',
   infoCities: 'Cities registered',
@@ -17,8 +17,8 @@ const messages = {
   about: 'About',
   login: 'Login',
   register: 'Signup',
-  loginWith: 'Login with ',
-  registerWith: 'Signup with ',
+  loginWith: 'Login with {name} ',
+  registerWith: 'Signup with {name} ',
   loading: 'Please wait, we are loading all information...',
   languagept: 'Portuguese',
   languageen: 'English',
@@ -47,7 +47,17 @@ const messages = {
   chartRecommendDescription : '% of students recommend this school to a friend',
   students: 'Students',
   satisfactionTitle: 'Student satisfaction',
-  frequencyFeedback: '{feedbacks} feedbacks in the last 12 months'
+  frequencyFeedback: '{feedbacks} feedbacks in the last 12 months',
+  password: 'Password',
+  passwordMessage: 'Please enter your password',
+  passwordMin: 'Password must contain at least 7 characters',
+  passwordConfirm: 'Repeat password',
+  passwordConfirmMessage: 'Password must be the same',
+  emailInvalid: 'The email address that you have entered is invalid.',
+  emailMessage: 'Please enter your e-mail',
+  fullName: 'Full name',
+  fullNameMessage: 'Please enter your full name'
+
 };
 
 export default messages;

@@ -4,10 +4,11 @@ import { login, drawer } from 'store/Authentication/actions';
 import { SERVER_URL } from 'settings';
 import './index.css';
 import { connect } from 'react-redux';
+import { injectIntl, FormattedMessage } from 'react-intl';
 
 const FormItem = Form.Item;
 
-class NormalLoginForm extends React.Component< any, any> {
+class NormalLoginForm extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -58,23 +59,24 @@ class NormalLoginForm extends React.Component< any, any> {
   render() {
     const { getFieldDecorator } = this.props.form;
     const { authentication } = this.state;
+    const { intl } = this.props;
     return (
       <div className={'formLogin'}>
-        <h2> Faça seu login </h2>
+        {/* <h2><FormattedMessage id='login' defaultMessage='Faça seu login'/></h2> */}
         <Row>
            <Col span={24}>
             <Button onClick={this.loginOnFacebook} size={'large'} icon='facebook' type='primary' className={'bt-facebook'}>
-                  Entrar com Facebook
-              </Button>
+              <FormattedMessage id='loginWith' defaultMessage='Entrar com {name}' values={{ name: 'Facebook'}} />
+            </Button>
           </Col>
            <Col span={24} style={{ paddingTop: '2%'}}>
             <Button onClick={this.loginOnGoogle} size={'large'} icon='google' type='primary' className={'bt-google'}>
-                Entrar com Google
+              <FormattedMessage id='loginWith' defaultMessage='Entrar com {name}' values={{ name: 'Google'}} />
             </Button>
           </Col>
            <Col span={24} style={{ paddingTop: '2%'}}>
             <Button disabled={this.state.email} onClick={this.onActiveEmail} size={'large'} icon='mail' type='primary' className={'bt-email'}>
-                Entrar com E-mail
+              <FormattedMessage id='loginWith' defaultMessage='Entrar com {name}' values={{ name: 'E-mail'}} />
             </Button>
           </Col>
         </Row>
@@ -84,22 +86,22 @@ class NormalLoginForm extends React.Component< any, any> {
               <FormItem label={'E-mail'} colon={false}>
                 {getFieldDecorator('email',{
                   rules: [
-                    { type: 'email', message: 'Por favor insira um email válido' },
-                    { required: true, message: 'Por favor informe seu email' }],
+                    { type: 'email', message: intl.formatMessage({ id: 'emailInvalid', defaultMessage: 'Por favor insira um email válido' })},
+                    { required: true, message: intl.formatMessage({ id: 'emailMessage', defaultMessage: 'Por favor informe seu email' })} ],
                 })(
-                  <Input prefix={<Icon type='user' style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder='Seu email cadastrado' />
+                  <Input prefix={<Icon type='user' style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={intl.formatMessage({ id: 'email', defaultMessage: 'Seu email cadastrado' })} />
                 )}
               </FormItem>
-              <FormItem label={'Senha'} colon={false}>
+              <FormItem label={intl.formatMessage({ id: 'password', defaultMessage: 'Senha' })} colon={false}>
                 {getFieldDecorator('password', {
-                  rules: [{ required: true, message: 'Por favor informe sua senha' }],
+                  rules: [{ required: true, message: intl.formatMessage({ id: 'passwordMessage', defaultMessage: 'Por favor informe sua senha' })}],
                 })(
-                  <Input prefix={<Icon type='lock' style={{ color: 'rgba(0,0,0,.25)' }} />} type='password' placeholder='Sua senha' />
+                  <Input prefix={<Icon type='lock' style={{ color: 'rgba(0,0,0,.25)' }} />} type='password' placeholder={intl.formatMessage({ id: 'password', defaultMessage: 'Sua senha' })} />
                 )}
               </FormItem>
               <FormItem className={'paddingTop'}>
                 <Button loading={authentication} icon={'email'} size='large' type='primary' style={{ width: '100%'}} htmlType='submit'>
-                    Entrar
+                  <FormattedMessage id='login' defaultMessage='Entrar'/>
                 </Button>
               </FormItem>
             </Form>
@@ -112,4 +114,9 @@ class NormalLoginForm extends React.Component< any, any> {
 
 const WrappedNormalLoginForm = Form.create()(NormalLoginForm);
 
-export default connect()(WrappedNormalLoginForm);
+function mapStateToProps(state: any, ownProps: any) {
+  return {
+  };
+}
+
+export default injectIntl(connect(mapStateToProps)(WrappedNormalLoginForm));
