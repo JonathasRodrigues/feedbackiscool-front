@@ -113,6 +113,8 @@ function mapStateToProps(state: any, ownProps: any) {
     isFetchingSchools: state.app.School.list.isFetching,
     isFetchingListLast: state.app.Review.listLast.isFetching,
     listLast: state.app.Review.listLast.data,
+    isAuthenticated: state.app.Authentication.authentication.isAuthenticated,
+    hasAccess: state.app.Profile.hasAccess,
   };
 }
 export default connect(mapStateToProps)(Home);

@@ -5,6 +5,7 @@ import { SERVER_URL } from 'settings';
 import './index.css';
 import { connect } from 'react-redux';
 import { injectIntl, FormattedMessage } from 'react-intl';
+import { canAccessContent } from 'store/Profile/actions';
 
 const FormItem = Form.Item;
 
@@ -30,6 +31,11 @@ class NormalLoginForm extends React.Component<any, any> {
             //   message: '',
             //   description: 'Olá seja bem vindo!',
             // });
+            const userId = localStorage.getItem('id');
+            await this.props.dispatch(canAccessContent(userId));
+            if (!this.props.hasAccess) {
+              this.props.dispatch({ type: 'MODAL_WELCOME_OPEN' });
+            }
           } catch (error) {
             this.setState({ authentication: false });
             notification.error({
@@ -116,6 +122,7 @@ const WrappedNormalLoginForm = Form.create()(NormalLoginForm);
 
 function mapStateToProps(state: any, ownProps: any) {
   return {
+    hasAccess: state.app.Profile.hasAccess,
   };
 }
 

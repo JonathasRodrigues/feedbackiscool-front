@@ -9,7 +9,6 @@ import './index.css';
 import { withRouter } from 'react-router';
 //const dataSource2 = ['Irlanda'];
 
-
 const reviews = [
   { label: 'Localização', field: 'localization' },
   { label: 'Estrutura', field: 'structure' },

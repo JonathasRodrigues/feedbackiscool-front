@@ -6,15 +6,15 @@
 }
 .user {
   float: right;
-  width: 80px;
   text-align: center;
+  width: 60px;
 }
 .user:hover {
   background: #1890ff;
 }
 .language {
   float: right;
-  width: 80px;
+  width: 50px;
   height: 100%;
 }
 .language img {
@@ -25,7 +25,7 @@
 }
 .bt-review {
   float: right;
-  margin-right: 25px;
+  margin-right: 20px;
 }
 .main {
   flex-grow: 1;
