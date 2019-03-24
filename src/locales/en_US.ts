@@ -65,7 +65,13 @@ const messages = {
   lockedText2:'Make a feedback of a school or tell us what you are looking foward studying and help the community.',
   lockedTextAuth1: 'Already made a feedback?',
   lockedTextAuth2: 'Enter',
-  lockedTextAuth3: 'It is quick and easy'
-
+  lockedTextAuth3: 'It is quick and easy',
+  reviewTitle1: 'join the community and help new students choose the best school for an exchange',
+  reviewtext1: 'We are a community of students where you find out the price and student satisfaction of each school. All content is for free, but we ask you to contribute with our community by providing your collaboration to have unlimited acess to opinions and price histories offered by all schools.',
+  reviewTitle2: 'Remember',
+  reviewText2: 'We are a serious plataform, always make your feedbacks with your true point of view and do not send inapropried comments, be respectfull with the community, our team will always keep track of the feedbacks, our primary objective is help future students to find better schools. If any feedback breaks the rules it will be quickly blocked and the user will be informed or depending of the case the feedback can be deleted of our base.',
+  formRadioStudent: 'I am a student / ex-student',
+  formTitleCity: 'Select the city of the school which you are studying or which you studied',
+  formCityChoose:'choose a city'
 };
 export default messages;

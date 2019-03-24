@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 import { list as ListCities } from 'store/City/actions';
 import { list as ListSchool, findById } from 'store/School/actions';
 import { insert as insertReview, insertProspect } from'store/Review/actions';
+import { FormattedMessage } from 'react-intl';
 import './index.css';
 import { withRouter } from 'react-router';
 //const dataSource2 = ['Irlanda'];
+
 
 const reviews = [
   { label: 'Localização', field: 'localization' },
@@ -90,8 +92,6 @@ class Home extends Component<any,any> {
           }
         })();
       }
-      console.log('opa contem erros');
-      console.log(err);
     });
   }
   render() {
@@ -105,7 +105,7 @@ class Home extends Component<any,any> {
       <Form onSubmit={this.handleSubmitStudent}>
       <Row gutter={8}>
         <Col md={24} xs={24} >
-          <Form.Item hasFeedback validateStatus={isLoadingCities ? 'validating': null} colon={false} label={'Selecione a cidade da escola que você esta estudando ou estudou'}>
+        <Form.Item hasFeedback validateStatus={isLoadingCities ? 'validating': null} colon={false} label={<FormattedMessage id='formTitleCity' defaultMessage='Selecione a cidade da escola que você esta estudando ou estudou'/>}>
             {getFieldDecorator('cityId', {
               rules: [{
                 required: studentRequired, message: 'Por favor escolha uma cidade',
@@ -413,7 +413,7 @@ class Home extends Component<any,any> {
               <Col span={24}>
                 <Form.Item>
                   <Radio.Group buttonStyle='solid' defaultValue={true} onChange={(e) => this.onSelectType(e.target.value)}>
-                    <Radio.Button value={true}>Sou estudante / Ex-estudante</Radio.Button>
+                    <Radio.Button value={true}><FormattedMessage id='formRadioStudent' defaultMessage='Sou estudante / Ex-estudante'/></Radio.Button>
                     <Radio.Button value={false}>Quero fazer intercâmbio (futuro estudante)</Radio.Button>
                   </Radio.Group>
                 </Form.Item>
@@ -424,27 +424,19 @@ class Home extends Component<any,any> {
           <Col md={{ span: 10, offset: 1, order: 2}} xs={{ span: 24, order: 1}} className={'tips'}>
             <Row>
               <Col span={24}>
-                <h2> Faça parte da comunidade e ajude futuros estudantes a escolherem a melhor escola para um intercâmbio</h2>
+                <h2><FormattedMessage id='reviewTitle1' defaultMessage='Faça parte da comunidade e ajude futuros estudantes a escolherem a melhor escola para um intercâmbio'/></h2>
               </Col>
               <Col span={24}>
-                <span>Somos uma comunidade de estudantes onde você descobre o histórico de preços e a satisfação dos estudantes em cada escola.</span>
-              </Col>
-              <Col span={24}>
-                 <span> O acesso a todo o conteúdo é gratuito,<br />
-                  mas pedimos que você contribua com a comunidade fornecendo sua colaboração para ter acesso ilimitado a opiniões e históricos de preços oferecidos em todas as escolas.</span>
+                <FormattedMessage id='reviewtext1' defaultMessage='Somos uma comunidade de estudantes onde você descobre o histórico de preços e a satisfação dos estudantes em cada escola. O acesso a todo o conteúdo é gratuito, mas pedimos que você contribua com a comunidade fornecendo sua colaboração para ter acesso ilimitado a opiniões e históricos de preços oferecidos em todas as escolas.'/>
               </Col>
             </Row>
            <br/>
             <Row>
               <Col span={24}>
-                <h3>Lembre-se</h3>
+                <h3><FormattedMessage id='reviewTitle2' defaultMessage='lembre-se'/></h3>
               </Col>
               <Col span={24}>
-                <span>Somos uma plataforma séria, sempre faça seu feedback com seu verdadeiro ponto de vista e <b>não</b> usar comentários inapropriados como xingamentos ou coisas do gênero, nossa equipe sempre estará monitorando os feedbacks, aliás nosso principal objetivo é ajudar futuros estudantes a conhecer melhor as escolas. Se algum feedback quebrar as regras ele será brevemente bloqueado e o usuário será informado ou se depender o feedback poderá ser excluído da nossa base.</span>
-              </Col>
-              <Col span={24}>
-                 <span> O acesso a todo o conteúdo é gratuito,<br />
-                  mas pedimos que você contribua com a comunidade fornecendo sua colaboração para ter acesso ilimitado a opiniões e históricos de preços oferecidos em todas as escolas.</span>
+              <FormattedMessage id='reviewText2' defaultMessage='Somos uma plataforma séria, sempre faça seu feedback com seu verdadeiro ponto de vista e não envie comentários inapropriados, seja respeitoso com a comunidade, nossa equipe sempre estará monitorando os feedbacks, nosso principal objetivo é ajudar futuros estudantes a conhecer melhor as escolas. Se algum feedback quebrar as regras ele será rapidamente bloqueado e o usuário será informado ou dependendo do feedback poderá ser excluído da nossa base.'/>
               </Col>
             </Row>
           </Col>
