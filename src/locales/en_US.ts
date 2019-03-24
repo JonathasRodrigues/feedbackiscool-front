@@ -111,6 +111,10 @@ const messages = {
   termsConditions: 'Terms and Conditions',
   accept: 'I agree to Feedbackiscool ',
   formCityPholder: 'pick a city',
-  formCityError: 'Please pick a city'
+  formCityError: 'Please pick a city',
+  welcomeModalMessage: `The first step for you to have full access and start analyzing which school fits for you!`,
+  welcomeModalReview: `I want to make my first feedback.`,
+  welcomeModalReview2: `I'm not a student yet, but I'm interested in schools.`,
+  welcomeModalTitle: `Let's begin!`
 };
 export default messages;
