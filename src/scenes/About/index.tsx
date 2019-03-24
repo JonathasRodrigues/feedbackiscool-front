@@ -1,8 +1,8 @@
 import React from 'react';
 import { Row, Col } from 'antd';
 import { logComponentError } from 'errors/errorHandler';
-import './index.css';
 import { FormattedMessage } from 'react-intl';
+import './index.css';
 
 interface IProps {
 
