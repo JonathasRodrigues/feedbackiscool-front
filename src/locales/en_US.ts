@@ -60,7 +60,12 @@ const messages = {
   welcomeMessage: 'Welcome to Feedback is cool!',
   aboutText1: 'Here you discover the satisfaction of students and ex-students in each school and discover which ones matches with you. The list of school are refered to (Interim List of Eligible Programmes) and ACELS (Accreditation and Coordination of English Language Service)',
   whyTitle: 'Why we created Feedback is Cool?',
-  whyText: 'When we were searching for cities and schools avaiable to study exchange we realized that more detailed information and feedback about schools were not avaiable. We analised that this was not just a problem that we went throught, there we had a snap and the idea came of gather all information about schools for study exchange in one place to be evaluated by students and ex-students. In that way, is possible to help people who are searching for study exchange and even who is looking foward renewing its course in a diferent school.'
-};
+  whyText: 'When we were searching for cities and schools avaiable to study exchange we realized that more detailed information and feedback about schools were not avaiable. We analised that this was not just a problem that we went throught, there we had a snap and the idea came of gather all information about schools for study exchange in one place to be evaluated by students and ex-students. In that way, is possible to help people who are searching for study exchange and even who is looking foward renewing its course in a diferent school.',
+  lockedText1:'To acess this content, ',
+  lockedText2:'Make a feedback of a school or tell us what you are looking foward studying and help the community.',
+  lockedTextAuth1: 'Already made a feedback?',
+  lockedTextAuth2: 'Enter',
+  lockedTextAuth3: 'It is quick and easy'
 
+};
 export default messages;
