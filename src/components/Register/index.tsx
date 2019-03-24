@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Row, Col, Input, Button, notification, Icon } from 'antd';
+import { Form, Row, Col, Input, Button, notification, Icon, Select, Checkbox } from 'antd';
 import { register, login, drawer } from 'store/Authentication/actions';
 import { connect } from 'react-redux';
 import { SERVER_URL } from 'settings';
@@ -20,6 +20,7 @@ class RegisterForm extends React.Component< any, any> {
         this.setState({ register: true });
         (async () => {
           try {
+            console.log(values);
             await this.props.dispatch(register(values));
             await notification.success({
               message: 'Sucesso',
@@ -129,20 +130,35 @@ class RegisterForm extends React.Component< any, any> {
                   )}
                 </FormItem>
               </Col>
-              {/* <Col span={24}>
+              <Col span={24}>
+                <FormItem label={intl.formatMessage({ id: 'country', defaultMessage: 'País de origem' })}>
+                {getFieldDecorator('country', {
+                    rules: [{ required: true, message: intl.formatMessage({ id: 'countryMessage', defaultMessage: 'Selecione seu país de origem' })},
+                  ],
+                  })(
+                    <Select showSearch optionFilterProp='children' filterOption={(input, option) => option.props.children.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0} labelInValue placeholder={intl.formatMessage({ id: 'countryMessage', defaultMessage: 'Selecione seu país de origem' })}>
+                      {Array.isArray(this.props.countries) && this.props.countries.map(( country: any, index: any) => (
+                        <Select.Option key={index} value={country.code}>{country.name} ({country.code})</Select.Option>
+                      ))}
+                  </Select>
+                  )}
+                </FormItem>
+              </Col>
+              <Col span={24}>
                 <FormItem>
                   {getFieldDecorator('remember', {
                     valuePropName: 'checked',
                     initialValue: true,
+                    rules: [{ required: true, message: intl.formatMessage({ id: 'countryMessage', defaultMessage: 'Selecione seu país de origem' })}]
                   })(
-                    <Checkbox>Aceito os <a>termos</a></Checkbox>
+                    <Checkbox disabled={true}><FormattedMessage id='accept' defaultMessage='Eu concordo com os '/><a target='_blank' href='https://termsandconditionsgenerator.com/live.php?token=rvvZf0uxjJRlfW1LByiWKKcaEaxZiPnw'><FormattedMessage id='termsConditions' defaultMessage='Termos e Condições' /></a></Checkbox>
                   )}
                 </FormItem>
-              </Col> */}
+              </Col>
               <Col span={24}>
                 <FormItem className={'paddingTop'}>
                   <Button loading={register} type='primary' style={{ width: '100%'}} htmlType='submit'>
-                      <FormattedMessage id='register' defaultMessage='Cadastrar' />
+                    <FormattedMessage id='register' defaultMessage='Cadastrar' />
                   </Button>
                 </FormItem>
               </Col>
@@ -157,6 +173,7 @@ const Register = Form.create()(RegisterForm);
 
 function mapStateToProps(state: any, ownProps: any) {
   return {
+    countries: state.app.Helpers.countries
   };
 }
 

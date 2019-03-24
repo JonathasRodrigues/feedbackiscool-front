@@ -72,6 +72,10 @@ const messages = {
   reviewText2: 'We are a serious plataform, always make your feedbacks with your true point of view and do not send inapropried comments, be respectfull with the community, our team will always keep track of the feedbacks, our primary objective is help future students to find better schools. If any feedback breaks the rules it will be quickly blocked and the user will be informed or depending of the case the feedback can be deleted of our base.',
   formRadioStudent: 'I am a student / ex-student',
   formTitleCity: 'Select the city of the school which you are studying or which you studied',
-  formCityChoose:'choose a city'
+  formCityChoose:'choose a city',
+  country: 'Country of birth',
+  countryMessage: 'Please choose a country of birth',
+  termsConditions: 'Terms and Conditions',
+  accept: 'I agree to Feedbackiscool '
 };
 export default messages;

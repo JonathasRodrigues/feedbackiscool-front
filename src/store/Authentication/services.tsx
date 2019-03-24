@@ -10,7 +10,8 @@ class AuthenticationService {
         username: user.name,
         emailVerified: false,
         email: user.email,
-        password: user.password
+        password: user.password,
+        country: user.country.key,
       }
     );
   }
