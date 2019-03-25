@@ -28,7 +28,7 @@ class MyDrawer extends Component<IProps, any> {
          <Col span={18}>
           <span> <FormattedMessage id='lockedText1' defaultMessage='Para acessar, '/><Link to={'/review'}><strong><FormattedMessage id='lockedText2' defaultMessage='avalie uma escola ou nos diga o que está pretendendo estudar e ajude a comunidade.'/></strong></Link></span><br />
           {!this.props.authenticated ?
-             <div><span><FormattedMessage id='lockedTextAuth1' defaultMessage='Ja avaliou uma escola?, '/></span><strong><a onClick={this.login}> <FormattedMessage id='lockedTextAuth2' defaultMessage='entrar'/></a></strong></div>
+             <div><span><FormattedMessage id='lockedTextAuth1' defaultMessage='Ja avaliou uma escola? '/></span><strong><a onClick={this.login}> <FormattedMessage id='login' defaultMessage='Entrar'/></a></strong></div>
              : <span> <FormattedMessage id='lockedTextAuth3' defaultMessage='é rapidinho e facil :)'/></span>
           }
          </Col>

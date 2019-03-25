@@ -3,28 +3,28 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { list as ListCities } from 'store/City/actions';
 import { list as ListSchool, findById } from 'store/School/actions';
-import { insert as insertReview, insertProspect } from'store/Review/actions';
+import { insert as insertReview, insertProspect } from 'store/Review/actions';
 import { FormattedMessage } from 'react-intl';
 import './index.css';
 import { withRouter } from 'react-router';
 //const dataSource2 = ['Irlanda'];
 
 const reviews = [
-  { label: 'Localização', field: 'localization' },
-  { label: 'Estrutura', field: 'structure' },
-  { label: 'Professores', field: 'teachers' },
-  { label: 'Funciónarios', field: 'staff' },
-  { label: 'Método de ensino', field: 'teachingMethod' },
-  { label: 'Mix de nacionalidade', field: 'mixNacionality'}
+  { label: <FormattedMessage id={'localization'} defaultMessage='Localização' />, field: 'localization' },
+  { label: <FormattedMessage id={'facilities'} defaultMessage='Estrutura' />, field: 'structure' },
+  { label: <FormattedMessage id={'teachers'} defaultMessage='Professores' />, field: 'teachers' },
+  { label: <FormattedMessage id={'staff'} defaultMessage='Staff' />, field: 'staff' },
+  { label: <FormattedMessage id={'teaching'} defaultMessage='Didática' />, field: 'teachingMethod' },
+  { label: <FormattedMessage id={'nacionalities'} defaultMessage='Mix de nacionalidades' />, field: 'mixNacionality' },
 ];
 
-class Home extends Component<any,any> {
+class Home extends Component<any, any> {
   constructor(props: any) {
     super(props);
     this.props.dispatch(ListCities());
     const { id } = this.props.match.params;
     if (id) {
-      (async() => {
+      (async () => {
         try {
           await this.props.dispatch(findById(id));
           await this.props.dispatch(ListSchool(this.props.school.cityId));
@@ -35,12 +35,12 @@ class Home extends Component<any,any> {
       })();
     }
     this.state = {
-      student : true
+      student: true
     };
   }
   onSelectedCity = (item: any) => {
     this.props.dispatch(ListSchool(item));
-    this.setState({ city : item });
+    this.setState({ city: item });
   }
   onSelectType = (value: boolean) => {
     this.setState({ student: value });
@@ -55,11 +55,11 @@ class Home extends Component<any,any> {
             review.userId = localStorage.getItem('id');
             await this.props.dispatch(insertReview(review));
             notification.success({
-              message: 'Sucesso',
-              description: 'Obrigado por ajudar com sua avaliação.',
+              message: <FormattedMessage id='success' defaultMessage='Successo' />,
+              description: <FormattedMessage id='successFeedback' defaultMessage='Obrigado por ajudar com sua avaliação.'/>,
             });
             this.props.history.push('/');
-          } catch(error) {
+          } catch (error) {
             notification.error({
               message: 'Erro',
               description: error,
@@ -79,11 +79,11 @@ class Home extends Component<any,any> {
             prospect.userId = localStorage.getItem('id');
             await this.props.dispatch(insertProspect(prospect));
             notification.success({
-              message: 'Sucesso',
-              description: 'Obrigado por ajudar com suas informações.',
+              message: <FormattedMessage id='success' defaultMessage='Successo' />,
+              description: <FormattedMessage id='successProspect' defaultMessage='Dados salvo com sucesso, aproveite todo contéudo do site' />,
             });
             this.props.history.push('/');
-          } catch(error) {
+          } catch (error) {
             notification.error({
               message: 'Erro',
               description: error,
@@ -93,36 +93,51 @@ class Home extends Component<any,any> {
       }
     });
   }
+
+  // componentDidMount() {
+  //   const btn = (
+  //     <Button type='primary' size='small' onClick={() => notification.close('info')}>
+  //       Ok
+  //     </Button>
+  //   );
+  //   notification.info({
+  //     message: <FormattedMessage id='reviewTitle2' defaultMessage='Lembre-se' />,
+  //     description: <FormattedMessage id='reviewText2' defaultMessage='Sempre faça seu feedback com seu verdadeiro ponto de vista e evite de user palavras inapropriadas, seja respeitoso com a comunidade, nossa equipe sempre estará monitorando os feedbacks, nosso principal objetivo é ajudar futuros estudantes a conhecer melhor as escolas. Se algum feedback quebrar as regras ele será rapidamente bloqueado e o usuário será informado ou dependendo do feedback poderá ser excluído da nossa base.' />,
+  //     duration: null,
+  //     btn,
+  //     key: 'info'
+  //   });
+  // }
   render() {
     //const filter = (inputValue: any, option: any) => option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1;
-    const { cities, schools, isLoadingSchools, isLoadingCities } = this.props;
+    const { cities, schools } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
     const studentRequired = this.state.student ? true : false;
     const prospectRequired = this.state.student ? false : true;
 
     const isStudent = (
       <Form onSubmit={this.handleSubmitStudent}>
-      <Row gutter={8}>
-        <Col md={24} xs={24} >
-        <Form.Item hasFeedback validateStatus={isLoadingCities ? 'validating': null} colon={false} label={<FormattedMessage id='formTitleCity' defaultMessage='Selecione a cidade da escola que você esta estudando ou estudou'/>}>
-            {getFieldDecorator('cityId', {
-              rules: [{
-                required: studentRequired, message: 'Por favor escolha uma cidade',
-              }],
-            })(
-              <Select
-                showSearch
-                placeholder='Selecione a cidade'
-                optionFilterProp='children'
-                onChange={this.onSelectedCity}
-                filterOption={(input, option) => String(option.props.children).toLowerCase().indexOf(input.toLowerCase()) >= 0}>
-                {(cities && cities && cities.length > 0)
-                  ? cities.map((item: any) => (
-                    <Select.Option key={item.id} value={item.id}>{item.name}</Select.Option>
-                  ))
-                  : null}
-              </Select>
-            )}
+        <Row gutter={8}>
+          <Col md={24} xs={24} >
+            <Form.Item hasFeedback  colon={false} label={<FormattedMessage id='formCityChoose' defaultMessage='Selecione a cidade da escola que você esta estudando ou estudou' />}>
+              {getFieldDecorator('cityId', {
+                rules: [{
+                  required: studentRequired, message: <FormattedMessage id='formCityChooseErr' defaultMessage='Por favor escolha uma cidade'/> ,
+                }],
+              })(
+                <Select
+                  showSearch
+                  placeholder={<FormattedMessage id='formCityPholder' defaultMessage='Selecione a cidade' />}
+                  optionFilterProp='children'
+                  onChange={this.onSelectedCity}
+                  filterOption={(input, option) => String(option.props.children).toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+                  {(cities && cities && cities.length > 0)
+                    ? cities.map((item: any) => (
+                      <Select.Option key={item.id} value={item.id}>{item.name}</Select.Option>
+                    ))
+                    : null}
+                </Select>
+              )}
             </Form.Item>
           </Col>
           {/* <Col md={8} xs={24}>
@@ -137,18 +152,18 @@ class Home extends Component<any,any> {
             </Form.Item>
           </Col> */}
         </Row>
-        { getFieldValue('cityId') &&
+        {getFieldValue('cityId') &&
           <Row>
             <Col md={24} xs={24} >
-              <Form.Item hasFeedback validateStatus={isLoadingSchools ? 'validating': null} colon={false} label={'Selecione a escola que você esta estudando ou estudou'}>
+              <Form.Item hasFeedback colon={false} label={<FormattedMessage id='formSchoolSelect' defaultMessage='Selecione a escola que você esta estudando ou estudou'/>}>
                 {getFieldDecorator('schoolId', {
                   rules: [{
-                    required: studentRequired, message: 'Por favor selecione uma escola',
+                    required: studentRequired, message: <FormattedMessage id='formSchoolChoose' defaultMessage='Por favor selecione uma escola'/>
                   }]
                 })(
                   <Select
                     showSearch
-                    placeholder='Selecione a escola'
+                    placeholder={<FormattedMessage id='formSchoolChoose' defaultMessage='Selecione uma escola'/>}
                     optionFilterProp='children'
                     filterOption={(input, option) => String(option.props.children).toLowerCase().indexOf(input.toLowerCase()) >= 0}>
                     {(schools && schools && schools.length > 0)
@@ -166,25 +181,25 @@ class Home extends Component<any,any> {
         <div>
           <Row gutter={8}>
             <Col md={18} xs={24} >
-              <Form.Item colon={false} label={'Qual o tipo de curso'}>
-              {getFieldDecorator('course', {
-                rules: [{
-                  required: studentRequired, message: 'Por favor selecione um tipo de curso',
-                }],
-              })(
-                <Select
-                  placeholder='Selecione o tipo de curso'>
+              <Form.Item colon={false} hasFeedback label={<FormattedMessage id='formCourseLabel' defaultMessage='Qual o tipo do curso'/>}>
+                {getFieldDecorator('course', {
+                  rules: [{
+                    required: studentRequired, message: <FormattedMessage id='formCourseChoose' defaultMessage='Por favor selecione um tipo de curso'/>,
+                  }],
+                })(
+                  <Select
+                    placeholder={<FormattedMessage id='formCoursePlaceholder' defaultMessage='Selecione o tipo de curso'/>}>
                     <Select.Option value={'GE'}>{'General english'}</Select.Option>
-                    <Select.Option value={'TP'}>{'Preparatório para teste trinity (IELTS, PET, etc.)'}</Select.Option>
-                 </Select>
-              )}
+                    <Select.Option value={'TP'}>{'Trinity (IELTS, PET, etc.)'}</Select.Option>
+                  </Select>
+                )}
               </Form.Item>
             </Col>
             <Col md={6} xs={24} >
-              <Form.Item colon={false} label={'Qtd. de semanas'}>
+              <Form.Item colon={false} hasFeedback label={<FormattedMessage id='formQtWeeks' defaultMessage='Qtd. de semanas'/>}>
                 {getFieldDecorator('weeks', {
                   rules: [{
-                    required: studentRequired, message: 'Por favor preencha o campo quantidade de semanas',
+                    required: studentRequired, message: <FormattedMessage id='formCourseDataChoose' defaultMessage='Por favor preencha o campo quantidade de semanas'/> ,
                   }],
                 })(
                   <InputNumber min={1} style={{ width: '100%' }} placeholder={'Ex: 25'} />
@@ -194,26 +209,26 @@ class Home extends Component<any,any> {
           </Row>
           <Row>
             <Col md={24} xs={24} >
-              <Form.Item colon={false} label={'Quando você começou o curso'} extra={'Não lembra o mês? Não tem problema! Coloque um mês próximo que você acha que começou o curso.'}>
-              {getFieldDecorator('startDate', {
-                rules: [{
-                  required: studentRequired, message: 'Por favor preencha o campo data que começou o curso',
-                }],
-              })(
-                <DatePicker.MonthPicker format={'MMMM/YYYY'} placeholder='Selecione o mês e ano' style={{ width: '100%' }}/>
-              )}
+              <Form.Item colon={false} hasFeedback label={<FormattedMessage id='formCourseDateChooseTitle' defaultMessage='Quando você começou o curso'/>} extra={<FormattedMessage id='formCourseDateMsg'defaultMessage='Não lembra o mês? Não tem problema! Coloque um mês próximo que você acha que começou o curso.'/>}>
+                {getFieldDecorator('startDate', {
+                  rules: [{
+                    required: studentRequired, message: <FormattedMessage id='formCourseDateChoose' defaultMessage='Por favor preencha o campo data que começou o curso'/>,
+                  }],
+                })(
+                  <DatePicker.MonthPicker format={'MMMM/YYYY'} style={{ width: '100%' }} />
+                )}
               </Form.Item>
             </Col>
           </Row>
           <Row>
             <Col span={24}>
-              <Form.Item colon={false} label={'Qual é o seu grau de satisfação geral?'}>
+              <Form.Item colon={false} label={<FormattedMessage id='formSatisfactionChoose' defaultMessage='Qual é o seu grau de satisfação geral?'/>}>
                 {getFieldDecorator('generalPoints', {
                   rules: [{
-                    required: studentRequired, message: 'Por favor preencha o campo satisfação geral',
+                    required: studentRequired, message:<FormattedMessage id='formSatisfactionErr' defaultMessage='Por favor escolha uma nota de satisfação geral'/>,
                   }],
                 })(
-                  <Rate style={{ fontSize: '20px'}} allowClear={false} allowHalf />
+                  <Rate style={{ fontSize: '20px' }} allowClear={false} allowHalf />
                 )}
                 {getFieldValue('generalPoints')}
               </Form.Item>
@@ -221,41 +236,41 @@ class Home extends Component<any,any> {
           </Row>
           <Row>
             <Col span={24}>
-              <Form.Item colon={false} label={'Pontos positivos'} extra={'Mínimo de 140 caracteres'}>
+              <Form.Item colon={false} hasFeedback label={<FormattedMessage id='formPositivePointsTitle' defaultMessage='Pontos positivos'/>} extra={<FormattedMessage id='formExtraPoints' defaultMessage='Minimo de 140 caracteres'/>}>
                 {getFieldDecorator('pros', {
                   rules: [{
-                    required: studentRequired, message: 'Por favor preencha o campo pontos positivos',
+                    required: studentRequired, message: <FormattedMessage id='formPositivePointsErr1' defaultMessage='Por favor preencha o campo pontos positivos'/>
                   },
                   {
-                    min: 140, message: 'Por favor pontos positivos tem que conter pelo menos 140 caracteres'
+                    min: 140, message:<FormattedMessage id='formPositivePointsErr2' defaultMessage='Por favor pontos positivos devem conter pelo menos 140 caracteres'/>
                   }],
                 })(
-                  <Input.TextArea placeholder={'Reconheça o que é legal na escola'} autosize={{ minRows: 4, maxRows: 6 }} />
+                  <Input.TextArea autosize={{ minRows: 4, maxRows: 6 }} />
                 )}
               </Form.Item>
             </Col>
             <Col span={24}>
-              <Form.Item colon={false} label={'Pontos negativos'} extra={'Mínimo de 140 caracteres'}>
+              <Form.Item colon={false} hasFeedback label={<FormattedMessage id='formNegativePointsTitle' defaultMessage='Pontos negativos'/>} extra={<FormattedMessage id='formExtraPoints' defaultMessage='Minimo de 140 caracteres'/>}>
                 {getFieldDecorator('contras', {
                   rules: [{
-                    required: studentRequired, message: 'Por favor preencha o campo pontos negativos',
+                    required: studentRequired, message:<FormattedMessage id='formNegativePointsErr1' defaultMessage='Por favor preencha o campo pontos negativos'/>
                   },
                   {
-                    min: 140, message: 'Por favor pontos positivos tem que conter pelo menos 140 caracteres'
+                    min: 140, message:<FormattedMessage id='formNegativePointsErr2' defaultMessage='Por favor pontos negativos devem conter pelo menos 140 caracteres'/>
                   }],
                 })(
-                  <Input.TextArea placeholder={'Explique de maneira construtiva'} autosize={{ minRows: 4, maxRows: 6 }} />
+                  <Input.TextArea autosize={{ minRows: 4, maxRows: 6 }} />
                 )}
               </Form.Item>
             </Col>
             <Col span={24}>
-              <Form.Item colon={false} label={'Título da avaliação'}>
+              <Form.Item colon={false} label={<FormattedMessage id='formTitle' defaultMessage='Título da avaliação'/>}>
                 {getFieldDecorator('title', {
                   rules: [{
-                    required: studentRequired, message: 'Por favor preencha o campo título da avaliação',
+                    required: studentRequired, message:<FormattedMessage id='formTitleErr' defaultMessage='Por favor preencha o campo título da avaliação'/>,
                   }],
                 })(
-                  <Input placeholder={'Uma frase, resuma sua avaliação'} />
+                  <Input/>
                 )}
               </Form.Item>
             </Col>
@@ -263,13 +278,13 @@ class Home extends Component<any,any> {
           <br />
           <Row>
             <Col span={24}>
-              <b>Qual a sua satisfação quanto a:</b>
+              <b><FormattedMessage id='formSatisfactionTitle' defaultMessage='Qual sua satisfação quanto a:'/></b>
             </Col>
           </Row>
           < br />
           <Row type='flex' justify='start'>
-            {reviews.map((item: any) => (
-              <Col span={24}>
+            {reviews.map((item: any, index: any) => (
+              <Col span={24} key={index}>
                 <Col span={12}>
                   <span>{item.label}</span>
                 </Col>
@@ -277,7 +292,7 @@ class Home extends Component<any,any> {
                   <Form.Item colon={false}>
                     {getFieldDecorator(`${item.field}Points`, {
                       rules: [{
-                        required: studentRequired, message: `Por favor dê uma nota para ${item.label}`,
+                        required: studentRequired, message: <FormattedMessage id={`${item.label.props.id}Message`} defaultMessage={`Por favor dê uma nota para ${item.label.props.defaultMessage}`}/>,
                       }],
                     })(
                       <Rate allowClear={false} allowHalf />
@@ -290,39 +305,39 @@ class Home extends Component<any,any> {
           </Row>
           <Row>
             <Col span={24}>
-                <Form.Item colon={false} label={'Recomendaria essa escola ?'}>
-                  {getFieldDecorator('recommend', { valuePropName: 'checked', initialValue: true })(
-                    <Switch checkedChildren='Sim' unCheckedChildren='Não' />
-                  )}
-                </Form.Item>
+              <Form.Item colon={false} label={<FormattedMessage id='formRecommendTitle' defaultMessage='Recomendaria essa escola?'/>}>
+                {getFieldDecorator('recommend', { valuePropName: 'checked', initialValue: true })(
+                  <Switch checkedChildren={<FormattedMessage id='yes' defaultMessage='Sim'/>} unCheckedChildren={<FormattedMessage id='no' defaultMessage='Não'/>}/>
+                )}
+              </Form.Item>
             </Col>
           </Row>
           <Row>
             <Col span={24}>
-              <Form.Item colon={false} label={'Conselho para diretoria'} extra={'(Opcional)'}>
-              {getFieldDecorator('advise', {
+              <Form.Item colon={false} label={<FormattedMessage id='formAdvice' defaultMessage='Conselho para diretoria'/>} extra={'(Opcional)'}>
+                {getFieldDecorator('advise', {
                 })(
-                  <Input.TextArea placeholder={'Suas dicas para melhorar a escola'} autosize={{ minRows: 4, maxRows: 6 }} />
+                  <Input.TextArea autosize={{ minRows: 4, maxRows: 6 }} />
                 )}
               </Form.Item>
             </Col>
           </Row>
           <Row>
             <Col md={24} xs={24} >
-                <Form.Item colon={false} label={'Deseja que apareça seu nome no feedback ?'} extra={'Acreditamos que quanto mais informações no seu feedback melhor é a integridade da informação mas se não deseja que seu nome apareça no feedback não tem problema.'}>
-                  {getFieldDecorator('anonymous', { valuePropName: 'checked', initialValue: true })(
-                    <Switch checkedChildren='Sim' unCheckedChildren='Não' />
-                  )}
-                </Form.Item>
-              </Col>
-            </Row>
+              <Form.Item colon={false} label={<FormattedMessage id='formFeedbackName' defaultMessage='Deseja que apareça seu nome no feedback?'/>} extra={<FormattedMessage id='formFeedbackNameExtra' defaultMessage='Acreditamos que quanto mais informações em seu feedback, maior é a integridade das informaçoes, mas a decisão é sua de mostrar ou não seu nome.'/>}>
+                {getFieldDecorator('anonymous', { valuePropName: 'checked', initialValue: true })(
+                  <Switch checkedChildren={<FormattedMessage id='yes' defaultMessage='Sim'/>} unCheckedChildren={<FormattedMessage id='no' defaultMessage='Não'/>}/>
+                )}
+              </Form.Item>
+            </Col>
+          </Row>
           <Row>
             <Col span={24}>
-              <Button type='primary' size='large' style={{ width: '100%' }} htmlType='submit'>Enviar avaliação</Button>
+              <Button type='primary' size='large' style={{ width: '100%' }} htmlType='submit'><FormattedMessage id='formButtonSubmit' defaultMessage='Enviar avaliação'/></Button>
             </Col>
           </Row>
         </div>
-      {/* } */}
+        {/* } */}
       </Form>
     );
 
@@ -330,116 +345,116 @@ class Home extends Component<any,any> {
       <Form onSubmit={this.handleSubmitProspect}>
         <Row gutter={8}>
           <Col md={24} xs={24} >
-            <Form.Item colon={false} label={'Selecione as cidades que você tem interesse em fazer intercâmbio'}>
+            <Form.Item colon={false} hasFeedback label={<FormattedMessage id='form2City' defaultMessage='Selecione as cidades que você tem interesse em fazer intercâmbio'/>}>
               {getFieldDecorator('citiesId', {
-                  rules: [{
-                    required: prospectRequired, message: 'Por favor selecione uma cidade',
-                  }],
-                })(
-                  <Select
-                    showSearch
-                    mode='multiple'
-                    placeholder='Selecione a cidade'
-                    optionFilterProp='children'
-                    onChange={this.onSelectedCity}
-                    filterOption={(input, option) => String(option.props.children).toLowerCase().indexOf(input.toLowerCase()) >= 0}>
-                    {(cities && cities && cities.length > 0)
-                      ? cities.map((item: any) => (
-                        <Select.Option key={item.id} value={item.id}>{item.name}</Select.Option>
-                      ))
-                      : null}
-                  </Select>
-                )}
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={8}>
-            <Col md={18} xs={24} >
-              <Form.Item colon={false} label={'Qual o tipo de curso'}>
-                {getFieldDecorator('courseType', {
-                  rules: [{
-                    required: prospectRequired, message: 'Por favor selecione um curso',
-                  }],
-                })(
-                  <Select
-                    placeholder='Selecione o tipo de curso'>
-                      <Select.Option value={'IDK'}>{'Não sei, estou pensando'}</Select.Option>
-                      <Select.Option value={'GE'}>{'General english'}</Select.Option>
-                      <Select.Option value={'TP'}>{'Preparatório para exame trinity (IELTS, Cambridge, etc.)'}</Select.Option>
-                  </Select>
-                )}
-              </Form.Item>
-            </Col>
-            <Col md={6} xs={24} >
-              <Form.Item colon={false} label={'Qtd. de semanas'}>
+                rules: [{
+                  required: prospectRequired, message:<FormattedMessage id='formCityError' defaultMessage='Por favor selecione uma cidade'/>,
+                }],
+              })(
+                <Select
+                  showSearch
+                  mode='multiple'
+                  placeholder={<FormattedMessage id='formCityPholder' defaultMessage='Selecione a cidade' />}
+                  optionFilterProp='children'
+                  onChange={this.onSelectedCity}
+                  filterOption={(input, option) => String(option.props.children).toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+                  {(cities && cities && cities.length > 0)
+                    ? cities.map((item: any) => (
+                      <Select.Option key={item.id} value={item.id}>{item.name}</Select.Option>
+                    ))
+                    : null}
+                </Select>
+              )}
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={8}>
+          <Col md={18} xs={24} >
+            <Form.Item colon={false} hasFeedback label={<FormattedMessage id='formCourseLabel' defaultMessage='Qual o tipo do curso'/>}>
+              {getFieldDecorator('courseType', {
+                rules: [{
+                  required: prospectRequired, message: <FormattedMessage id='formCourseChoose' defaultMessage='Por favor selecione um tipo de curso'/>,
+                }],
+              })(
+                <Select
+              placeholder={<FormattedMessage id='formCoursePlaceholder' defaultMessage='Selecione o tipo de curso'/>}>
+                  <Select.Option value={'IDK'}>{<FormattedMessage id='idkThinking' defaultMessage='Não sei, estou pensando' />}</Select.Option>
+                  <Select.Option value={'GE'}>{'General english'}</Select.Option>
+                  <Select.Option value={'TP'}>{'Trinity (IELTS, Cambridge, etc.)'}</Select.Option>
+                </Select>
+              )}
+            </Form.Item>
+          </Col>
+          <Col md={6} xs={24} >
+            <Form.Item colon={false} hasFeedback label={<FormattedMessage id='formQtWeeks' defaultMessage='Qtd. de semanas'/>}>
               {getFieldDecorator('weeks', {
-                  rules: [{
-                    required: prospectRequired, message: 'Por favor informe a quantidade de semanas',
-                  }],
-                })(
-                  <InputNumber min={1} style={{ width: '100%' }} placeholder={'Ex: 25'} />
-                )}
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row>
-            <Col md={24} xs={24} >
-              <Form.Item colon={false} label={'Quando você deseja começar o curso'} extra={'Não faz ideia do mês? Não tem problema! Coloque um mês próximo que você deseja começar.'}>
-                {getFieldDecorator('expectedDate', {
-                  rules: [{
-                    required: prospectRequired, message: 'Por favor selecione uma data que você pretende começar seu curso',
-                  }],
-                })(
-                  <DatePicker.MonthPicker format={'MMMM/YYYY'} placeholder='Selecione o mês e ano' style={{ width: '100%' }}/>
-                )}
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={24}>
-              <Button type='primary' size='large' style={{ width: '100%' }} htmlType='submit'>Enviar interesse</Button>
-            </Col>
-          </Row>
-        </Form>
+                rules: [{
+                  required: prospectRequired, message:<FormattedMessage id='formQtWeeksErr' defaultMessage='Por favor informe a quantidade de semanas'/>
+                }],
+              })(
+                <InputNumber min={1} style={{ width: '100%' }} placeholder={'Ex: 25'} />
+              )}
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row>
+          <Col md={24} xs={24} >
+            <Form.Item colon={false} hasFeedback label={<FormattedMessage id='formCourseDateChoose2' defaultMessage='Quando você deseja começar o curso'/>} extra={<FormattedMessage id='formCourseDataMsg' defaultMessage='Não faz ideia do mês? Não tem problema! Coloque um mês próximo que você deseja começar.'/>}>
+              {getFieldDecorator('expectedDate', {
+                rules: [{
+                  required: prospectRequired, message: <FormattedMessage id='formCourseDateChoose2' defaultMessage='Por favor selecione uma data que você pretende começar seu curso'/>,
+                }],
+              })(
+                <DatePicker.MonthPicker format={'MMMM/YYYY'} style={{ width: '100%' }} />
+              )}
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={24}>
+            <Button type='primary' size='large' style={{ width: '100%' }} htmlType='submit'><FormattedMessage id='formButtonSubmitProspect' defaultMessage='Enviar avaliação'/></Button>
+          </Col>
+        </Row>
+      </Form>
     );
     return (
       <div className={'with-padding'}>
-        <Row type='flex'>
-          <Col md={{ span: 13, order: 1 }} xs={{ span: 24, order: 2}} className={'form-review'}>
-            <h2> Avalie uma escola ou adicione um interesse para acessar todo conteúdo de avaliações</h2>
+        <Row type='flex' justify='center'>
+          <Col md={{ span: 13, order: 1 }} xs={{ span: 24, order: 2 }} className={'form-review'}>
+            <h2><FormattedMessage id='reviewTitle' defaultMessage='Avalie uma escola ou adicione um interesse para acessar todo conteúdo de avaliações'/></h2>
             <Divider />
             <Row>
               <Col span={24}>
                 <Form.Item>
                   <Radio.Group buttonStyle='solid' defaultValue={true} onChange={(e) => this.onSelectType(e.target.value)}>
-                    <Radio.Button value={true}><FormattedMessage id='formRadioStudent' defaultMessage='Sou estudante / Ex-estudante'/></Radio.Button>
-                    <Radio.Button value={false}>Quero fazer intercâmbio (futuro estudante)</Radio.Button>
+                    <Radio.Button value={true}><FormattedMessage id='formRadioStudent1' defaultMessage='Sou estudante / Ex-estudante' /></Radio.Button>
+                    <Radio.Button value={false}><FormattedMessage id='formRadioStudent2' defaultMessage='Quero fazer intercâmbio (futuro estudante)' /></Radio.Button>
                   </Radio.Group>
                 </Form.Item>
               </Col>
             </Row>
-              {this.state.student ? isStudent : isProspect}
+            {this.state.student ? isStudent : isProspect}
           </Col>
-          <Col md={{ span: 10, offset: 1, order: 2}} xs={{ span: 24, order: 1}} className={'tips'}>
+          {/* <Col md={{ span: 10, offset: 1, order: 2 }} xs={{ span: 24, order: 1 }} className={'tips'}>
             <Row>
               <Col span={24}>
-                <h2><FormattedMessage id='reviewTitle1' defaultMessage='Faça parte da comunidade e ajude futuros estudantes a escolherem a melhor escola para um intercâmbio'/></h2>
+                <h2><FormattedMessage id='reviewTitle1' defaultMessage='Faça parte da comunidade e ajude futuros estudantes a escolherem a melhor escola para um intercâmbio' /></h2>
               </Col>
               <Col span={24}>
-                <FormattedMessage id='reviewtext1' defaultMessage='Somos uma comunidade de estudantes onde você descobre o histórico de preços e a satisfação dos estudantes em cada escola. O acesso a todo o conteúdo é gratuito, mas pedimos que você contribua com a comunidade fornecendo sua colaboração para ter acesso ilimitado a opiniões e históricos de preços oferecidos em todas as escolas.'/>
+                <FormattedMessage id='reviewtext1' defaultMessage='Somos uma comunidade de estudantes onde você descobre o histórico de preços e a satisfação dos estudantes em cada escola. O acesso a todo o conteúdo é gratuito, mas pedimos que você contribua com a comunidade fornecendo sua colaboração para ter acesso ilimitado a opiniões e históricos de preços oferecidos em todas as escolas.' />
               </Col>
             </Row>
-           <br/>
+            <br />
             <Row>
               <Col span={24}>
-                <h3><FormattedMessage id='reviewTitle2' defaultMessage='lembre-se'/></h3>
+                <h3><FormattedMessage id='reviewTitle2' defaultMessage='lembre-se' /></h3>
               </Col>
               <Col span={24}>
-              <FormattedMessage id='reviewText2' defaultMessage='Somos uma plataforma séria, sempre faça seu feedback com seu verdadeiro ponto de vista e não envie comentários inapropriados, seja respeitoso com a comunidade, nossa equipe sempre estará monitorando os feedbacks, nosso principal objetivo é ajudar futuros estudantes a conhecer melhor as escolas. Se algum feedback quebrar as regras ele será rapidamente bloqueado e o usuário será informado ou dependendo do feedback poderá ser excluído da nossa base.'/>
+                <FormattedMessage id='reviewText2' defaultMessage='Somos uma plataforma séria, sempre faça seu feedback com seu verdadeiro ponto de vista e não envie comentários inapropriados, seja respeitoso com a comunidade, nossa equipe sempre estará monitorando os feedbacks, nosso principal objetivo é ajudar futuros estudantes a conhecer melhor as escolas. Se algum feedback quebrar as regras ele será rapidamente bloqueado e o usuário será informado ou dependendo do feedback poderá ser excluído da nossa base.' />
               </Col>
             </Row>
-          </Col>
-          </Row>
+          </Col> */}
+        </Row>
       </div>
     );
   }
