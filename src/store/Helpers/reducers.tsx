@@ -1,9 +1,14 @@
 import { combineReducers } from 'redux';
 
 import listCountries from './countries';
+import listCurrencies from './currencies';
 
 const countries = () => {
   return listCountries;
+};
+
+const currencies = () => {
+  return listCurrencies;
 };
 
 const modalWelcome = (state = false, action: any) => {
@@ -18,5 +23,6 @@ const modalWelcome = (state = false, action: any) => {
 
 export const reducer = combineReducers({
   countries,
+  currencies,
   modalWelcome
 });
